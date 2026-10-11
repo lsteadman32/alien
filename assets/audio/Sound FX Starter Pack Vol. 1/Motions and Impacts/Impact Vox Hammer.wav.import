@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://msj7slqjmd0r"
+path="res://.godot/imported/Impact Vox Hammer.wav-527d05fc1e910fa33a907e5aa3868462.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound FX Starter Pack Vol. 1/Motions and Impacts/Impact Vox Hammer.wav"
+dest_files=["res://.godot/imported/Impact Vox Hammer.wav-527d05fc1e910fa33a907e5aa3868462.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

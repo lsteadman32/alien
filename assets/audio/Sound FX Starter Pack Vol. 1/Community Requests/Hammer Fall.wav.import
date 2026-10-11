@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cclg505h5h8ol"
+path="res://.godot/imported/Hammer Fall.wav-9ca1117f23608d603f2b825015cb2820.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound FX Starter Pack Vol. 1/Community Requests/Hammer Fall.wav"
+dest_files=["res://.godot/imported/Hammer Fall.wav-9ca1117f23608d603f2b825015cb2820.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

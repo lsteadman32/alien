@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://71gdpaus1s27"
+path="res://.godot/imported/Loot Gold.wav-7e0afb35bee208bf27deee6a9c892509.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound FX Starter Pack Vol. 1/Medieval/Loot Gold.wav"
+dest_files=["res://.godot/imported/Loot Gold.wav-7e0afb35bee208bf27deee6a9c892509.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

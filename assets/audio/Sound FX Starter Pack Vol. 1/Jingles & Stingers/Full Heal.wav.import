@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cufwihy85n5ql"
+path="res://.godot/imported/Full Heal.wav-d152b3d97265deb451dc40ac6b15594b.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound FX Starter Pack Vol. 1/Jingles & Stingers/Full Heal.wav"
+dest_files=["res://.godot/imported/Full Heal.wav-d152b3d97265deb451dc40ac6b15594b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

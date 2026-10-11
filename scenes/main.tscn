@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://155xx7s6y6ta"]
+
+[ext_resource type="Script" uid="uid://gul4ujaoy2jj" path="res://scripts/game.gd" id="1_0wfyh"]
+[ext_resource type="Script" uid="uid://iswjq63nm5ca" path="res://scripts/input.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://bwjx27yr10up1" path="res://scripts/command_processor.gd" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://dqpylturg55nj" path="res://scenes/main_menu.tscn" id="2_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://b3u4a73vabpt3" path="res://scenes/room.tscn" id="3_jyhfs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py3kj"]
+bg_color = Color(0.0715005, 0.07150053, 0.07150047, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqcjr"]
+bg_color = Color(0.19434926, 0.19434929, 0.19434917, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py3kj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
+
+[node name="Game" type="Control" unique_id=929610791]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0wfyh")
+
+[node name="MainMenu" parent="." unique_id=320918559 instance=ExtResource("2_tbgi4")]
+
+[node name="CommandProcessor" type="Node" parent="." unique_id=845233236]
+script = ExtResource("2_sugp2")
+
+[node name="RoomManager" type="Node" parent="." unique_id=1985747606]
+
+[node name="Room" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
+
+[node name="TextEditor" type="CanvasLayer" parent="." unique_id=1172315282]
+process_mode = 1
+layer = 10
+
+[node name="GUI" type="PanelContainer" parent="TextEditor" unique_id=39381780]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_py3kj")
+
+[node name="MarginContainer" type="MarginContainer" parent="TextEditor/GUI" unique_id=2129228774]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="TextEditor/GUI/MarginContainer" unique_id=1321487164]
+process_mode = 1
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GameInfo" type="PanelContainer" parent="TextEditor/GUI/MarginContainer/Rows" unique_id=1511173447]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Scroll" type="ScrollContainer" parent="TextEditor/GUI/MarginContainer/Rows/GameInfo" unique_id=1586843453]
+layout_mode = 2
+scroll_horizontal_by_default = true
+
+[node name="HistoryRows" type="VBoxContainer" parent="TextEditor/GUI/MarginContainer/Rows/GameInfo/Scroll" unique_id=486041557]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="InputArea" type="PanelContainer" parent="TextEditor/GUI/MarginContainer/Rows" unique_id=241195374]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+theme_override_styles/panel = SubResource("StyleBoxFlat_jqcjr")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextEditor/GUI/MarginContainer/Rows/InputArea" unique_id=1719905919]
+layout_mode = 2
+
+[node name="Caret" type="Label" parent="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=1983526509]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " > "
+
+[node name="Input" type="LineEdit" parent="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=713941665]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_py3kj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_o5qli")
+placeholder_text = "What do you do?"
+max_length = 70
+keep_editing_on_text_submit = true
+script = ExtResource("1_o5qli")
+
+[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=254400519]
+process_mode = 2
+layer = 20
+
+[node name="PauseRoot" type="Control" parent="PauseLayer" unique_id=1197587670]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="text_submitted" from="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
+[connection signal="text_submitted" from="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bchf454r72jty"
+path="res://.godot/imported/Slide.wav-454ff8973c0cac42a59335c4ba6c2d2f.sample"
+
+[deps]
+
+source_file="res://assets/audio/Sound FX Starter Pack Vol. 1/Retro/Slide.wav"
+dest_files=["res://.godot/imported/Slide.wav-454ff8973c0cac42a59335c4ba6c2d2f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

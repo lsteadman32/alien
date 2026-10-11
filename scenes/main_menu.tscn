@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dqpylturg55nj"]
+
+[node name="MainMenu" type="CanvasLayer" unique_id=320918559]
+layer = 30
+
+[node name="MainMenuRoot" type="Control" parent="." unique_id=1440049560]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Start" type="Button" parent="MainMenuRoot" unique_id=236179864]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Continue" type="Button" parent="MainMenuRoot" unique_id=105194055]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Load" type="Button" parent="MainMenuRoot" unique_id=1314751715]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Settings" type="Button" parent="MainMenuRoot" unique_id=673661043]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Exit" type="Button" parent="MainMenuRoot" unique_id=1671276769]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
