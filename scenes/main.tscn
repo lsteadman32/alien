@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://gul4ujaoy2jj" path="res://scripts/game.gd" id="1_0wfyh"]
 [ext_resource type="Script" uid="uid://iswjq63nm5ca" path="res://scripts/input.gd" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bwjx27yr10up1" path="res://scripts/command_processor.gd" id="2_sugp2"]
-[ext_resource type="PackedScene" uid="uid://dqpylturg55nj" path="res://scenes/main_menu.tscn" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://b3u4a73vabpt3" path="res://scenes/room.tscn" id="3_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://doj6pdrm6tiax" path="res://scenes/pause_menu.tscn" id="5_tefeu"]
+[ext_resource type="PackedScene" uid="uid://dqfu84agd2iaf" path="res://scenes/settings.tscn" id="6_tefeu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py3kj"]
 bg_color = Color(0.0715005, 0.07150053, 0.07150047, 1)
@@ -26,14 +27,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wfyh")
 
+[node name="PauseLayer" parent="." unique_id=205017505 instance=ExtResource("5_tefeu")]
+visible = false
+
 [node name="CommandProcessor" type="Node" parent="." unique_id=845233236]
 script = ExtResource("2_sugp2")
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 
 [node name="Room" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
-
-[node name="MainMenu" parent="." unique_id=320918559 instance=ExtResource("2_tbgi4")]
 
 [node name="TextEditor" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
@@ -98,15 +100,7 @@ max_length = 70
 keep_editing_on_text_submit = true
 script = ExtResource("1_o5qli")
 
-[node name="PauseLayer" type="CanvasLayer" parent="." unique_id=254400519]
-process_mode = 2
-layer = 20
-
-[node name="PauseRoot" type="Control" parent="PauseLayer" unique_id=1197587670]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Settings" parent="." unique_id=137133012 instance=ExtResource("6_tefeu")]
 
 [connection signal="text_submitted" from="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]
