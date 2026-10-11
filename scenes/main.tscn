@@ -26,14 +26,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wfyh")
 
-[node name="MainMenu" parent="." unique_id=320918559 instance=ExtResource("2_tbgi4")]
-
 [node name="CommandProcessor" type="Node" parent="." unique_id=845233236]
 script = ExtResource("2_sugp2")
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 
 [node name="Room" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
+
+[node name="MainMenu" parent="." unique_id=320918559 instance=ExtResource("2_tbgi4")]
 
 [node name="TextEditor" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
