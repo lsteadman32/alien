@@ -35,13 +35,15 @@ script = ExtResource("2_sugp2")
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 
-[node name="Room" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
+[node name="CryoChamber" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
+room_name = "Cryosleep Chamber"
+room_description = ""
 
-[node name="TextEditor" type="CanvasLayer" parent="." unique_id=1172315282]
+[node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
 layer = 10
 
-[node name="GUI" type="PanelContainer" parent="TextEditor" unique_id=39381780]
+[node name="GUI" type="PanelContainer" parent="TextEditorGUI" unique_id=39381780]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -49,47 +51,47 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_py3kj")
 
-[node name="MarginContainer" type="MarginContainer" parent="TextEditor/GUI" unique_id=2129228774]
+[node name="MarginContainer" type="MarginContainer" parent="TextEditorGUI/GUI" unique_id=2129228774]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Rows" type="VBoxContainer" parent="TextEditor/GUI/MarginContainer" unique_id=1321487164]
+[node name="Rows" type="VBoxContainer" parent="TextEditorGUI/GUI/MarginContainer" unique_id=1321487164]
 process_mode = 1
 layout_mode = 2
 theme_override_constants/separation = 15
 
-[node name="GameInfo" type="PanelContainer" parent="TextEditor/GUI/MarginContainer/Rows" unique_id=1511173447]
+[node name="GameInfo" type="PanelContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows" unique_id=1511173447]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Scroll" type="ScrollContainer" parent="TextEditor/GUI/MarginContainer/Rows/GameInfo" unique_id=1586843453]
+[node name="Scroll" type="ScrollContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/GameInfo" unique_id=1586843453]
 layout_mode = 2
 scroll_horizontal_by_default = true
 
-[node name="HistoryRows" type="VBoxContainer" parent="TextEditor/GUI/MarginContainer/Rows/GameInfo/Scroll" unique_id=486041557]
+[node name="HistoryRows" type="VBoxContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll" unique_id=486041557]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="InputArea" type="PanelContainer" parent="TextEditor/GUI/MarginContainer/Rows" unique_id=241195374]
+[node name="InputArea" type="PanelContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows" unique_id=241195374]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
 theme_override_styles/panel = SubResource("StyleBoxFlat_jqcjr")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TextEditor/GUI/MarginContainer/Rows/InputArea" unique_id=1719905919]
+[node name="HBoxContainer" type="HBoxContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea" unique_id=1719905919]
 layout_mode = 2
 
-[node name="Caret" type="Label" parent="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=1983526509]
+[node name="Caret" type="Label" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=1983526509]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " > "
 
-[node name="Input" type="LineEdit" parent="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=713941665]
+[node name="Input" type="LineEdit" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=713941665]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 24
@@ -102,5 +104,5 @@ script = ExtResource("1_o5qli")
 
 [node name="Settings" parent="." unique_id=137133012 instance=ExtResource("6_tefeu")]
 
-[connection signal="text_submitted" from="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
-[connection signal="text_submitted" from="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditor/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]
+[connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
+[connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]

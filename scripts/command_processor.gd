@@ -7,7 +7,6 @@ signal response_generated(response_text)
 var current_room = null
 
 
-
 func initialize(starting_room):
 	change_room(starting_room)
 
