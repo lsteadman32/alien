@@ -2,15 +2,24 @@
 
 [ext_resource type="Script" uid="uid://duhd44f2sc6u3" path="res://scripts/input_response.gd" id="1_5fbpa"]
 [ext_resource type="PackedScene" uid="uid://dcq51tfe1n220" path="res://scenes/response.tscn" id="2_brd57"]
+[ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_qu8yc"]
 
 [node name="InputResponse" type="VBoxContainer" unique_id=1364437752]
+offset_right = 258.0
+offset_bottom = 119.0
 theme_override_constants/separation = 0
 script = ExtResource("1_5fbpa")
 
 [node name="InputHistory" type="Label" parent="." unique_id=1654452802]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.5409905, 0.5409905, 0.5409905, 1)
+theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_qu8yc")
 text = " > This is what the user typed"
+
+[node name="HSeparator" type="HSeparator" parent="." unique_id=2116065085]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 11
 
 [node name="Response" parent="." unique_id=166766703 instance=ExtResource("2_brd57")]
 layout_mode = 2

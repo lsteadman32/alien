@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://iswjq63nm5ca" path="res://scripts/input.gd" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bwjx27yr10up1" path="res://scripts/command_processor.gd" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://b3u4a73vabpt3" path="res://scenes/room.tscn" id="3_jyhfs"]
+[ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://doj6pdrm6tiax" path="res://scenes/pause_menu.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://dqfu84agd2iaf" path="res://scenes/settings.tscn" id="6_tefeu"]
 
@@ -12,6 +13,9 @@ bg_color = Color(0.0715005, 0.07150053, 0.07150047, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqcjr"]
 bg_color = Color(0.19434926, 0.19434929, 0.19434917, 1)
+
+[sub_resource type="Theme" id="Theme_yoo2f"]
+default_font = ExtResource("5_o6xl0")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py3kj"]
 
@@ -85,21 +89,27 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_jqcjr")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea" unique_id=1719905919]
 layout_mode = 2
+theme = SubResource("Theme_yoo2f")
 
 [node name="Caret" type="Label" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=1983526509]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 16
 text = " > "
 
 [node name="Input" type="LineEdit" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=713941665]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/caret_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_fonts/font = ExtResource("5_o6xl0")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxEmpty_py3kj")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_o5qli")
 placeholder_text = "What do you do?"
 max_length = 70
 keep_editing_on_text_submit = true
+caret_blink = true
+caret_blink_interval = 5.07
+caret_force_displayed = true
 script = ExtResource("1_o5qli")
 
 [node name="Settings" parent="." unique_id=137133012 instance=ExtResource("6_tefeu")]

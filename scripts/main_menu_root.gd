@@ -1,9 +1,18 @@
 extends Control
 
+@onready var glow = $Glow
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	glow.pivot_offset = glow.size / 2
+	glow.modulate.a = 0.3
+	var tween := create_tween().set_loops()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(glow, "modulate:a", 0.6, 2.0)
+	tween.tween_property(glow, "scale", Vector2(1.05, 1.05), 2.0)
+	tween.chain().tween_property(glow, "modulate:a", 0.3, 2.0)
+	tween.tween_property(glow, "scale", Vector2.ONE, 2.0)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b3u4a73vabpt3"]
 
 [ext_resource type="Script" uid="uid://d2nh6ntjciivq" path="res://scripts/room.gd" id="1_36trf"]
+[ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_ffxv4"]
 
 [node name="GameRoom" type="PanelContainer" unique_id=1423448244]
 custom_minimum_size = Vector2(250, 200)
@@ -19,11 +20,13 @@ layout_mode = 2
 
 [node name="RoomName" type="Label" parent="MarginContainer/Rows" unique_id=844092378]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ffxv4")
 theme_override_font_sizes/font_size = 24
 text = "Room name"
 horizontal_alignment = 1
 
 [node name="RoomDescription" type="Label" parent="MarginContainer/Rows" unique_id=2009174429]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ffxv4")
 text = "This is the description of the room"
 autowrap_mode = 3

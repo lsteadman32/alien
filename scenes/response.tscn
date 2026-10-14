@@ -1,7 +1,15 @@
 [gd_scene format=3 uid="uid://dcq51tfe1n220"]
 
+[ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="1_hdnxl"]
+
 [node name="Response" type="Label" unique_id=166766703]
 custom_minimum_size = Vector2(-1000, 100)
+custom_maximum_size = Vector2(1000, -1)
+offset_right = 258.0
+offset_bottom = 100.0
+theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_colors/font_shadow_color = Color(0.5019608, 1, 0.7529412, 0.6039216)
+theme_override_fonts/font = ExtResource("1_hdnxl")
 theme_override_font_sizes/font_size = 24
 text = "This is what the game printed"
 autowrap_mode = 2
