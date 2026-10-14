@@ -6,13 +6,33 @@
 [ext_resource type="PackedScene" uid="uid://b3u4a73vabpt3" path="res://scenes/room.tscn" id="3_jyhfs"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://doj6pdrm6tiax" path="res://scenes/pause_menu.tscn" id="5_tefeu"]
+[ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="5_tipki"]
+[ext_resource type="Texture2D" uid="uid://cvg3vsajmilxa" path="res://assets/TerminalBorder.png" id="5_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://dqfu84agd2iaf" path="res://scenes/settings.tscn" id="6_tefeu"]
+[ext_resource type="Texture2D" uid="uid://dyfu3x772b6r6" path="res://assets/weyland-yutani-corp-seeklogo.png" id="7_85g3d"]
+[ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/Sprite-WY.png" id="9_choun"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py3kj"]
-bg_color = Color(0.0715005, 0.07150053, 0.07150047, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o6xl0"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqcjr"]
-bg_color = Color(0.19434926, 0.19434929, 0.19434917, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
+shader = ExtResource("5_tipki")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g3d"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_bqqt6"]
+colors = PackedColorArray(0, 1, 0.25490198, 0.36078432, 0, 0.7490196, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_85g3d"]
+gradient = SubResource("Gradient_bqqt6")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jqcjr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0lwdj"]
 
 [sub_resource type="Theme" id="Theme_yoo2f"]
 default_font = ExtResource("5_o6xl0")
@@ -20,6 +40,39 @@ default_font = ExtResource("5_o6xl0")
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py3kj"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
+
+[sub_resource type="Shader" id="Shader_bqqt6"]
+code = "shader_type canvas_item;
+
+uniform float line_count = 540.0;
+uniform float line_strength : hint_range(0.0, 1.0) = 0.25;
+uniform float roll_speed = 0.08;
+uniform float roll_width : hint_range(0.01, 0.5) = 0.15;
+uniform float roll_strength : hint_range(0.0, 1.0) = 0.08;
+uniform vec3 tint : source_color = vec3(0.3, 1.0, 0.7);
+
+void fragment() {
+	//static scanlines
+	float lines = 0.5 + 0.5 * sin(FRAGCOORD.y / 1.0);
+	float line_alpha = lines * line_strength;
+	
+	// rolling bar: bright edge that fades out behind int
+	float pos = fract(TIME * roll_speed);
+	float dist = abs(fract(UV.y - pos + 0.5) - 0.5);
+	float bar = 1.0 - smoothstep(0.0, roll_width, dist);
+	
+	COLOR = vec4(tint * bar, clamp(line_alpha + bar * roll_strength, 0.0, 1.0));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
+shader = SubResource("Shader_bqqt6")
+shader_parameter/line_count = 270.0
+shader_parameter/line_strength = 0.25
+shader_parameter/roll_speed = 0.08
+shader_parameter/roll_width = 0.15
+shader_parameter/roll_strength = 0.08
+shader_parameter/tint = Color(0.3, 1, 0.7, 1)
 
 [node name="Game" type="Control" unique_id=929610791]
 process_mode = 3
@@ -47,20 +100,47 @@ room_description = ""
 process_mode = 1
 layer = 10
 
+[node name="TextureRect2" type="TextureRect" parent="TextEditorGUI" unique_id=1067774035]
+z_index = 300
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -13.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.04)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("5_ya4ey")
+
 [node name="GUI" type="PanelContainer" parent="TextEditorGUI" unique_id=39381780]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_py3kj")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_o6xl0")
+
+[node name="Panel" type="Panel" parent="TextEditorGUI/GUI" unique_id=618876782]
+material = SubResource("ShaderMaterial_tipki")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_85g3d")
+
+[node name="Glow" type="TextureRect" parent="TextEditorGUI/GUI" unique_id=1344886469]
+z_index = 10
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_85g3d")
+expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="TextEditorGUI/GUI" unique_id=2129228774]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 90
+theme_override_constants/margin_top = 90
+theme_override_constants/margin_right = 90
+theme_override_constants/margin_bottom = 105
 
 [node name="Rows" type="VBoxContainer" parent="TextEditorGUI/GUI/MarginContainer" unique_id=1321487164]
 process_mode = 1
@@ -70,6 +150,7 @@ theme_override_constants/separation = 15
 [node name="GameInfo" type="PanelContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows" unique_id=1511173447]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_jqcjr")
 
 [node name="Scroll" type="ScrollContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/GameInfo" unique_id=1586843453]
 layout_mode = 2
@@ -85,21 +166,24 @@ theme_override_constants/separation = 20
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.15
-theme_override_styles/panel = SubResource("StyleBoxFlat_jqcjr")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_0lwdj")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea" unique_id=1719905919]
+z_index = 20
 layout_mode = 2
 theme = SubResource("Theme_yoo2f")
 
 [node name="Caret" type="Label" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=1983526509]
+visible = false
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0.4, 0.46666667)
 theme_override_font_sizes/font_size = 16
-text = " > "
+text = " | "
 
 [node name="Input" type="LineEdit" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=713941665]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/caret_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_colors/font_placeholder_color = Color(0, 1, 0.4, 0.46666667)
 theme_override_fonts/font = ExtResource("5_o6xl0")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxEmpty_py3kj")
@@ -107,10 +191,36 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_o5qli")
 placeholder_text = "What do you do?"
 max_length = 70
 keep_editing_on_text_submit = true
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
 caret_blink = true
-caret_blink_interval = 5.07
 caret_force_displayed = true
+right_icon = ExtResource("7_85g3d")
+icon_expand_mode = 2
+right_icon_scale = 0.85
 script = ExtResource("1_o5qli")
+
+[node name="ScanLines" type="ColorRect" parent="TextEditorGUI/GUI" unique_id=2139384177]
+z_index = 100
+material = SubResource("ShaderMaterial_85g3d")
+layout_mode = 2
+mouse_filter = 2
+
+[node name="WeyYuLogo" type="TextureRect" parent="TextEditorGUI" unique_id=635085551]
+modulate = Color(1, 1, 1, 0.28627452)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("9_choun")
+expand_mode = 1
+stretch_mode = 3
 
 [node name="Settings" parent="." unique_id=137133012 instance=ExtResource("6_tefeu")]
 

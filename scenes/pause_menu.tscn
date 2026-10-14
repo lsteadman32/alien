@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://bww56yo88sn8n" path="res://scripts/pause_root.gd" id="1_n87rw"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_myx47"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+bg_color = Color(0.6, 0.6, 0.6, 0.039215688)
+
 [node name="PauseLayer" type="CanvasLayer" unique_id=205017505]
 process_mode = 2
 layer = 20
@@ -25,6 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_choun")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseRoot" unique_id=996506198]
 process_mode = 2

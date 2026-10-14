@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dtahhsd2sox8" path="res://scripts/main_menu_root.gd" id="1_l6cm7"]
 [ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="2_bqqt6"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/Sprite-WY.png" id="4_wu84c"]
+[ext_resource type="Texture2D" uid="uid://cvg3vsajmilxa" path="res://assets/TerminalBorder.png" id="5_8ln24"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ogn71"]
 shader = ExtResource("2_bqqt6")
@@ -10,19 +12,80 @@ shader = ExtResource("2_bqqt6")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekxnf"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Gradient" id="Gradient_8rbnb"]
-colors = PackedColorArray(0, 0.7490196, 0, 0.43137255, 0, 0.7490196, 0, 0)
+[sub_resource type="Gradient" id="Gradient_bqqt6"]
+colors = PackedColorArray(0, 1, 0.25490198, 0.36078432, 0, 0.7490196, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_py3kj"]
-gradient = SubResource("Gradient_8rbnb")
+gradient = SubResource("Gradient_bqqt6")
 use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.84313726)
+shadow_size = 10
+shadow_offset = Vector2(2, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bqqt6"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0.4, 1)
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 10
+shadow_offset = Vector2(2, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ya4ey"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 10
+shadow_offset = Vector2(2, 4)
+
+[sub_resource type="Shader" id="Shader_bqqt6"]
+code = "shader_type canvas_item;
+
+uniform float line_count = 540.0;
+uniform float line_strength : hint_range(0.0, 1.0) = 0.25;
+uniform float roll_speed = 0.08;
+uniform float roll_width : hint_range(0.01, 0.5) = 0.15;
+uniform float roll_strength : hint_range(0.0, 1.0) = 0.08;
+uniform vec3 tint : source_color = vec3(0.3, 1.0, 0.7);
+
+void fragment() {
+	//static scanlines
+	float lines = 0.5 + 0.5 * sin(FRAGCOORD.y / 1.0);
+	float line_alpha = lines * line_strength;
+	
+	// rolling bar: bright edge that fades out behind int
+	float pos = fract(TIME * roll_speed);
+	float dist = abs(fract(UV.y - pos + 0.5) - 0.5);
+	float bar = 1.0 - smoothstep(0.0, roll_width, dist);
+	
+	COLOR = vec4(tint * bar, clamp(line_alpha + bar * roll_strength, 0.0, 1.0));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_py3kj"]
+shader = SubResource("Shader_bqqt6")
+shader_parameter/line_count = 270.0
+shader_parameter/line_strength = 0.25
+shader_parameter/roll_speed = 0.08
+shader_parameter/roll_width = 0.15
+shader_parameter/roll_strength = 0.08
+shader_parameter/tint = Color(0.3, 1, 0.7, 1)
 
 [node name="MainMenu" type="CanvasLayer" unique_id=320918559]
 process_mode = 3
 layer = 30
+follow_viewport_enabled = true
 
 [node name="MainMenuRoot" type="Control" parent="." unique_id=1440049560]
 layout_mode = 3
@@ -33,7 +96,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
 
-[node name="Panel" type="Panel" parent="MainMenuRoot" unique_id=618584815]
+[node name="Background" type="Panel" parent="MainMenuRoot" unique_id=618584815]
 material = SubResource("ShaderMaterial_ogn71")
 layout_mode = 1
 anchors_preset = 15
@@ -42,16 +105,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ekxnf")
-
-[node name="MarginContainer" type="MarginContainer" parent="MainMenuRoot" unique_id=203021539]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1121.0
-offset_bottom = 618.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Glow" type="TextureRect" parent="MainMenuRoot" unique_id=1391569270]
 layout_mode = 1
@@ -64,7 +117,25 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_py3kj")
 expand_mode = 1
 
+[node name="TextureRect" type="TextureRect" parent="MainMenuRoot" unique_id=1638711967]
+modulate = Color(1, 1, 1, 0.28627452)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_wu84c")
+expand_mode = 1
+stretch_mode = 3
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenuRoot" unique_id=2133447619]
+light_mask = 3
+visibility_layer = 3
+z_index = 150
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -84,12 +155,15 @@ custom_minimum_size = Vector2(150, 0)
 custom_maximum_size = Vector2(150, -1)
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_colors/font_color = Color(0, 1, 0.25490198, 1)
 theme_override_colors/font_focus_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_colors/font_pressed_color = Color(0, 1, 0.4, 1)
 theme_override_colors/font_hover_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_fonts/font = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
 text = "Start Game"
 
 [node name="Continue" type="Button" parent="MainMenuRoot/VBoxContainer" unique_id=105194055]
@@ -97,12 +171,15 @@ custom_minimum_size = Vector2(150, 0)
 custom_maximum_size = Vector2(150, -1)
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_colors/font_color = Color(0, 1, 0.25490198, 1)
 theme_override_colors/font_focus_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_colors/font_pressed_color = Color(0, 1, 0.4, 1)
 theme_override_colors/font_hover_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_fonts/font = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
 disabled = true
 text = "Continue"
 
@@ -111,12 +188,15 @@ custom_minimum_size = Vector2(150, 0)
 custom_maximum_size = Vector2(150, -1)
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_colors/font_color = Color(0, 1, 0.25490198, 1)
 theme_override_colors/font_focus_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_colors/font_pressed_color = Color(0, 1, 0.4, 1)
 theme_override_colors/font_hover_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_fonts/font = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
 disabled = true
 text = "Load"
 
@@ -126,12 +206,15 @@ custom_minimum_size = Vector2(150, 0)
 custom_maximum_size = Vector2(150, -1)
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_colors/font_color = Color(0, 1, 0.25490198, 1)
 theme_override_colors/font_focus_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_colors/font_pressed_color = Color(0, 1, 0.4, 1)
 theme_override_colors/font_hover_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_fonts/font = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
 text = "Settings"
 
 [node name="Exit" type="Button" parent="MainMenuRoot/VBoxContainer" unique_id=1671276769]
@@ -139,15 +222,44 @@ custom_minimum_size = Vector2(150, 0)
 custom_maximum_size = Vector2(150, -1)
 layout_mode = 2
 size_flags_vertical = 6
-theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_colors/font_color = Color(0, 1, 0.25490198, 1)
 theme_override_colors/font_focus_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_colors/font_pressed_color = Color(0, 1, 0.4, 1)
 theme_override_colors/font_hover_color = Color(0.015686275, 0.9843137, 0.6745098, 1)
 theme_override_fonts/font = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
 text = "Quit"
 
+[node name="ScanLines" type="ColorRect" parent="." unique_id=1644719882]
+z_index = 100
+material = SubResource("ShaderMaterial_py3kj")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=827382594]
+z_index = 300
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -13.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.0400001)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+texture = ExtResource("5_8ln24")
+
 [node name="Label" type="Label" parent="." unique_id=433458231]
+z_index = 150
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -159,8 +271,9 @@ offset_right = 182.0
 offset_bottom = -135.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 1, 0.4, 1)
-theme_override_colors/font_shadow_color = Color(0.5019608, 1, 0.7529412, 0.6039216)
+theme_override_colors/font_color = Color(0, 1, 0.25490198, 1)
+theme_override_colors/font_shadow_color = Color(0.5019608, 1, 0.7529412, 0.3019608)
+theme_override_colors/font_outline_color = Color(0.5019608, 1, 0.7529412, 0.3019608)
 theme_override_fonts/font = ExtResource("2_ekxnf")
 theme_override_font_sizes/font_size = 48
 text = "Alien Text Adventure"

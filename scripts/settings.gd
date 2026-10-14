@@ -1,8 +1,18 @@
 extends CanvasLayer
-
+@onready var glow = $SettingsControl/Glow
 
 func _ready() -> void:
 	$SettingsControl/VBoxContainer/FullScreenCheck.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
+
+	glow.pivot_offset = glow.size / 2
+	glow.modulate.a = 0.3
+	var tween := create_tween().set_loops()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(glow, "modulate:a", 0.6, 4.0)
+	tween.tween_property(glow, "scale", Vector2(2.05, 2.05), 10.0)
+	tween.chain().tween_property(glow, "modulate:a", 0.3, 2.0)
+	tween.tween_property(glow, "scale", Vector2.ONE, 2.0)
 
 
 func _on_volume_value_changed(value: float) -> void:

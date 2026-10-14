@@ -8,6 +8,7 @@ const Response = preload("res://scenes/response.tscn")
 
 @export var max_lines_remembered := 30
 
+@onready var glow = $TextEditorGUI/GUI/Glow
 @onready var history_rows = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll/HistoryRows
 @onready var scroll = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll
 @onready var command_processor = $CommandProcessor
@@ -20,6 +21,17 @@ var paused = false
 func _ready() -> void:
 	handle_response_generated("Welcome. You can type help to see available commands,")
 	$PauseLayer/PauseRoot.resume_requested.connect(pauseMenu)
+	
+	## glow effect
+	glow.pivot_offset = glow.size / 2
+	glow.modulate.a = 0.3
+	var tween := create_tween().set_loops()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(glow, "modulate:a", 0.6, 4.0)
+	tween.tween_property(glow, "scale", Vector2(2.05, 2.05), 10.0)
+	tween.chain().tween_property(glow, "modulate:a", 0.3, 2.0)
+	tween.tween_property(glow, "scale", Vector2.ONE, 2.0)
 
 
 	command_processor.response_generated.connect(handle_response_generated)
