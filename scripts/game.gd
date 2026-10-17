@@ -8,7 +8,7 @@ const Response = preload("res://scenes/response.tscn")
 
 @export var max_lines_remembered := 30
 
-@onready var glow = $TextEditorGUI/GUI/Glow
+@onready var glow = $TextEditorGUI/AspectRatioContainer/Glow
 @onready var history_rows = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll/HistoryRows
 @onready var scroll = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll
 @onready var command_processor = $CommandProcessor

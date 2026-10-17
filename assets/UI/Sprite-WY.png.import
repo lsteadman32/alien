@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyfu3x772b6r6"
-path="res://.godot/imported/weyland-yutani-corp-seeklogo.png-6c9321b16afad0e598bd0d639c63e892.ctex"
+uid="uid://cfwdjc6tofogw"
+path="res://.godot/imported/Sprite-WY.png-572cf21a0eeed7f5d6f1992b9a0e51ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/weyland-yutani-corp-seeklogo.png"
-dest_files=["res://.godot/imported/weyland-yutani-corp-seeklogo.png-6c9321b16afad0e598bd0d639c63e892.ctex"]
+source_file="res://assets/UI/Sprite-WY.png"
+dest_files=["res://.godot/imported/Sprite-WY.png-572cf21a0eeed7f5d6f1992b9a0e51ea.ctex"]
 
 [params]
 

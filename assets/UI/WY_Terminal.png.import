@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfwdjc6tofogw"
-path="res://.godot/imported/Sprite-WY.png-a489701ad9c4bb13a0d7f50ab14f218a.ctex"
+uid="uid://b87fuwpwwo58g"
+path="res://.godot/imported/WY_Terminal.png-dbc3a0c819258f6b076ee45a2591761c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Sprite-WY.png"
-dest_files=["res://.godot/imported/Sprite-WY.png-a489701ad9c4bb13a0d7f50ab14f218a.ctex"]
+source_file="res://assets/UI/WY_Terminal.png"
+dest_files=["res://.godot/imported/WY_Terminal.png-dbc3a0c819258f6b076ee45a2591761c.ctex"]
 
 [params]
 

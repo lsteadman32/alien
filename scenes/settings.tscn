@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dqfu84agd2iaf"]
 
 [ext_resource type="Script" uid="uid://circjc70c8o8" path="res://scripts/settings.gd" id="1_5p8wc"]
-[ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/Sprite-WY.png" id="2_6wm04"]
+[ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="2_6wm04"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_r6d6q"]
-[ext_resource type="Texture2D" uid="uid://cvg3vsajmilxa" path="res://assets/TerminalBorder.png" id="4_f4mfi"]
+[ext_resource type="Texture2D" uid="uid://1phxvuljpsof" path="res://assets/UI/WY_Monitor2.png" id="4_f4mfi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py3kj"]
 bg_color = Color(0, 0, 0, 1)

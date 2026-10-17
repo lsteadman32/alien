@@ -4,15 +4,27 @@
 [ext_resource type="Script" uid="uid://iswjq63nm5ca" path="res://scripts/input.gd" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bwjx27yr10up1" path="res://scripts/command_processor.gd" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://b3u4a73vabpt3" path="res://scenes/room.tscn" id="3_jyhfs"]
+[ext_resource type="Script" uid="uid://dxsf6og6d5n7l" path="res://scenes/room_manager.gd" id="4_eb6dy"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://doj6pdrm6tiax" path="res://scenes/pause_menu.tscn" id="5_tefeu"]
 [ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="5_tipki"]
-[ext_resource type="Texture2D" uid="uid://cvg3vsajmilxa" path="res://assets/TerminalBorder.png" id="5_ya4ey"]
+[ext_resource type="Texture2D" uid="uid://1phxvuljpsof" path="res://assets/UI/WY_Monitor2.png" id="6_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://dqfu84agd2iaf" path="res://scenes/settings.tscn" id="6_tefeu"]
-[ext_resource type="Texture2D" uid="uid://dyfu3x772b6r6" path="res://assets/weyland-yutani-corp-seeklogo.png" id="7_85g3d"]
-[ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/Sprite-WY.png" id="9_choun"]
+[ext_resource type="Texture2D" uid="uid://dyfu3x772b6r6" path="res://assets/UI/weyland-yutani-corp-seeklogo.png" id="7_85g3d"]
+[ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="9_choun"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o6xl0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jqcjr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0lwdj"]
+
+[sub_resource type="Theme" id="Theme_yoo2f"]
+default_font = ExtResource("5_o6xl0")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py3kj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 shader = ExtResource("5_tipki")
@@ -29,17 +41,6 @@ use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jqcjr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0lwdj"]
-
-[sub_resource type="Theme" id="Theme_yoo2f"]
-default_font = ExtResource("5_o6xl0")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py3kj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
 
 [sub_resource type="Shader" id="Shader_bqqt6"]
 code = "shader_type canvas_item;
@@ -80,6 +81,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 768.0
+offset_bottom = 432.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wfyh")
@@ -91,10 +94,26 @@ visible = false
 script = ExtResource("2_sugp2")
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
+script = ExtResource("4_eb6dy")
 
 [node name="CryoChamber" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
 room_name = "Cryosleep Chamber"
-room_description = ""
+
+[node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
+room_name = "Junction A1"
+
+[node name="MessHall" parent="RoomManager" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
+offset_right = 285.0
+offset_bottom = -458.0
+room_name = "Mess Hall"
+
+[node name="JunctionA5" parent="RoomManager" unique_id=396502791 instance=ExtResource("3_jyhfs")]
+offset_right = 285.0
+offset_bottom = -458.0
+room_name = "Junction A5"
+
+[node name="LockerRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
+room_name = "Locker Room"
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
@@ -105,42 +124,32 @@ z_index = 300
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -13.0
-offset_bottom = -13.0
+offset_left = 101.99999
+offset_top = 11.999992
+offset_right = 30.0
+offset_bottom = 84.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1, 1.04)
+scale = Vector2(0.876, 0.876)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
-texture = ExtResource("5_ya4ey")
+texture = ExtResource("6_eb6dy")
 
 [node name="GUI" type="PanelContainer" parent="TextEditorGUI" unique_id=39381780]
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_o6xl0")
 
-[node name="Panel" type="Panel" parent="TextEditorGUI/GUI" unique_id=618876782]
-material = SubResource("ShaderMaterial_tipki")
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_85g3d")
-
-[node name="Glow" type="TextureRect" parent="TextEditorGUI/GUI" unique_id=1344886469]
-z_index = 10
-layout_mode = 2
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_85g3d")
-expand_mode = 1
-
 [node name="MarginContainer" type="MarginContainer" parent="TextEditorGUI/GUI" unique_id=2129228774]
 layout_mode = 2
-theme_override_constants/margin_left = 90
-theme_override_constants/margin_top = 90
-theme_override_constants/margin_right = 90
-theme_override_constants/margin_bottom = 105
+theme_override_constants/margin_left = 263
+theme_override_constants/margin_top = 70
+theme_override_constants/margin_right = 273
+theme_override_constants/margin_bottom = 137
 
 [node name="Rows" type="VBoxContainer" parent="TextEditorGUI/GUI/MarginContainer" unique_id=1321487164]
 process_mode = 1
@@ -183,12 +192,15 @@ text = " | "
 [node name="Input" type="LineEdit" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer" unique_id=713941665]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 1, 0.25490198, 1)
 theme_override_colors/font_placeholder_color = Color(0, 1, 0.4, 0.46666667)
+theme_override_colors/caret_color = Color(0, 1, 0.25490198, 1)
+theme_override_constants/caret_width = 10
 theme_override_fonts/font = ExtResource("5_o6xl0")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxEmpty_py3kj")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_o5qli")
-placeholder_text = "What do you do?"
+placeholder_text = "  What do you do?"
 max_length = 70
 keep_editing_on_text_submit = true
 context_menu_enabled = false
@@ -202,7 +214,26 @@ icon_expand_mode = 2
 right_icon_scale = 0.85
 script = ExtResource("1_o5qli")
 
-[node name="ScanLines" type="ColorRect" parent="TextEditorGUI/GUI" unique_id=2139384177]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TextEditorGUI" unique_id=2053250941]
+offset_left = 257.0
+offset_top = 66.0
+offset_right = 297.0
+offset_bottom = 106.0
+scale = Vector2(15.820749, 11.116755)
+
+[node name="Panel" type="Panel" parent="TextEditorGUI/AspectRatioContainer" unique_id=618876782]
+material = SubResource("ShaderMaterial_tipki")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_85g3d")
+
+[node name="Glow" type="TextureRect" parent="TextEditorGUI/AspectRatioContainer" unique_id=1344886469]
+z_index = 10
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_85g3d")
+expand_mode = 1
+
+[node name="ScanLines" type="ColorRect" parent="TextEditorGUI/AspectRatioContainer" unique_id=2139384177]
 z_index = 100
 material = SubResource("ShaderMaterial_85g3d")
 layout_mode = 2
@@ -223,6 +254,7 @@ expand_mode = 1
 stretch_mode = 3
 
 [node name="Settings" parent="." unique_id=137133012 instance=ExtResource("6_tefeu")]
+visible = false
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]

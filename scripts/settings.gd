@@ -1,6 +1,8 @@
 extends CanvasLayer
 @onready var glow = $SettingsControl/Glow
 
+
+
 func _ready() -> void:
 	$SettingsControl/VBoxContainer/FullScreenCheck.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 

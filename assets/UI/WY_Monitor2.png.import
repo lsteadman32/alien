@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvg3vsajmilxa"
-path="res://.godot/imported/TerminalBorder.png-a66d2b0912499c236b57f2e34bb11c67.ctex"
+uid="uid://1phxvuljpsof"
+path="res://.godot/imported/WY_Monitor2.png-bede9541843eea5b692877ae05d131ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/TerminalBorder.png"
-dest_files=["res://.godot/imported/TerminalBorder.png-a66d2b0912499c236b57f2e34bb11c67.ctex"]
+source_file="res://assets/UI/WY_Monitor2.png"
+dest_files=["res://.godot/imported/WY_Monitor2.png-bede9541843eea5b692877ae05d131ba.ctex"]
 
 [params]
 
