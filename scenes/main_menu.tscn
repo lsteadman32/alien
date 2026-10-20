@@ -4,7 +4,6 @@
 [ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="2_bqqt6"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="4_wu84c"]
-[ext_resource type="Texture2D" uid="uid://1phxvuljpsof" path="res://assets/UI/WY_Monitor2.png" id="5_8ln24"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ogn71"]
 shader = ExtResource("2_bqqt6")
@@ -12,10 +11,17 @@ shader = ExtResource("2_bqqt6")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekxnf"]
 bg_color = Color(0, 0, 0, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqqt6"]
+shader = ExtResource("2_bqqt6")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wu84c"]
+bg_color = Color(0, 0, 0, 1)
+
 [sub_resource type="Gradient" id="Gradient_bqqt6"]
+offsets = PackedFloat32Array(0.0147929, 1)
 colors = PackedColorArray(0, 1, 0.25490198, 0.36078432, 0, 0.7490196, 0, 0)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_py3kj"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8ln24"]
 gradient = SubResource("Gradient_bqqt6")
 use_hdr = true
 fill = 1
@@ -46,7 +52,7 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_py3kj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rtw2f"]
 shader = SubResource("Shader_bqqt6")
 shader_parameter/line_count = 270.0
 shader_parameter/line_strength = 0.25
@@ -107,31 +113,28 @@ grow_vertical = 2
 scale = Vector2(1.0014676, 1)
 theme_override_styles/panel = SubResource("StyleBoxFlat_ekxnf")
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="MainMenuRoot" unique_id=528284120]
-layout_mode = 0
-offset_left = 258.0
-offset_top = 43.999996
-offset_right = 298.0
-offset_bottom = 84.0
-scale = Vector2(16.573118, 11.737056)
+[node name="TerminalEffects" type="MarginContainer" parent="MainMenuRoot" unique_id=1828374202]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Glow" type="TextureRect" parent="MainMenuRoot/AspectRatioContainer" unique_id=1391569270]
+[node name="Panel" type="Panel" parent="MainMenuRoot/TerminalEffects" unique_id=913395560]
+material = SubResource("ShaderMaterial_bqqt6")
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wu84c")
+
+[node name="Glow" type="TextureRect" parent="MainMenuRoot/TerminalEffects" unique_id=1364650178]
+z_index = 10
 layout_mode = 2
 mouse_filter = 2
-texture = SubResource("GradientTexture2D_py3kj")
-expand_mode = 1
+texture = SubResource("GradientTexture2D_8ln24")
 
-[node name="TextureRect" type="TextureRect" parent="MainMenuRoot/AspectRatioContainer" unique_id=1638711967]
-visible = false
-modulate = Color(1, 1, 1, 0.28627452)
-layout_mode = 2
-texture = ExtResource("4_wu84c")
-expand_mode = 1
-stretch_mode = 3
-
-[node name="ScanLines" type="ColorRect" parent="MainMenuRoot/AspectRatioContainer" unique_id=1644719882]
+[node name="ScanLines" type="ColorRect" parent="MainMenuRoot/TerminalEffects" unique_id=694115737]
 z_index = 100
-material = SubResource("ShaderMaterial_py3kj")
+material = SubResource("ShaderMaterial_rtw2f")
 layout_mode = 2
 mouse_filter = 2
 
@@ -218,6 +221,7 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
 theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
+disabled = true
 text = "Settings"
 
 [node name="Exit" type="Button" parent="MainMenuRoot/VBoxContainer" unique_id=1671276769]
@@ -235,23 +239,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
 theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
 text = "Quit"
-
-[node name="TextureRect2" type="TextureRect" parent="." unique_id=827382594]
-z_index = 300
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 90.0
-offset_top = -7.0
-offset_right = 90.0
-offset_bottom = 65.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.8760001, 0.9110402)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-texture = ExtResource("5_8ln24")
 
 [node name="Label" type="Label" parent="." unique_id=433458231]
 z_index = 150
@@ -274,6 +261,20 @@ theme_override_font_sizes/font_size = 48
 text = "Alien Text Adventure"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="WeyYuLogo" type="TextureRect" parent="." unique_id=848180751]
+modulate = Color(1, 1, 1, 0.28627452)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_wu84c")
+expand_mode = 1
+stretch_mode = 3
 
 [connection signal="pressed" from="MainMenuRoot/VBoxContainer/Start" to="MainMenuRoot" method="_on_start_pressed"]
 [connection signal="pressed" from="MainMenuRoot/VBoxContainer/Continue" to="MainMenuRoot" method="_on_continue_pressed"]

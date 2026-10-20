@@ -1,6 +1,6 @@
 extends Control
 
-@onready var glow = $AspectRatioContainer/Glow
+@onready var glow = $TerminalEffects/Glow
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

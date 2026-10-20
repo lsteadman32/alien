@@ -3,24 +3,12 @@
 [ext_resource type="Script" uid="uid://duhd44f2sc6u3" path="res://scripts/input_response.gd" id="1_5fbpa"]
 [ext_resource type="PackedScene" uid="uid://dcq51tfe1n220" path="res://scenes/response.tscn" id="2_brd57"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_qu8yc"]
-[ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="2_xt2nu"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qa54y"]
-shader = ExtResource("2_xt2nu")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hoeii"]
-bg_color = Color(0, 0, 0, 1)
 
 [node name="InputResponse" type="VBoxContainer" unique_id=1364437752]
 offset_right = 258.0
 offset_bottom = 119.0
 theme_override_constants/separation = 0
 script = ExtResource("1_5fbpa")
-
-[node name="Panel" type="Panel" parent="." unique_id=1671654459]
-material = SubResource("ShaderMaterial_qa54y")
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_hoeii")
 
 [node name="InputHistory" type="Label" parent="." unique_id=1654452802]
 layout_mode = 2

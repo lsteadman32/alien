@@ -8,7 +8,7 @@ const Response = preload("res://scenes/response.tscn")
 
 @export var max_lines_remembered := 30
 
-@onready var glow = $TextEditorGUI/AspectRatioContainer/Glow
+@onready var glow = $Settings/SettingsControl/Glow
 @onready var history_rows = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll/HistoryRows
 @onready var scroll = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll
 @onready var command_processor = $CommandProcessor
@@ -19,8 +19,10 @@ const Response = preload("res://scenes/response.tscn")
 var paused = false
 
 func _ready() -> void:
-	handle_response_generated("Welcome. You can type help to see available commands,")
+	handle_response_generated("")
 	$PauseLayer/PauseRoot.resume_requested.connect(pauseMenu)
+	
+
 	
 	## glow effect
 	glow.pivot_offset = glow.size / 2

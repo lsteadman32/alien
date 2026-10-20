@@ -1,17 +1,18 @@
 [gd_scene format=3 uid="uid://b3u4a73vabpt3"]
 
 [ext_resource type="Script" uid="uid://d2nh6ntjciivq" path="res://scripts/room.gd" id="1_36trf"]
-[ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_ffxv4"]
 
 [node name="GameRoom" type="PanelContainer" unique_id=1423448244]
 visible = false
 custom_minimum_size = Vector2(250, 200)
 custom_maximum_size = Vector2(250, 200)
-offset_left = 35.0
-offset_top = -658.0
-offset_right = 75.0
-offset_bottom = -618.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_36trf")
+room_description = null
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=986221521]
 layout_mode = 2
@@ -19,15 +20,13 @@ layout_mode = 2
 [node name="Rows" type="VBoxContainer" parent="MarginContainer" unique_id=857527914]
 layout_mode = 2
 
-[node name="RoomName" type="Label" parent="MarginContainer/Rows" unique_id=844092378]
+[node name="RoomName" type="Label" parent="MarginContainer/Rows" unique_id=367174251]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ffxv4")
-theme_override_font_sizes/font_size = 24
 text = "Room name"
 horizontal_alignment = 1
 
-[node name="RoomDescription" type="Label" parent="MarginContainer/Rows" unique_id=2009174429]
+[node name="RoomDescription" type="Label" parent="MarginContainer/Rows" unique_id=1203273755]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ffxv4")
 text = "This is the description of the room"
 autowrap_mode = 3
+visible_characters_behavior = 1

@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://circjc70c8o8" path="res://scripts/settings.gd" id="1_5p8wc"]
 [ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="2_6wm04"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_r6d6q"]
-[ext_resource type="Texture2D" uid="uid://1phxvuljpsof" path="res://assets/UI/WY_Monitor2.png" id="4_f4mfi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py3kj"]
 bg_color = Color(0, 0, 0, 1)
@@ -190,22 +189,6 @@ theme_override_fonts/font = ExtResource("2_r6d6q")
 theme_override_font_sizes/font_size = 24
 text = "Close"
 alignment = 0
-
-[node name="TextureRect2" type="TextureRect" parent="SettingsControl" unique_id=956193089]
-z_index = 300
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -13.0
-offset_bottom = -13.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1, 1.0400001)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 2
-texture = ExtResource("4_f4mfi")
 
 [connection signal="value_changed" from="SettingsControl/VBoxContainer/Vol_Label/Volume" to="." method="_on_volume_value_changed"]
 [connection signal="item_selected" from="SettingsControl/VBoxContainer/ResolutionLabel/Resolutions" to="." method="_on_resolutions_item_selected"]

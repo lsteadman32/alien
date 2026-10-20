@@ -8,23 +8,11 @@
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://doj6pdrm6tiax" path="res://scenes/pause_menu.tscn" id="5_tefeu"]
 [ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="5_tipki"]
-[ext_resource type="Texture2D" uid="uid://1phxvuljpsof" path="res://assets/UI/WY_Monitor2.png" id="6_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://dqfu84agd2iaf" path="res://scenes/settings.tscn" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://dyfu3x772b6r6" path="res://assets/UI/weyland-yutani-corp-seeklogo.png" id="7_85g3d"]
 [ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="9_choun"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o6xl0"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jqcjr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0lwdj"]
-
-[sub_resource type="Theme" id="Theme_yoo2f"]
-default_font = ExtResource("5_o6xl0")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py3kj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 shader = ExtResource("5_tipki")
@@ -32,17 +20,17 @@ shader = ExtResource("5_tipki")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g3d"]
 bg_color = Color(0, 0, 0, 1)
 
-[sub_resource type="Gradient" id="Gradient_bqqt6"]
+[sub_resource type="Gradient" id="Gradient_ya4ey"]
 colors = PackedColorArray(0, 1, 0.25490198, 0.36078432, 0, 0.7490196, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_85g3d"]
-gradient = SubResource("Gradient_bqqt6")
+gradient = SubResource("Gradient_ya4ey")
 use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
 
-[sub_resource type="Shader" id="Shader_bqqt6"]
+[sub_resource type="Shader" id="Shader_eb6dy"]
 code = "shader_type canvas_item;
 
 uniform float line_count = 540.0;
@@ -67,7 +55,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
-shader = SubResource("Shader_bqqt6")
+shader = SubResource("Shader_eb6dy")
 shader_parameter/line_count = 270.0
 shader_parameter/line_strength = 0.25
 shader_parameter/roll_speed = 0.08
@@ -75,14 +63,23 @@ shader_parameter/roll_width = 0.15
 shader_parameter/roll_strength = 0.08
 shader_parameter/tint = Color(0.3, 1, 0.7, 1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jqcjr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0lwdj"]
+
+[sub_resource type="Theme" id="Theme_yoo2f"]
+default_font = ExtResource("5_o6xl0")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py3kj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
+
 [node name="Game" type="Control" unique_id=929610791]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 768.0
-offset_bottom = 432.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0wfyh")
@@ -97,72 +94,201 @@ script = ExtResource("2_sugp2")
 script = ExtResource("4_eb6dy")
 
 [node name="CryoChamber" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
-room_name = "Cryosleep Chamber"
-
-[node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
-room_name = "Junction A1"
+visible = true
+offset_left = 372.0
+offset_top = -290.0
+offset_right = -530.0
+offset_bottom = -738.0
+room_name = "CryoChamber"
+room_description = ""
 
 [node name="MessHall" parent="RoomManager" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
-offset_right = 285.0
-offset_bottom = -458.0
+visible = true
+offset_left = 373.0
+offset_top = -817.0
+offset_right = -529.0
+offset_bottom = -1265.0
 room_name = "Mess Hall"
-
-[node name="JunctionA5" parent="RoomManager" unique_id=396502791 instance=ExtResource("3_jyhfs")]
-offset_right = 285.0
-offset_bottom = -458.0
-room_name = "Junction A5"
+room_description = "Description"
 
 [node name="LockerRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
+visible = true
+offset_left = -296.0
+offset_top = -610.0
+offset_right = -1198.0
+offset_bottom = -1058.0
 room_name = "Locker Room"
+room_description = "Description"
+
+[node name="Airlock" parent="RoomManager" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 907.0
+offset_top = -798.0
+offset_right = 1157.0
+offset_bottom = -598.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Airlock"
+room_description = "Description"
+
+[node name="Bridge" parent="RoomManager" unique_id=76881209 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 371.0
+offset_top = -1428.0
+offset_right = 621.0
+offset_bottom = -1228.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Bridge"
+room_description = "Description"
+
+[node name="ComputerRoom" parent="RoomManager" unique_id=267301003 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -132.0
+offset_top = -1430.0
+offset_right = 118.0
+offset_bottom = -1230.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Computer Room"
+room_description = "Description"
+
+[node name="MedBay" parent="RoomManager" unique_id=477782257 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 878.0
+offset_top = -1423.0
+offset_right = 1128.0
+offset_bottom = -1223.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Med Bay"
+room_description = "Description"
+
+[node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 375.0
+offset_top = -565.0
+offset_right = 625.0
+offset_bottom = -365.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Junction A1"
+room_description = "Description"
+
+[node name="JunctionA3" parent="RoomManager" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
+visible = true
+offset_left = -293.0
+offset_top = -1078.0
+offset_right = -1195.0
+offset_bottom = -1526.0
+room_name = "Junction A3"
+room_description = "Description"
+
+[node name="JunctionA2" parent="RoomManager" unique_id=586666453 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 917.0
+offset_top = -1083.0
+offset_right = 1167.0
+offset_bottom = -883.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Junction A4"
+room_description = "Description"
+
+[node name="JunctionA4" parent="RoomManager" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 368.0
+offset_top = -1091.0
+offset_right = 618.0
+offset_bottom = -891.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Junction A2"
+room_description = "Description"
+
+[node name="JunctionA5" parent="RoomManager" unique_id=396502791 instance=ExtResource("3_jyhfs")]
+visible = true
+offset_left = 46.0
+offset_top = -292.0
+offset_right = -856.0
+offset_bottom = -740.0
+room_name = "Junction A5"
+room_description = "Description"
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
 layer = 10
 
-[node name="TextureRect2" type="TextureRect" parent="TextEditorGUI" unique_id=1067774035]
-z_index = 300
+[node name="GUI" type="PanelContainer" parent="TextEditorGUI" unique_id=39381780]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 101.99999
-offset_top = 11.999992
-offset_right = 30.0
-offset_bottom = 84.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.876, 0.876)
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 2
-texture = ExtResource("6_eb6dy")
-
-[node name="GUI" type="PanelContainer" parent="TextEditorGUI" unique_id=39381780]
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_o6xl0")
 
-[node name="MarginContainer" type="MarginContainer" parent="TextEditorGUI/GUI" unique_id=2129228774]
+[node name="Panel" type="Panel" parent="TextEditorGUI/GUI" unique_id=618876782]
+material = SubResource("ShaderMaterial_tipki")
 layout_mode = 2
-theme_override_constants/margin_left = 263
-theme_override_constants/margin_top = 70
-theme_override_constants/margin_right = 273
-theme_override_constants/margin_bottom = 137
+theme_override_styles/panel = SubResource("StyleBoxFlat_85g3d")
+
+[node name="Glow" type="TextureRect" parent="TextEditorGUI/GUI" unique_id=1344886469]
+z_index = 10
+layout_mode = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_85g3d")
+
+[node name="ScanLines" type="ColorRect" parent="TextEditorGUI/GUI" unique_id=2139384177]
+z_index = 100
+material = SubResource("ShaderMaterial_85g3d")
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextEditorGUI/GUI" unique_id=1214320657]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="Rows" type="VBoxContainer" parent="TextEditorGUI/GUI/MarginContainer" unique_id=1321487164]
 process_mode = 1
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 theme_override_constants/separation = 15
 
 [node name="GameInfo" type="PanelContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows" unique_id=1511173447]
+custom_minimum_size = Vector2(25, 400)
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_jqcjr")
 
 [node name="Scroll" type="ScrollContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/GameInfo" unique_id=1586843453]
 layout_mode = 2
+horizontal_scroll_mode = 0
 scroll_horizontal_by_default = true
 
 [node name="HistoryRows" type="VBoxContainer" parent="TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll" unique_id=486041557]
@@ -213,31 +339,6 @@ right_icon = ExtResource("7_85g3d")
 icon_expand_mode = 2
 right_icon_scale = 0.85
 script = ExtResource("1_o5qli")
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="TextEditorGUI" unique_id=2053250941]
-offset_left = 257.0
-offset_top = 66.0
-offset_right = 297.0
-offset_bottom = 106.0
-scale = Vector2(15.820749, 11.116755)
-
-[node name="Panel" type="Panel" parent="TextEditorGUI/AspectRatioContainer" unique_id=618876782]
-material = SubResource("ShaderMaterial_tipki")
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_85g3d")
-
-[node name="Glow" type="TextureRect" parent="TextEditorGUI/AspectRatioContainer" unique_id=1344886469]
-z_index = 10
-layout_mode = 2
-mouse_filter = 2
-texture = SubResource("GradientTexture2D_85g3d")
-expand_mode = 1
-
-[node name="ScanLines" type="ColorRect" parent="TextEditorGUI/AspectRatioContainer" unique_id=2139384177]
-z_index = 100
-material = SubResource("ShaderMaterial_85g3d")
-layout_mode = 2
-mouse_filter = 2
 
 [node name="WeyYuLogo" type="TextureRect" parent="TextEditorGUI" unique_id=635085551]
 modulate = Color(1, 1, 1, 0.28627452)
