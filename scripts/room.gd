@@ -13,10 +13,11 @@ class_name GameRoom
 		room_description = desc
 		$MarginContainer/Rows/RoomDescription.text=desc
 @export var exits: Dictionary = {}
+@export var locked_exits: Dictionary = {}
 @export var items: Array[String] = []
 @export var ambient_sound: AudioStream
 @export var background: Texture2D
-
+@export var terminals: Array[GameTerminal] = []
 
 var visited := false
 
@@ -31,18 +32,32 @@ func enter() -> String:
 	return describe()
 
 func describe() -> String:
-	var text := "%s\n%s" % [room_name, room_description]
+	var text := "%s\n\n%s" % [room_name, room_description]
+	for t in terminals:
+		text += "\nA terminal is here"
 	if items.size() > 0:
 		text += "\nYou see: " + ", ".join(items)
-	text += "\nExits: " + ", ".join(exits.keys())
+	
+	var labels: Array[String] = []
+	for e in exits.keys():
+		labels.append(e + " (locked)" if locked_exits.has(e) else e)
+	text += "\nExits: " + ", ".join(labels)
 	return text
 
-func get_exit(dest: String) -> GameRoom:
+func find_exit_name(dest: String) -> String:
 	if exits.has(dest):
-		return get_node(exits[dest]) as GameRoom
+		return dest
 	for key in exits:
 		if key.begins_with(dest):
-			return get_node(exits[key]) as GameRoom
+			return key
+	return ""
+
+func get_exit(dest: String) -> GameRoom:
+	var key := find_exit_name(dest)
+	if key == "":
+		return null
+	if exits.has(dest):
+		return get_node(exits[key]) as GameRoom
 	return null
 
 func take_item(id: String) -> bool:
@@ -50,6 +65,33 @@ func take_item(id: String) -> bool:
 		items.erase(id)
 		return true
 	return false
+
+func find_terminal(query: String) -> GameTerminal:
+	if terminals.is_empty():
+		return null
+	if query == "" or query == "terminal":
+		return terminals[0]
+	var names: Array = []
+	for t in terminals:
+		if t != null:
+			names.append(t.terminal_name.to_lower())
+	var hit := Fuzzy.best_match(query, names)
+	for t in terminals:
+		if t != null and hit != "" and t.terminal_name.to_lower() == hit:
+			return t
+	return null
+	pass
+
+func unlock_exit(query: String) -> bool:
+	var key := find_exit_name(query.to_lower())
+	print("unlock_exit: query=[", query, "] key =[", key, "] locks=", locked_exits)
+	if key == "" or not locked_exits.has(key):
+		return false
+	locked_exits.erase(key)
+	var other := get_node(exits[key])
+	if other != null:
+		other.locked_exits.erase(room_name.to_lower())
+	return true
 
 func drop_item(id: String) -> void:
 	items.append(id)

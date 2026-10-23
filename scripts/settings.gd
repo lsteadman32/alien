@@ -24,7 +24,7 @@ func _on_volume_value_changed(value: float) -> void:
 func _on_resolutions_item_selected(index: int) -> void:
 	var screen := DisplayServer.screen_get_size()
 	var win := DisplayServer.window_get_size()
-	DisplayServer.window_set_position((screen - win) /2)
+	DisplayServer.window_set_position((screen - win) /2.0)
 	match index:
 		0:
 			DisplayServer.window_set_size(Vector2i(600,600))

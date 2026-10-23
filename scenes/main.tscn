@@ -4,13 +4,64 @@
 [ext_resource type="Script" uid="uid://iswjq63nm5ca" path="res://scripts/input.gd" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bwjx27yr10up1" path="res://scripts/command_processor.gd" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://b3u4a73vabpt3" path="res://scenes/room.tscn" id="3_jyhfs"]
+[ext_resource type="Script" uid="uid://b6qnpxdtgwbn5" path="res://scripts/item_data.gd" id="4_a8y0u"]
 [ext_resource type="Script" uid="uid://dxsf6og6d5n7l" path="res://scenes/room_manager.gd" id="4_eb6dy"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="5_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://doj6pdrm6tiax" path="res://scenes/pause_menu.tscn" id="5_tefeu"]
 [ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="5_tipki"]
+[ext_resource type="Script" uid="uid://v17r7ywcmxbo" path="res://scripts/game_terminal.gd" id="6_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://dqfu84agd2iaf" path="res://scenes/settings.tscn" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://dyfu3x772b6r6" path="res://assets/UI/weyland-yutani-corp-seeklogo.png" id="7_85g3d"]
+[ext_resource type="Script" uid="uid://dpb2fp3wv12bp" path="res://scripts/terminal_entry.gd" id="7_trceg"]
 [ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="9_choun"]
+
+[sub_resource type="Resource" id="Resource_jkv2x"]
+script = ExtResource("4_a8y0u")
+id = "credentials"
+item_desc = "You see a familiar face. Your face. Under your name and title is a serial number and a barcode: 7716538
+
+Perhaps this will be useful."
+metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
+
+[sub_resource type="Resource" id="Resource_dp3eg"]
+script = ExtResource("7_trceg")
+command = "bio readouts"
+metadata/_custom_type_script = "uid://dpb2fp3wv12bp"
+
+[sub_resource type="Resource" id="Resource_jbj1t"]
+script = ExtResource("6_eb6dy")
+greeting = "WEYLAND-YUTANI SYSTEMS
+
+Good day, Executive {name}"
+entries = Array[ExtResource("7_trceg")]([SubResource("Resource_dp3eg")])
+password = "7716538"
+metadata/_custom_type_script = "uid://v17r7ywcmxbo"
+
+[sub_resource type="Resource" id="Resource_eb6dy"]
+script = ExtResource("7_trceg")
+command = "crew log"
+text = "Anita Webber (Captain)
+Sarah Jones (Biologist)
+{name} (Weyland-Yutani Executive)"
+metadata/_custom_type_script = "uid://dpb2fp3wv12bp"
+
+[sub_resource type="Resource" id="Resource_trceg"]
+script = ExtResource("7_trceg")
+command = "open airlock"
+text = "Umbilical unlocked"
+unlocks_exit = "docking umbilical"
+unlocks_room = "airlock"
+metadata/_custom_type_script = "uid://dpb2fp3wv12bp"
+
+[sub_resource type="Resource" id="Resource_v0a5v"]
+script = ExtResource("6_eb6dy")
+terminal_name = "MuThUr"
+greeting = "WEYLAND-YUTANI SYSTEMS
+
+Good day, Executive {name}"
+required_item = "credentials"
+entries = Array[ExtResource("7_trceg")]([SubResource("Resource_eb6dy"), SubResource("Resource_trceg")])
+metadata/_custom_type_script = "uid://v17r7ywcmxbo"
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o6xl0"]
 
@@ -89,6 +140,7 @@ visible = false
 
 [node name="CommandProcessor" type="Node" parent="." unique_id=845233236]
 script = ExtResource("2_sugp2")
+item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x")])
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 script = ExtResource("4_eb6dy")
@@ -99,8 +151,9 @@ offset_left = 372.0
 offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
-room_name = "CryoChamber"
-room_description = ""
+room_name = "Cryo Chamber"
+room_description = "Description"
+terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_jbj1t")])
 
 [node name="MessHall" parent="RoomManager" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -134,6 +187,34 @@ grow_vertical = 1
 room_name = "Airlock"
 room_description = "Description"
 
+[node name="Umbilical" parent="RoomManager" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1255.0
+offset_top = -798.0
+offset_right = 1505.0
+offset_bottom = -598.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Docking Umbilical"
+room_description = "Description"
+
+[node name="AirlockKinship" parent="RoomManager" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1255.0
+offset_top = -798.0
+offset_right = 1505.0
+offset_bottom = -598.0
+grow_horizontal = 1
+grow_vertical = 1
+room_name = "Airlock of USCSS Kinship"
+room_description = "Description"
+
 [node name="Bridge" parent="RoomManager" unique_id=76881209 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
@@ -147,6 +228,7 @@ grow_horizontal = 1
 grow_vertical = 1
 room_name = "Bridge"
 room_description = "Description"
+items = Array[String](["credentials"])
 
 [node name="ComputerRoom" parent="RoomManager" unique_id=267301003 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -161,6 +243,7 @@ grow_horizontal = 1
 grow_vertical = 1
 room_name = "Computer Room"
 room_description = "Description"
+terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
 [node name="MedBay" parent="RoomManager" unique_id=477782257 instance=ExtResource("3_jyhfs")]
 visible = true

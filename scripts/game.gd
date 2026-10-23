@@ -11,9 +11,11 @@ const Response = preload("res://scenes/response.tscn")
 @onready var glow = $Settings/SettingsControl/Glow
 @onready var history_rows = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll/HistoryRows
 @onready var scroll = $TextEditorGUI/GUI/MarginContainer/Rows/GameInfo/Scroll
-@onready var command_processor = $CommandProcessor
+@onready var command_processor: Node = $CommandProcessor
 @onready var room_manager = $RoomManager
 @onready var pause_menu = $PauseLayer
+
+
 
 
 var paused = false
@@ -25,7 +27,7 @@ func _ready() -> void:
 
 	
 	## glow effect
-	glow.pivot_offset = glow.size / 2
+	glow.pivot_offset = glow.size / 2.0
 	glow.modulate.a = 0.3
 	var tween := create_tween().set_loops()
 	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
@@ -58,15 +60,19 @@ func _on_input_text_submitted(_new_text: String) -> void:
 		return
 	
 	var input_response = InputResponse.instantiate()
+	var masked: bool =  command_processor.awaiting_password
 	var response = command_processor.process_command(_new_text)
-	input_response.set_text(_new_text, response)
+	input_response.set_text("*".repeat(_new_text.length()) if masked else _new_text, response)
+
+	if command_processor.active_terminal != null:
+		var label = input_response.get_node("Response")
+		label.add_theme_color_override("font_color", command_processor.active_terminal.text_color)
 	add_response_to_game(input_response)
 
 func handle_response_generated(response_text: String):
 	var response = Response.instantiate()
 	response.text = response_text
 	add_response_to_game(response)
-
 
 
 func add_response_to_game(response: Control):
