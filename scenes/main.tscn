@@ -18,34 +18,38 @@
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
 id = "credentials"
-item_description = "{name}
-Weyland-Yutani Executive
-
+item_description = "Name: {name}
+Occupation: Weyland-Yutani Executive
 Employee Serial Number:
 7786341"
+metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
+
+[sub_resource type="Resource" id="Resource_a8y0u"]
+script = ExtResource("4_a8y0u")
+id = "wrench"
+item_description = "It's just a wrench."
 metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
 
 [sub_resource type="Resource" id="Resource_dp3eg"]
 script = ExtResource("7_trceg")
 command = "bio readouts"
+text = "//Bio Readouts//
+1.  Capt. Webber, A. ----- NORMAL ----- POD OPEN
+2.  Jones, S. ----- NORMAL -----POD OPEN
+######
+3.  ///ERROR/// ----- ABNORMAL ----- POD MALFUNCTION
+"
 metadata/_custom_type_script = "uid://dpb2fp3wv12bp"
 
 [sub_resource type="Resource" id="Resource_jbj1t"]
 script = ExtResource("6_eb6dy")
+terminal_name = "Cryo Monitor"
 greeting = "WEYLAND-YUTANI SYSTEMS
 
 Good day, Executive {name}"
 entries = Array[ExtResource("7_trceg")]([SubResource("Resource_dp3eg")])
-password = "776384"
+password = "7786341"
 metadata/_custom_type_script = "uid://v17r7ywcmxbo"
-
-[sub_resource type="Resource" id="Resource_3npii"]
-script = ExtResource("4_a8y0u")
-id = "credentials"
-item_description = "Name: {name}
-Occupation: Weyland-Yutani Executive
-Serial Number: 776384"
-metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
 
 [sub_resource type="Resource" id="Resource_eb6dy"]
 script = ExtResource("7_trceg")
@@ -150,7 +154,7 @@ visible = false
 
 [node name="CommandProcessor" type="Node" parent="." unique_id=845233236]
 script = ExtResource("2_sugp2")
-item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x")])
+item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x"), SubResource("Resource_a8y0u")])
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 script = ExtResource("4_eb6dy")
@@ -162,11 +166,19 @@ offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
 room_name = "Cryo Chamber"
-room_description = "You see a room."
+room_description = "The whine of the cryo pod lid rouses you from your artificial sleep as the lights automatically flicker on. Looking around the room you can see two other cryo pods, empty with their lids open.
+
+A faint smell of burnt electronics and the lingering scent of chemicals fills your nostrils, not quite overpowering but nearing the threshold.
+
+A computer terminal flashes near a door labeled \"Jct. A1\"."
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_jbj1t")])
-short_description = "It is the same room."
-hidden_items = Array[String](["pants"])
-search_text = "There is a pair of pants folded near the floor next to the cryosleep chamber."
+short_description = "In the center of the room, the three cryo pods remain open. The faint smell of burnt electronics returns to your senses as the lights flicker intermittently.
+
+A computer terminal flashes in the corner of the room."
+hidden_items = Array[String](["wrench"])
+search_text = "Upon inspecting the room you locate the cause of the burning electronics. The panel that houses the components of your cryopod bends outward as if beaten open. Cabling that was once securely in place is now seemingly ripped out of the control panel. A pipe wrench lays under the cryo pod.
+
+You're lucky the cryo pod was functional enough to keep you alive, let alone able to wake you again."
 
 [node name="MessHall" parent="RoomManager" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -175,7 +187,10 @@ offset_top = -817.0
 offset_right = -529.0
 offset_bottom = -1265.0
 room_name = "Mess Hall"
-room_description = "Description"
+room_description = "Normally a welcome sight, the current state of the Mess Hall would leave Captain Webber with a veiny bulge in her neck on the brink of bursting.
+
+Shards of ceramic and glass cover the table. Several cabinets are left open and a slight creak emanates from the fridge as it slightly swings back and forth."
+short_description = "The fridge lightly creaks and the broken plates and mugs litter the table."
 
 [node name="LockerRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -225,7 +240,7 @@ offset_right = 1838.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
-room_name = "Airlock of USCSS Kinship"
+room_name = "USCSS Kinship"
 room_description = "Description"
 
 [node name="Bridge" parent="RoomManager" unique_id=76881209 instance=ExtResource("3_jyhfs")]
@@ -241,7 +256,6 @@ grow_horizontal = 1
 grow_vertical = 1
 room_name = "Bridge"
 room_description = "Description"
-item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_3npii")])
 items = Array[String](["credentials"])
 
 [node name="ComputerRoom" parent="RoomManager" unique_id=267301003 instance=ExtResource("3_jyhfs")]
@@ -331,6 +345,16 @@ offset_top = -292.0
 offset_right = -856.0
 offset_bottom = -740.0
 room_name = "Junction A5"
+room_description = "Description"
+
+[node name="Node" type="Node" parent="RoomManager" unique_id=1976474899]
+
+[node name="GameRoom" parent="RoomManager/Node" unique_id=1117398016 instance=ExtResource("3_jyhfs")]
+visible = true
+offset_left = 2036.0
+offset_top = -794.0
+offset_right = 1134.0
+offset_bottom = -1242.0
 room_description = "Description"
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]

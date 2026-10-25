@@ -14,7 +14,6 @@ class_name GameRoom
 		$MarginContainer/Rows/RoomDescription.text=desc
 @export var exits: Dictionary = {}
 @export var locked_exits: Dictionary = {}
-@export var item_data: Array [ItemData] = []
 @export var items: Array[String] = []
 @export var ambient_sound: AudioStream
 @export var background: Texture2D
@@ -44,11 +43,11 @@ func describe(full: bool = true) -> String:
 		desc = short_description
 	var text := "%s\n%s" % [room_name, desc]
 	if items.size() > 0:
-		text += "\nYou see: " + ", ".join(items)
+		text += "\n\nYou see: " + ", ".join(items)
 	var labels: Array[String] = []
 	for e in visible_exits():
 		labels.append(e + " (locked)" if locked_exits.has(e) else e)
-	text += "\nExits: " + ", ".join(labels)
+	text += "\n\nExits: " + ", ".join(labels).to_upper()
 	return text
 
 func visible_exits() -> Array:
@@ -72,7 +71,7 @@ func search() -> String:
 		return "You search the area thoroughly but find nothing."
 	var text := search_text if search_text != "" else "You search the room carefully."
 	if not found.is_empty():
-		text += "\nYou find: " + ", ".join(found)
+		text += "\nItems: " + ", ".join(found)
 	if not revealed.is_empty():
 		text += "\nYou discover a way: " + ", ".join(revealed)
 	return text

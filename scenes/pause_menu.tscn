@@ -38,9 +38,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -65.0
+offset_left = -165.0
 offset_top = -85.5
-offset_right = 65.0
+offset_right = -35.0
 offset_bottom = 85.5
 grow_horizontal = 2
 grow_vertical = 2
@@ -89,6 +89,28 @@ theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_font_sizes/font_size = 18
 action_mode = 0
 text = "Quit to Desktop"
+
+[node name="RichTextLabel" type="Label" parent="PauseRoot" unique_id=1988532040]
+layout_mode = 0
+offset_left = 541.0
+offset_top = 225.0
+offset_right = 800.0
+offset_bottom = 464.0
+theme_override_colors/font_color = Color(0.7708395, 0.77083945, 0.77083945, 1)
+theme_override_fonts/font = ExtResource("2_myx47")
+theme_override_font_sizes/font_size = 12
+text = "\"back\"
+\"go\", \"move\" (or type partial location name)
+\"help\"
+\"unlock\"
+\"take\" item
+\"drop\" item
+\"inventory\", \"i\"
+\"use\", \"access\" terminal
+\"examine\", \"investigate\", \"inspect\", \"x\" item
+\"look\", \"l\" to see 
+\"search\" to find hidden items"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="PauseRoot/VBoxContainer/Resume" to="PauseRoot" method="_on_resume_pressed"]
 [connection signal="pressed" from="PauseRoot/VBoxContainer/Save" to="PauseRoot" method="_on_save_pressed"]
