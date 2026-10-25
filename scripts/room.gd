@@ -18,6 +18,11 @@ class_name GameRoom
 @export var ambient_sound: AudioStream
 @export var background: Texture2D
 @export var terminals: Array[GameTerminal] = []
+@export_multiline var short_description := ""
+@export var hidden_items: Array[String] = []
+@export var hidden_exits: Array[String] = []
+@export_multiline var search_text := ""
+
 
 var visited := false
 
@@ -27,28 +32,55 @@ signal entered(room: GameRoom)
 
 
 func enter() -> String:
+	var first: = not visited
 	visited = true
 	entered.emit(self)
-	return describe()
+	return describe(first)
 
-func describe() -> String:
-	var text := "%s\n\n%s" % [room_name, room_description]
-	for t in terminals:
-		text += "\nA terminal is here"
+func describe(full: bool = true) -> String:
+	var desc := room_description
+	if not full and short_description != "":
+		desc = short_description
+	var text := "%s\n%s" % [room_name, desc]
 	if items.size() > 0:
-		text += "\nYou see: " + ", ".join(items)
-	
+		text += "\n\nYou see: " + ", ".join(items)
 	var labels: Array[String] = []
-	for e in exits.keys():
+	for e in visible_exits():
 		labels.append(e + " (locked)" if locked_exits.has(e) else e)
-	text += "\nExits: " + ", ".join(labels)
+	text += "\n\nExits: " + ", ".join(labels).to_upper()
 	return text
 
+func visible_exits() -> Array:
+	var result: Array = []
+	for k in exits.keys():
+		if not hidden_exits.has(k):
+			result.append(k)
+	return result
+
+func search() -> String:
+	var found: Array[String] = []
+	for id in hidden_items:
+		items.append(id)
+		found.append(id)
+	hidden_items.clear()
+	var revealed: Array[String] = []
+	for ex in hidden_exits:
+		revealed.append(ex)
+	hidden_exits.clear()
+	if found.is_empty() and revealed.is_empty():
+		return "You search the area thoroughly but find nothing."
+	var text := search_text if search_text != "" else "You search the room carefully."
+	if not found.is_empty():
+		text += "\nItems: " + ", ".join(found)
+	if not revealed.is_empty():
+		text += "\nYou discover a way: " + ", ".join(revealed)
+	return text
+
+
 func find_exit_name(dest: String) -> String:
-	if exits.has(dest):
+	if exits.has(dest) and not hidden_exits.has(dest):
 		return dest
-	var hit := Fuzzy.best_match(dest, exits.keys())
-	return hit
+	return Fuzzy.best_match(dest, visible_exits())
 
 func get_exit(dest: String) -> GameRoom:
 	var key := find_exit_name(dest)

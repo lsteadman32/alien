@@ -74,6 +74,12 @@ func process_command(_input: String) -> String:
 			return use_terminal(second_word)
 		"examine", "investigate", "inspect", "x":
 			return examine(second_word)
+		"look", "l":
+			if second_word != "":
+				return examine(second_word)
+			return current_room.describe(true)
+		"search":
+			return current_room.search()
 		_:
 			if current_room.get_exit(full_text) != null:
 				return go(full_text)
@@ -126,8 +132,9 @@ func find_entry(term: GameTerminal, text: String) -> TerminalEntry:
 	for e in term.entries:
 		if e == null:
 			continue
-		names.append(e.command.strip_edges().to_lower)
+		names.append(e.command.strip_edges().to_lower())
 	var hit := Fuzzy.best_match(text, names)
+	print("find_entry text=[", text, "] names=", names, "hit=[", hit, "]")
 	if hit == "":
 		return null
 	for e in term.entries:
