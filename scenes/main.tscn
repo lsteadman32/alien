@@ -18,9 +18,11 @@
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
 id = "credentials"
-item_desc = "You see a familiar face. Your face. Under your name and title is a serial number and a barcode: 7716538
+item_description = "{name}
+Weyland-Yutani Executive
 
-Perhaps this will be useful."
+Employee Serial Number:
+7786341"
 metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
 
 [sub_resource type="Resource" id="Resource_dp3eg"]
@@ -34,7 +36,7 @@ greeting = "WEYLAND-YUTANI SYSTEMS
 
 Good day, Executive {name}"
 entries = Array[ExtResource("7_trceg")]([SubResource("Resource_dp3eg")])
-password = "7716538"
+password = "7786341"
 metadata/_custom_type_script = "uid://v17r7ywcmxbo"
 
 [sub_resource type="Resource" id="Resource_eb6dy"]
@@ -152,7 +154,7 @@ offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
 room_name = "Cryo Chamber"
-room_description = "Description"
+room_description = "\\nYou see a room."
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_jbj1t")])
 
 [node name="MessHall" parent="RoomManager" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
@@ -167,9 +169,9 @@ room_description = "Description"
 [node name="LockerRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = -296.0
-offset_top = -610.0
+offset_top = -667.0
 offset_right = -1198.0
-offset_bottom = -1058.0
+offset_bottom = -1115.0
 room_name = "Locker Room"
 room_description = "Description"
 
@@ -206,9 +208,9 @@ visible = true
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 1255.0
+offset_left = 1588.0
 offset_top = -798.0
-offset_right = 1505.0
+offset_right = 1838.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1

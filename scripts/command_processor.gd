@@ -4,6 +4,9 @@ extends Node
 
 
 signal response_generated(response_text)
+
+const COMMANDS := ["go", "help", "look", "take", "get", "drop", "inventory", "examine", "investigate", "inspect", "unlock", "use", "access", "back"]
+
 var current_room: GameRoom
 var previous_room: GameRoom
 var inventory: Array[String] = []
@@ -13,6 +16,18 @@ var awaiting_name := false
 var item_lookup := {}
 var pending_terminal: GameTerminal
 var awaiting_password := false
+
+func resolve_command(word: String, full_text: String) -> String:
+	if word in ["i", "x"] or COMMANDS.has(word):
+		return word
+	var best := ""
+	var best_score := 0.0
+	for c in COMMANDS:
+		var s: float = 0.9 if c.begins_with(word) else word.similarity(c)
+		if s > best_score:
+			best_score = s
+			best = c
+	return best if best_score >= 0.6 else word
 
 func initialize(starting_room):
 	current_room = starting_room
@@ -26,16 +41,18 @@ func _ready() -> void:
 func process_command(_input: String) -> String:
 	if awaiting_name:
 		return set_player_name(_input)
-	if awaiting_password:
-		return check_password(_input)
 	var words = _input.split(" ", false)
 	if active_terminal != null:
 		return terminal_input(" ".join(words).to_lower())
 
+	if awaiting_password:
+		return check_password(_input)
+
 	if words.size() == 0:
 		return "Error: no words were parsed."
 	
-	var first_word = words[0].to_lower()
+	var full_text := " ".join(words).to_lower()
+	var first_word = resolve_command(words[0].to_lower(), full_text)
 	var second_word = " ".join(words.slice(1)).to_lower()
 	
 	match first_word:
@@ -55,10 +72,9 @@ func process_command(_input: String) -> String:
 			return show_inventory()
 		"use", "access":
 			return use_terminal(second_word)
-		"examine", "investigate":
-			return find_item_id(second_word)
+		"examine", "investigate", "inspect", "x":
+			return examine(second_word)
 		_:
-			var full_text := " ".join(words).to_lower()
 			if current_room.get_exit(full_text) != null:
 				return go(full_text)
 			return "Unrecognized command - please try again."
@@ -99,33 +115,44 @@ func move_to(room: GameRoom) -> String:
 func take(item: String) -> String:
 	if item == "":
 		return "Take what?"
-	if current_room.take_item(item):
-		inventory.append(item)
-		return "You take the %s." % item
+	var id := Fuzzy.best_match(item, current_room.items)
+	if id != "" and current_room.take_item(id):
+		inventory.append(id)
+		return "You take the %s." % id
 	return "You don't see that here."
 
 func find_entry(term: GameTerminal, text: String) -> TerminalEntry:
 	var names: Array = []
 	for e in term.entries:
-		names.append(e.command.strip)
+		if e == null:
+			continue
+		names.append(e.command.strip_edges().to_lower)
+	var hit := Fuzzy.best_match(text, names)
+	if hit == "":
+		return null
+	for e in term.entries:
+		if e != null and e.command.strip_edges().to_lower() == hit:
+			return e
+	return null
 
 func find_item_id(query: String) -> String:
 	return Fuzzy.best_match(query, inventory)
 
 func examine(query: String) -> String:
+	var id := find_item_id(query)
 	if query == "":
 		return "Examine what?"
-	var id := find_item_id(query)
 	if id == "":
 		return "You aren't carrying that."
 	if not item_lookup.has(id):
 		return "You see nothing special about the %s." % id
 	var data: ItemData = item_lookup[id]
-	return data.description.replace("{name}", player_name)
+	print("desc=[", data.item_description, "]")
+
+	return data.item_description.replace("{name}", player_name)
 
 func use_terminal(target: String) -> String: 
 	var term := current_room.find_terminal(target)
-	var greeting := term.greeting.replace("{name}", player_name)
 	if term == null:
 		return "There's nothing like that to use."
 	if term.required_item != "" and not inventory.has(term.required_item):
@@ -139,7 +166,7 @@ func use_terminal(target: String) -> String:
 func open_terminal(term: GameTerminal) -> String:
 	active_terminal = term
 	var greeting := term.greeting.replace("{name}", player_name)
-	return "%s\nAvailable: %s\nType 'logout' to leave session.\nREMEMBER\nCompany information is private information." % [greeting, list_entries(term)]
+	return "%s\nAvailable: %s\n\nType 'logout' to leave session.\nREMEMBER\nCompany information is private information." % [greeting, list_entries(term)]
 
 
 func check_password(text: String) -> String:
@@ -157,29 +184,28 @@ func terminal_input(text: String) -> String:
 	if text == "logout" or text == "exit":
 		active_terminal = null
 		return "You step away from the terminal."
-	for e in active_terminal.entries:
-		if e.command.begins_with(text):
-			var result: String = e.text.replace("{name}", player_name)
-			if e.unlocks_exit != "":
-				var target: GameRoom = current_room
-				if e.unlocks_room != "":
-					target = find_room(e.unlocks_room)
-				print("terminal target room: ", target.room_name if target else "NULL")
-				if target != null and target.unlock_exit(e.unlocks_exit):
-					result += "\n[ACCESS GRANTED: %s unlocked]" % e.unlocks_exit
-				else:
-					result += "\n[%s is already unlocked]" % e.unlocks_exit
-				return e.text.replace("{name}", player_name)
-			return result
-	return "Unknown entry. Available: " + list_entries(active_terminal)
+	var e := find_entry(active_terminal, text)
+	if e == null:
+		return "Unkown entry. Available: " + list_entries(active_terminal)
+	var result: String = e.text.replace("{name}", player_name)
+	if e.unlocks_exit != "":
+		var target: GameRoom = current_room
+		if e.unlocks_room != "":
+			target = find_room(e.unlocks_room)
+		if target != null and target.unlock_exit(e.unlocks_exit):
+			result += "\n[ACCESS GRANTED: %s unlocked]" % e.unlocks_exit
+		else:
+			result += "\n[%s is already unlocked]" % e.unlocks_exit
+	return result
 
 
 func drop(item: String) -> String:
-	if not inventory.has(item):
+	var id := Fuzzy.best_match(item, inventory)
+	if id == "":
 		return "You aren't carrying that."
-	inventory.erase(item)
-	current_room.drop_item(item)
-	return "You drop the %s." % item
+	inventory.erase(id)
+	current_room.drop_item(id)
+	return "You drop the %s" % id
 
 func show_inventory() -> String:
 	if inventory.is_empty():

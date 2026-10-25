@@ -47,18 +47,14 @@ func describe() -> String:
 func find_exit_name(dest: String) -> String:
 	if exits.has(dest):
 		return dest
-	for key in exits:
-		if key.begins_with(dest):
-			return key
-	return ""
+	var hit := Fuzzy.best_match(dest, exits.keys())
+	return hit
 
 func get_exit(dest: String) -> GameRoom:
 	var key := find_exit_name(dest)
 	if key == "":
 		return null
-	if exits.has(dest):
-		return get_node(exits[key]) as GameRoom
-	return null
+	return get_node(exits[key]) as GameRoom
 
 func take_item(id: String) -> bool:
 	if items.has(id):
@@ -80,7 +76,7 @@ func find_terminal(query: String) -> GameTerminal:
 		if t != null and hit != "" and t.terminal_name.to_lower() == hit:
 			return t
 	return null
-	pass
+
 
 func unlock_exit(query: String) -> bool:
 	var key := find_exit_name(query.to_lower())
