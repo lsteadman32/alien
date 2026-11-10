@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://dyfu3x772b6r6" path="res://assets/UI/weyland-yutani-corp-seeklogo.png" id="7_85g3d"]
 [ext_resource type="Script" uid="uid://dpb2fp3wv12bp" path="res://scripts/terminal_entry.gd" id="7_trceg"]
 [ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="9_choun"]
+[ext_resource type="AudioStream" uid="uid://c4trpwir3sos4" path="res://assets/audio/Input 5.wav" id="13_jkv2x"]
+[ext_resource type="Script" uid="uid://bex0ebdwxd8u6" path="res://scripts/xenomorph.gd" id="16_jbj1t"]
 
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
@@ -192,13 +194,13 @@ room_description = "Normally a welcome sight, the current state of the Mess Hall
 Shards of ceramic and glass cover the table. Several cabinets are left open and a slight creak emanates from the fridge as it slightly swings back and forth."
 short_description = "The fridge lightly creaks and the broken plates and mugs litter the table."
 
-[node name="LockerRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
+[node name="ChangingRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = -296.0
 offset_top = -667.0
 offset_right = -1198.0
 offset_bottom = -1115.0
-room_name = "Locker Room"
+room_name = "Changing Room"
 room_description = "Description"
 
 [node name="Airlock" parent="RoomManager" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
@@ -229,7 +231,7 @@ grow_vertical = 1
 room_name = "Docking Umbilical"
 room_description = "Description"
 
-[node name="AirlockKinship" parent="RoomManager" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
+[node name="Kinship" parent="RoomManager" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -257,6 +259,7 @@ grow_vertical = 1
 room_name = "Bridge"
 room_description = "Description"
 items = Array[String](["credentials"])
+hidden_exits = Array[String](["vent"])
 
 [node name="ComputerRoom" parent="RoomManager" unique_id=267301003 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -278,13 +281,29 @@ visible = true
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 878.0
+offset_left = 929.0
 offset_top = -1423.0
-offset_right = 1128.0
+offset_right = 1179.0
 offset_bottom = -1223.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Med Bay"
+room_description = "Description"
+hidden_exits = Array[String](["vent"])
+
+[node name="MedVent" parent="RoomManager" unique_id=53633462 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 645.0
+offset_top = -1365.0
+offset_right = 895.0
+offset_bottom = -1165.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(1.032306, 0.36248073)
+room_name = "Vent"
 room_description = "Description"
 
 [node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
@@ -299,7 +318,8 @@ offset_bottom = -365.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Junction A1"
-room_description = "Description"
+room_description = "The lights flicker and hum as you enter the junction. Metal pipes and wires run across the ceiling, leading to either the Cryo Chamber or the Mess Hall. "
+short_description = "This junction leads to the Cryo Chamber or the Mess Hall."
 
 [node name="JunctionA3" parent="RoomManager" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -345,7 +365,11 @@ offset_top = -292.0
 offset_right = -856.0
 offset_bottom = -740.0
 room_name = "Junction A5"
-room_description = "Description"
+room_description = "The lights flicker in the junction flicker for a moment, attempting to illuminate the corridor.
+
+In a final attempt the lights begin to glow brightly before popping, sending sparks showering down.
+
+The only light you can see emanates dimly from the Changing Room and the Cryo Chamber"
 
 [node name="Node" type="Node" parent="RoomManager" unique_id=1976474899]
 
@@ -461,6 +485,10 @@ icon_expand_mode = 2
 right_icon_scale = 0.85
 script = ExtResource("1_o5qli")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" unique_id=123758535]
+stream = ExtResource("13_jkv2x")
+max_polyphony = 10
+
 [node name="WeyYuLogo" type="TextureRect" parent="TextEditorGUI" unique_id=635085551]
 modulate = Color(1, 1, 1, 0.28627452)
 anchors_preset = 8
@@ -477,6 +505,9 @@ stretch_mode = 3
 
 [node name="Settings" parent="." unique_id=137133012 instance=ExtResource("6_tefeu")]
 visible = false
+
+[node name="Xenomorph" type="Node" parent="." unique_id=1740128239]
+script = ExtResource("16_jbj1t")
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]

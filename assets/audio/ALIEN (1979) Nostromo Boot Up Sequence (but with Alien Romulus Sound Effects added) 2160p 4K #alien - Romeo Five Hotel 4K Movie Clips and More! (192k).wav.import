@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://doynjor8f72x6"
+path="res://.godot/imported/ALIEN (1979) Nostromo Boot Up Sequence (but with Alien Romulus Sound Effects added) 2160p 4K #alien - Romeo Five Hotel 4K Movie Clips and More! (192k).wav-aa8dc795869d9928b21b83c6ddfa05dc.sample"
+
+[deps]
+
+source_file="res://assets/audio/ALIEN (1979) Nostromo Boot Up Sequence (but with Alien Romulus Sound Effects added) 2160p 4K #alien - Romeo Five Hotel 4K Movie Clips and More! (192k).wav"
+dest_files=["res://.godot/imported/ALIEN (1979) Nostromo Boot Up Sequence (but with Alien Romulus Sound Effects added) 2160p 4K #alien - Romeo Five Hotel 4K Movie Clips and More! (192k).wav-aa8dc795869d9928b21b83c6ddfa05dc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

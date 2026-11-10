@@ -1,6 +1,7 @@
 extends CanvasLayer
 @onready var glow = $SettingsControl/Glow
 
+var bus_name : String
 
 
 func _ready() -> void:
@@ -15,10 +16,15 @@ func _ready() -> void:
 	tween.tween_property(glow, "scale", Vector2(2.05, 2.05), 10.0)
 	tween.chain().tween_property(glow, "modulate:a", 0.3, 2.0)
 	tween.tween_property(glow, "scale", Vector2.ONE, 2.0)
+	
+	var bus_index: int = AudioServer.get_bus_index(bus_name)
+	var current_db: float = AudioServer.get_bus_volume_db(bus_index)
+	$SettingsControl/VBoxContainer/Vol_Label/Volume.value = db_to_linear(bus_index)
 
 
 func _on_volume_value_changed(value: float) -> void:
-	AudioServer.set_bus_volume_db(0,value)
+	var bus_index: int = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
 
 
 func _on_resolutions_item_selected(index: int) -> void:
@@ -44,6 +50,7 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		
+
 
 
 func _on_close_pressed() -> void:

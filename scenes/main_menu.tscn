@@ -221,7 +221,6 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_choun")
 theme_override_styles/hover = SubResource("StyleBoxFlat_bqqt6")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_ya4ey")
-disabled = true
 text = "Settings"
 
 [node name="Exit" type="Button" parent="MainMenuRoot/VBoxContainer" unique_id=1671276769]

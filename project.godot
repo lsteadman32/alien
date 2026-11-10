@@ -15,6 +15,14 @@ run/main_scene="uid://dqpylturg55nj"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://bvwxrc2rmixmi"
+
+[autoload]
+
+MetSys="*uid://c01ibpvrp2wsd"
+
 [display]
 
 window/stretch/mode="canvas_items"

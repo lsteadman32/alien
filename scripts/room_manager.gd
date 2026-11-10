@@ -2,11 +2,12 @@ extends Node
 
 
 func _ready() -> void:
+	# Ship 1 Rooms
 	connect_rooms($CryoChamber, $JunctionA1)
 	connect_rooms($CryoChamber, $JunctionA5)
 	connect_rooms($JunctionA1, $MessHall)
-	connect_rooms($JunctionA5, $LockerRoom)
-	connect_rooms($LockerRoom, $JunctionA3)
+	connect_rooms($JunctionA5, $ChangingRoom)
+	connect_rooms($ChangingRoom, $JunctionA3)
 	connect_rooms($JunctionA3, $ComputerRoom)
 	connect_rooms($ComputerRoom, $Bridge)
 	connect_rooms($Bridge, $JunctionA2)
@@ -18,8 +19,16 @@ func _ready() -> void:
 	connect_rooms($MessHall, $Airlock)
 	connect_rooms($Airlock, $JunctionA4)
 	connect_rooms($Airlock, $Umbilical)
-	connect_rooms($Umbilical, $AirlockKinship)
+	connect_rooms($Umbilical, $Kinship)
 	
+	#Ship 1 hidden rooms
+	connect_rooms($MedVent, $MedBay)
+	connect_rooms($MedVent, $Bridge)
+	
+	
+	# Ship 2 Rooms
+	
+	# Door locks
 	lock_exit($Airlock, $Umbilical, "credentials")
 	
 

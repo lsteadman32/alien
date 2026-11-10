@@ -24,6 +24,7 @@ func _ready() -> void:
 	handle_response_generated("")
 	$PauseLayer/PauseRoot.resume_requested.connect(pauseMenu)
 	
+	scroll.get_v_scroll_bar().changed.connect(_scroll_to_bottom)
 
 	
 	## glow effect
@@ -56,6 +57,7 @@ func pauseMenu():
 	paused = !paused
 
 func _on_input_text_submitted(_new_text: String) -> void:
+	get_tree().call_group("typewriter", "skip")
 	if _new_text.is_empty():
 		return
 	
@@ -74,11 +76,14 @@ func handle_response_generated(response_text: String):
 	response.text = response_text
 	add_response_to_game(response)
 
+func _scroll_to_bottom() -> void:
+	scroll.scroll_vertical = int(scroll.get_v_scroll_bar().max_value)
 
 func add_response_to_game(response: Control):
 	history_rows.add_child(response)
 	await get_tree().process_frame
-	scroll.ensure_control_visible(response)
+	await get_tree().process_frame
+	_scroll_to_bottom()
 	delete_history_beyond_limit()
 
 func delete_history_beyond_limit():

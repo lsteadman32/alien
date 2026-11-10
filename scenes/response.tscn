@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://dcq51tfe1n220"]
 
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="1_hdnxl"]
+[ext_resource type="Script" uid="uid://b0ajpyqrlilny" path="res://scripts/typewriter.gd" id="2_xq4qq"]
+[ext_resource type="AudioStream" uid="uid://bsrehvpmaaoma" path="res://assets/audio/Output1.wav" id="3_evjww"]
+[ext_resource type="AudioStream" uid="uid://4onarqsqkpch" path="res://assets/audio/Output2.wav" id="4_cnafv"]
+[ext_resource type="AudioStream" uid="uid://dvqsl61q7bt18" path="res://assets/audio/Output3.wav" id="5_nc3gx"]
 
 [node name="Response" type="Label" unique_id=166766703]
 custom_minimum_size = Vector2(-1000, 100)
@@ -13,3 +17,9 @@ theme_override_fonts/font = ExtResource("1_hdnxl")
 theme_override_font_sizes/font_size = 24
 text = "This is what the game printed"
 autowrap_mode = 2
+script = ExtResource("2_xq4qq")
+sound_1 = ExtResource("3_evjww")
+sound_2 = ExtResource("4_cnafv")
+sound_3 = ExtResource("5_nc3gx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1093089443]

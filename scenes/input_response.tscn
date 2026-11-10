@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://duhd44f2sc6u3" path="res://scripts/input_response.gd" id="1_5fbpa"]
 [ext_resource type="PackedScene" uid="uid://dcq51tfe1n220" path="res://scenes/response.tscn" id="2_brd57"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_qu8yc"]
+[ext_resource type="AudioStream" uid="uid://b83pmokx3xsfv" path="res://assets/audio/Output4.wav" id="4_xt2nu"]
 
 [node name="InputResponse" type="VBoxContainer" unique_id=1364437752]
 offset_right = 258.0
@@ -23,3 +24,4 @@ theme_override_constants/separation = 11
 
 [node name="Response" parent="." unique_id=166766703 instance=ExtResource("2_brd57")]
 layout_mode = 2
+sound_4 = ExtResource("4_xt2nu")
