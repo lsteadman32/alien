@@ -4,6 +4,7 @@ extends Node
 
 
 signal response_generated(response_text)
+signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 
 const COMMANDS := ["go", "help", "look", "take", "get", "drop", "inventory", "examine", "investigate", "inspect", "unlock", "use", "access", "back"]
 
@@ -113,9 +114,14 @@ func unlock(target: String) -> String:
 	return "You unlock the way to %s." % exit_name
 
 func move_to(room: GameRoom) -> String:
+	var old_room := current_room
+	
 	previous_room = current_room
 	current_room = room
+	
 	print("moved from", previous_room.room_name, " to ", room.room_name)
+	
+	player_moved.emit(old_room, current_room)
 	return room.enter()
 
 func take(item: String) -> String:

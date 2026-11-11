@@ -14,10 +14,11 @@ const Response = preload("res://scenes/response.tscn")
 @onready var command_processor: Node = $CommandProcessor
 @onready var room_manager = $RoomManager
 @onready var pause_menu = $PauseLayer
+@onready var xenomorph: Xenomorph = $Xenomorph
 
 
-
-
+var pending_xenomorph_events: Array[String] = []
+var waiting_for_xenomorph_event := false
 var paused = false
 
 func _ready() -> void:
@@ -40,7 +41,30 @@ func _ready() -> void:
 
 
 	command_processor.response_generated.connect(handle_response_generated)
-	command_processor.initialize(room_manager.get_child(0))
+	
+	command_processor.player_moved.connect(xenomorph.on_player_moved)
+	xenomorph.xenomorph_event.connect(_on_xenomorph_event)
+	
+	var starting_room: GameRoom = room_manager.get_node("CryoChamber")
+	
+	command_processor.initialize(starting_room)
+	xenomorph.initialize(starting_room)
+	
+	#xenomorph.debug_pathfinding(
+	#	room_manager.get_node("CryoChamber") as GameRoom
+	#)
+func _on_xenomorph_event(message: String) -> void:
+	pending_xenomorph_events.append(message)
+
+func display_next_xenomorph_event() -> void:
+	if pending_xenomorph_events.is_empty():
+		return
+	
+	waiting_for_xenomorph_event = true
+	
+	var message: String = pending_xenomorph_events.pop_front()
+	
+	handle_response_generated(message)
 
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
@@ -58,18 +82,32 @@ func pauseMenu():
 
 func _on_input_text_submitted(_new_text: String) -> void:
 	get_tree().call_group("typewriter", "skip")
+	
 	if _new_text.is_empty():
 		return
+	
+	var player_turn_started: bool = not command_processor.awaiting_name
 	
 	var input_response = InputResponse.instantiate()
 	var masked: bool =  command_processor.awaiting_password
 	var response = command_processor.process_command(_new_text)
+	var response_label = input_response.get_node("Response")
+	
+	if response_label.has_signal("typing_finished"):
+		response_label.typing_finished.connect(
+			display_next_xenomorph_event
+		)
+	
 	input_response.set_text("*".repeat(_new_text.length()) if masked else _new_text, response)
 
 	if command_processor.active_terminal != null:
 		var label = input_response.get_node("Response")
 		label.add_theme_color_override("font_color", command_processor.active_terminal.text_color)
 	add_response_to_game(input_response)
+	
+	if player_turn_started:
+		xenomorph.advance_turn()
+		
 
 func handle_response_generated(response_text: String):
 	var response = Response.instantiate()
