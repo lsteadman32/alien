@@ -146,7 +146,7 @@ func secure_exit(query: String) -> bool:
 	if other == null:
 		return false
 	
-	if secured_exits.append(key):
+	if secured_exits.has(key):
 		return false
 		
 	secured_exits.append(key)
@@ -154,7 +154,7 @@ func secure_exit(query: String) -> bool:
 	
 	return true
 
-func unsecure_exit(quere: String) -> bool:
+func unsecure_exit(query: String) -> bool:
 	var key := find_exit_name(query.to_lower())
 	
 	if key == "" or not secured_exits.has(key):
