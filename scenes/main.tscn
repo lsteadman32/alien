@@ -148,6 +148,36 @@ default_font = ExtResource("5_o6xl0")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
 
+[sub_resource type="Gradient" id="Gradient_muem4"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jqcjr"]
+gradient = SubResource("Gradient_muem4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Curve" id="Curve_dp3eg"]
+_limits = [0.8, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_pqted"]
+curve = SubResource("Curve_dp3eg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_py3kj"]
+particle_flag_disable_z = true
+direction = Vector3(1, -0.2, 0)
+spread = 25.0
+initial_velocity_min = 12.0
+initial_velocity_max = 12.5
+angular_velocity_min = -15.000016
+angular_velocity_max = 14.999984
+gravity = Vector3(0, -2, 0)
+scale_min = 0.5
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_pqted")
+
 [node name="Game" type="Control" unique_id=929610791]
 process_mode = 3
 layout_mode = 3
@@ -523,6 +553,7 @@ visible = false
 layer = 15
 
 [node name="EffectsOverlay" type="Control" parent="EnvironmentEffectsLayer" unique_id=1417374330]
+custom_maximum_size = Vector2(0, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -530,6 +561,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="SmokeParticles" type="GPUParticles2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=254221184]
+position = Vector2(960, 540)
+amount = 35
+texture = SubResource("GradientTexture2D_jqcjr")
+lifetime = 8.0
+randomness = 0.8
+visibility_rect = Rect2(-1000, -1000, 3000, 2000)
+process_material = SubResource("ParticleProcessMaterial_py3kj")
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]
