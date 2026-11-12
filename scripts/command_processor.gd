@@ -6,8 +6,9 @@ extends Node
 signal response_generated(response_text)
 signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 signal player_made_noise(intensity: int)
+signal map_requested
 
-const COMMANDS := ["go", "help", "look", "take", "get", "drop", "inventory", "examine", "investigate", "inspect", "unlock", "use", "access", "back"]
+const COMMANDS := ["go", "help", "look", "take", "get", "drop", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
 
 var current_room: GameRoom
 var previous_room: GameRoom
@@ -73,6 +74,9 @@ func process_command(_input: String) -> String:
 			return go(second_word)
 		"help":
 			return help()
+		"map":
+			map_requested.emit()
+			return "ACCESSING SHIP SCHEMATIC..."
 		"unlock":
 			return unlock(second_word)
 		"take":

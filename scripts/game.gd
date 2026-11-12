@@ -15,6 +15,7 @@ const Response = preload("res://scenes/response.tscn")
 @onready var room_manager = $RoomManager
 @onready var pause_menu = $PauseLayer
 @onready var xenomorph: Xenomorph = $Xenomorph
+@onready var map_display = $MapLayer/MapDisplay
 
 
 var pending_xenomorph_events: Array[String] = []
@@ -44,6 +45,8 @@ func _ready() -> void:
 	
 	command_processor.player_moved.connect(xenomorph.on_player_moved)
 	command_processor.player_made_noise.connect(xenomorph.report_noise)
+	command_processor.map_requested.connect(_toggle_map)
+	command_processor.player_moved.connec(_on_player_moved)
 	xenomorph.xenomorph_event.connect(_on_xenomorph_event)
 	
 	var starting_room: GameRoom = room_manager.get_node("CryoChamber")
@@ -52,6 +55,9 @@ func _ready() -> void:
 	
 	command_processor.initialize(starting_room, not loading_saved_game)
 	xenomorph.initialize(starting_room)
+	
+	map_display.setup(room_manager)
+	map_display.set_current_room((command_processor.current_room))
 	
 	if SaveManager.load_on_next_scene:
 		SaveManager.load_on_next_scene = false
@@ -63,6 +69,7 @@ func _ready() -> void:
 
 func _load_pending_save() -> void:
 	if load_game():
+		map_display.set_current_room(command_processor.current_room)
 		print("Game: Saved game restored successfully.")
 		print("Restored room: ", command_processor.current_room.room_name)
 		print("Restored inventory: ", command_processor.inventory)
@@ -162,3 +169,10 @@ func save_game() -> bool:
 
 func load_game() -> bool:
 	return SaveManager.load_game(self)
+
+func _toggle_map() -> void:
+	map_display.visible = not map_display.visible
+	map_display.set_current_room(command_processor.current_room)
+
+func _on_player_moved(_previous_room: GameRoom, new_room: GameRoom) -> void:
+	map_display.set_current_room(new_room)

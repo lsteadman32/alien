@@ -1,0 +1,142 @@
+
+extends Control
+
+var room_manager: Node
+var current_room: GameRoom
+var selected_deck: int = 1
+
+const MAP_MARGIN := 60.0
+const ROOM_RADIUS := 9.0
+
+const COLOR_BACKGROUND := Color(0.02, 0.06, 0.05, 0.96)
+const COLOR_CONNECTION := Color(0.2, 0.55, 0.42, 0.7)
+const COLOR_ROOM := Color(0.4, 0.75, 0.6, 1.0)
+const COLOR_CURRENT := Color(0.7, 1.0, 0.75, 1.0)
+const COLOR_TEXT := Color(0.65, 0.85, 0.75, 1.0)
+
+
+func setup(manager: Node) -> void:
+	room_manager = manager
+	queue_redraw()
+
+
+func set_current_room(room: GameRoom) -> void:
+	current_room = room
+	queue_redraw()
+
+
+func set_deck(deck: int) -> void:
+	selected_deck = deck
+	queue_redraw()
+
+
+func _draw() -> void:
+	if room_manager == null:
+		return
+
+	draw_rect(Rect2(Vector2.ZERO, size), COLOR_BACKGROUND, true)
+
+	var visible_rooms: Array[GameRoom] = []
+
+	for room in room_manager.get_rooms_on_deck(selected_deck):
+		if room.room_name.strip_edges() == "":
+			continue
+
+		if room.visited or room == current_room:
+			visible_rooms.append(room)
+
+	if visible_rooms.is_empty():
+		draw_string(
+			ThemeDB.fallback_font,
+			Vector2(30, 50),
+			"NO DISCOVERED LOCATIONS",
+			HORIZONTAL_ALIGNMENT_LEFT,
+			-1,
+			16,
+			COLOR_TEXT
+		)
+		return
+
+	# Determine the spatial bounds of discovered rooms.
+	var min_position := Vector2(INF, INF)
+	var max_position := Vector2(-INF, -INF)
+	var room_centers: Dictionary = {}
+
+	for room in visible_rooms:
+		var center := room.global_position + room.size / 2.0
+		room_centers[room] = center
+
+		min_position.x = min(min_position.x, center.x)
+		min_position.y = min(min_position.y, center.y)
+		max_position.x = max(max_position.x, center.x)
+		max_position.y = max(max_position.y, center.y)
+
+	var available_size := size - Vector2(MAP_MARGIN * 2.0, MAP_MARGIN * 2.0)
+	var layout_size := max_position - min_position
+
+	if layout_size.x < 1.0:
+		layout_size.x = 1.0
+	if layout_size.y < 1.0:
+		layout_size.y = 1.0
+
+	var scale_factor: float = minf(
+		available_size.x / layout_size.x,
+		available_size.y / layout_size.y
+	)
+
+	scale_factor = min(scale_factor, 1.0)
+
+	var map_size := layout_size * scale_factor
+	var map_offset := (size - map_size) / 2.0
+
+	var draw_positions: Dictionary = {}
+
+	for room in visible_rooms:
+		var source_position: Vector2 = room_centers[room]
+		var map_position := (source_position - min_position) * scale_factor
+		draw_positions[room] = map_offset + map_position
+
+	# Draw connections between discovered rooms.
+	for room in visible_rooms:
+		var start_position: Vector2 = draw_positions[room]
+
+		for exit_name in room.exits.keys():
+			if room.hidden_exits.has(exit_name):
+				continue
+
+			var connected_room := room.get_exit(exit_name)
+
+			if connected_room == null:
+				continue
+
+			if not draw_positions.has(connected_room):
+				continue
+
+			var end_position: Vector2 = draw_positions[connected_room]
+
+			draw_line(
+				start_position,
+				end_position,
+				COLOR_CONNECTION,
+				2.0
+			)
+
+	# Draw room markers and labels.
+	for room in visible_rooms:
+		var position: Vector2 = draw_positions[room]
+		var is_current := room == current_room
+
+		var marker_color := COLOR_CURRENT if is_current else COLOR_ROOM
+		var marker_radius := ROOM_RADIUS * 1.5 if is_current else ROOM_RADIUS
+
+		draw_circle(position, marker_radius, marker_color)
+
+		draw_string(
+			ThemeDB.fallback_font,
+			position + Vector2(14, 5),
+			room.room_name.to_upper(),
+			HORIZONTAL_ALIGNMENT_LEFT,
+			-1,
+			14,
+			COLOR_TEXT
+		)

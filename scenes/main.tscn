@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="9_choun"]
 [ext_resource type="AudioStream" uid="uid://c4trpwir3sos4" path="res://assets/audio/Input 5.wav" id="13_jkv2x"]
 [ext_resource type="Script" uid="uid://bex0ebdwxd8u6" path="res://scripts/xenomorph.gd" id="16_jbj1t"]
+[ext_resource type="PackedScene" uid="uid://bc3lrc7lngynr" path="res://scenes/map_display.tscn" id="17_muem4"]
 
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
@@ -173,6 +174,7 @@ offset_left = 372.0
 offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
+deck_number = null
 room_name = "Cryo Chamber"
 room_description = "The whine of the cryo pod lid rouses you from your artificial sleep as the lights automatically flicker on. Looking around the room you can see two other cryo pods, empty with their lids open.
 
@@ -188,12 +190,31 @@ search_text = "Upon inspecting the room you locate the cause of the burning elec
 
 You're lucky the cryo pod was functional enough to keep you alive, let alone able to wake you again."
 
+[node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 367.0
+offset_top = -564.0
+offset_right = 617.0
+offset_bottom = -364.0
+grow_horizontal = 1
+grow_vertical = 1
+deck_number = null
+map_position = Vector2i(0, 1)
+room_name = "Junction A1"
+room_description = "The lights flicker and hum as you enter the junction. Metal pipes and wires run across the ceiling, leading to either the Cryo Chamber or the Mess Hall. "
+short_description = "This junction leads to the Cryo Chamber or the Mess Hall."
+
 [node name="MessHall" parent="RoomManager" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = 373.0
 offset_top = -817.0
 offset_right = -529.0
 offset_bottom = -1265.0
+deck_number = null
+map_position = Vector2i(1, 1)
 room_name = "Mess Hall"
 room_description = "Normally a welcome sight, the current state of the Mess Hall would leave Captain Webber with a veiny bulge in her neck on the brink of bursting.
 
@@ -207,6 +228,8 @@ offset_left = -296.0
 offset_top = -667.0
 offset_right = -1198.0
 offset_bottom = -1115.0
+deck_number = null
+map_position = Vector2i(-1, 1)
 room_name = "Changing Room"
 
 [node name="Airlock" parent="RoomManager" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
@@ -220,6 +243,8 @@ offset_right = 1157.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
+map_position = Vector2i(2, 1)
 room_name = "Airlock"
 
 [node name="Umbilical" parent="RoomManager" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
@@ -233,6 +258,8 @@ offset_right = 1505.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
+map_position = Vector2i(3, 1)
 room_name = "Docking Umbilical"
 
 [node name="Kinship" parent="RoomManager" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
@@ -246,6 +273,8 @@ offset_right = 1838.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
+map_position = Vector2i(4, 1)
 room_name = "USCSS Kinship"
 
 [node name="Bridge" parent="RoomManager" unique_id=76881209 instance=ExtResource("3_jyhfs")]
@@ -259,6 +288,7 @@ offset_right = 621.0
 offset_bottom = -1228.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
 room_name = "Bridge"
 items = Array[String](["credentials"])
 hidden_exits = Array[String](["vent"])
@@ -274,6 +304,7 @@ offset_right = 118.0
 offset_bottom = -1230.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
 room_name = "Computer Room"
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
@@ -288,6 +319,7 @@ offset_right = 1179.0
 offset_bottom = -1223.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
 room_name = "Med Bay"
 hidden_exits = Array[String](["vent"])
 
@@ -303,22 +335,8 @@ offset_bottom = -1165.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(1.032306, 0.36248073)
+deck_number = null
 room_name = "Vent"
-
-[node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
-visible = true
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 375.0
-offset_top = -565.0
-offset_right = 625.0
-offset_bottom = -365.0
-grow_horizontal = 1
-grow_vertical = 1
-room_name = "Junction A1"
-room_description = "The lights flicker and hum as you enter the junction. Metal pipes and wires run across the ceiling, leading to either the Cryo Chamber or the Mess Hall. "
-short_description = "This junction leads to the Cryo Chamber or the Mess Hall."
 
 [node name="JunctionA3" parent="RoomManager" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -326,6 +344,7 @@ offset_left = -293.0
 offset_top = -1078.0
 offset_right = -1195.0
 offset_bottom = -1526.0
+deck_number = null
 room_name = "Junction A3"
 
 [node name="JunctionA2" parent="RoomManager" unique_id=586666453 instance=ExtResource("3_jyhfs")]
@@ -339,6 +358,7 @@ offset_right = 1167.0
 offset_bottom = -883.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
 room_name = "Junction A4"
 
 [node name="JunctionA4" parent="RoomManager" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
@@ -352,6 +372,7 @@ offset_right = 618.0
 offset_bottom = -891.0
 grow_horizontal = 1
 grow_vertical = 1
+deck_number = null
 room_name = "Junction A2"
 
 [node name="JunctionA5" parent="RoomManager" unique_id=396502791 instance=ExtResource("3_jyhfs")]
@@ -360,6 +381,7 @@ offset_left = 46.0
 offset_top = -292.0
 offset_right = -856.0
 offset_bottom = -740.0
+deck_number = null
 room_name = "Junction A5"
 room_description = "The lights flicker in the junction flicker for a moment, attempting to illuminate the corridor.
 
@@ -375,6 +397,7 @@ offset_left = 2036.0
 offset_top = -794.0
 offset_right = 1134.0
 offset_bottom = -1242.0
+deck_number = null
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
@@ -503,6 +526,11 @@ visible = false
 
 [node name="Xenomorph" type="Node" parent="." unique_id=1740128239]
 script = ExtResource("16_jbj1t")
+
+[node name="MapLayer" type="CanvasLayer" parent="." unique_id=1758485749]
+
+[node name="MapDisplay" parent="MapLayer" unique_id=321590544 instance=ExtResource("17_muem4")]
+visible = false
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]
