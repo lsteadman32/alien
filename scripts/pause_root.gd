@@ -13,6 +13,7 @@ func _on_save_pressed() -> void:
 	if game and game.has_method("save_game"):
 		if game.save_game():
 			print("Game saved.")
+			game.pauseMenu()
 		else:
 			print("Save failed.")
 
@@ -22,6 +23,7 @@ func _on_load_pressed() -> void:
 	if game and game.has_method("load_game"):
 		if game.load_game():
 			print("Game loaded.")
+			game.pauseMenu()
 		else:
 			print("Load failed.")
 

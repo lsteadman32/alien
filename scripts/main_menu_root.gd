@@ -48,7 +48,7 @@ func _load_saved_game() -> void:
 		push_error("Could not open game save.")
 		return
 	
-	await  get_tree().current_scene
+	await  get_tree().scene_changed
 	
 	var game = get_tree().current_scene
 	

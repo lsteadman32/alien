@@ -136,11 +136,3 @@ func save_game() -> bool:
 
 func load_game() -> bool:
 	return SaveManager.load_game(self)
-
-func _input(event:InputEvent) -> void:
-	if event.is_action_pressed("ui_page_down"):
-		save_game()
-	
-	if event.is_action_pressed("ui_page_up"):
-		load_game()
-	
