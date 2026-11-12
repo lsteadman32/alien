@@ -3,7 +3,11 @@ extends PanelContainer
 class_name GameRoom
 
 
+@export_group("Map Settings")
+@export_range(1,20) var deck_number
+@export var map_position: Vector2i = Vector2i.ZERO
 
+@export_group("Room Information")
 @export var room_name: String = "Name" :
 	set( name ) :
 		$MarginContainer/Rows/RoomName.text = name

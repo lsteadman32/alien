@@ -43,3 +43,14 @@ func lock_exit(a: GameRoom, b: GameRoom, key_id) -> void:
 
 func hide_exit(a: GameRoom, b: GameRoom) -> void:
 	a.hidden_exits.append(b.room_name.to_lower())
+
+func get_rooms_on_deck(deck: int) -> Array[GameRoom]:
+	var result: Array[GameRoom] = []
+	
+	var rooms: Array = find_children("*", "GameRoom", true, false)
+	
+	for room in rooms:
+		if room.deck_number == deck:
+			result.append(room)
+	
+	return result
