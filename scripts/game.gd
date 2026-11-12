@@ -24,7 +24,7 @@ var paused = false
 
 func _ready() -> void:
 	handle_response_generated("")
-	$PauseLayer/PauseRoot.resume_requested.connect(pauseMenu)
+	$PauseLayer/PauseRoot.resume_requested.connect(resume_game_input)
 	
 	scroll.get_v_scroll_bar().changed.connect(_scroll_to_bottom)
 
@@ -112,13 +112,12 @@ func _close_map() -> void:
 
 func pauseMenu():
 	if paused:
-		pause_menu.hide()
-		get_tree().paused = false
+		resume_game_input()
 	else:
 		pause_menu.show()
 		get_tree().paused = true
+		paused = true
 	
-	paused = !paused
 
 func resume_game_input() -> void:
 	pause_menu.hide()
@@ -131,7 +130,7 @@ func resume_game_input() -> void:
 	get_viewport().gui_release_focus()
 	input_field.editable = true
 	input_field.grab_focus()
-	input_field.call_deferred("grab_focaus")
+	input_field.call_deferred("grab_focus")
 
 func _on_input_text_submitted(_new_text: String) -> void:
 	get_tree().call_group("typewriter", "skip")

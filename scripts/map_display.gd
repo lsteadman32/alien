@@ -19,6 +19,7 @@ const COLOR_ROOM := Color(0.4, 0.75, 0.6, 1.0)
 const COLOR_CURRENT := Color(0.7, 1.0, 0.75, 1.0)
 const COLOR_TEXT := Color(0.65, 0.85, 0.75, 1.0)
 const COLOR_UNVISITED := Color(0.22, 0.38, 0.32, 0.75)
+const COLOR_LOCKED := Color(0.706, 0.0, 0.0, 0.753)
 
 func _ready() -> void:
 	var header := HBoxContainer.new()
@@ -226,7 +227,11 @@ func _draw() -> void:
 				continue
 
 			var end_position: Vector2 = draw_positions[connected_room]
-
+			var connection_color := COLOR_LOCKED
+			
+			if room.locked_exits.has(exit_name) or room.secured_exits.has(exit_name):
+				connection_color = COLOR_LOCKED
+				
 			draw_line(
 				start_position,
 				end_position,
