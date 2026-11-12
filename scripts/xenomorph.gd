@@ -36,6 +36,7 @@ var previous_room: GameRoom
 var player_room: GameRoom
 var last_known_player_room: GameRoom
 var starting_room: GameRoom = null
+var has_reached_investigation_site: bool = false
 
 func _ready() -> void:
 	print("Xenomorph initialized.")
@@ -113,6 +114,7 @@ func report_noise(intensity: int = 25) -> void:
 	awareness = clampi(awareness + intensity, 0, MAX_AWARENESS)
 	
 	last_known_player_room = player_room
+	has_reached_investigation_site = false
 	
 	match current_state:
 		State.DORMANT, State.PATROLLING, State.STALKING:
@@ -330,16 +332,20 @@ func process_patrolling() -> void:
 
 func process_investigating() -> void:
 	if last_known_player_room != null:
-		var moved: bool = move_one_step_toward(
-			last_known_player_room
-		)
-		if not moved and current_room == last_known_player_room:
+		if current_room == last_known_player_room:
+			has_reached_investigation_site = true
+		
+		if not has_reached_investigation_site:
+			move_one_step_toward(last_known_player_room)
+			if current_room == last_known_player_room:
+				has_reached_investigation_site = true
+		else:
 			move_to_random_adjacent_room()
 	
 	if current_state != State.INVESTIGATING:
 		return
 	
-	awareness = maxi(awareness - 5,0)
+	awareness = maxi(awareness -5, 0)
 	
 	if turns_in_state >= 3:
 		if awareness > 0:
@@ -349,19 +355,17 @@ func process_investigating() -> void:
 
 func process_stalking() -> void:
 	if turns_in_state % 2 == 0:
-		if last_known_player_room != null:
-			var moved: bool = move_one_step_toward(
-				last_known_player_room
-			)
-			if not moved and current_room == last_known_player_room:
-				move_to_random_adjacent_room()
-	else:
-		move_to_random_adjacent_room()
-	
+		if not has_reached_investigation_site and last_known_player_room != null:
+			move_one_step_toward(last_known_player_room)
+			
+			if current_room == last_known_player_room:
+				has_reached_investigation_site = true
+			
+		else:
+			move_to_random_adjacent_room()
 	if current_state != State.STALKING:
 		return
-	
-	awareness = maxi(awareness - 5, 0)
+	awareness = maxi(awareness -5, 0)
 	
 	if awareness <= 0:
 		change_state(State.RETREATING)

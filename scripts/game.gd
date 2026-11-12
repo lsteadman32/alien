@@ -43,6 +43,7 @@ func _ready() -> void:
 	command_processor.response_generated.connect(handle_response_generated)
 	
 	command_processor.player_moved.connect(xenomorph.on_player_moved)
+	command_processor.player_made_noise.connect(xenomorph.report_noise)
 	xenomorph.xenomorph_event.connect(_on_xenomorph_event)
 	
 	var starting_room: GameRoom = room_manager.get_node("CryoChamber")

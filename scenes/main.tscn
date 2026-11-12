@@ -32,6 +32,12 @@ id = "wrench"
 item_description = "It's just a wrench."
 metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
 
+[sub_resource type="Resource" id="Resource_36trf"]
+script = ExtResource("4_a8y0u")
+id = "pda"
+item_description = "A Weyland-Yutani Personnel Data Assistant. The casing is scuffed, but the display still functions. It appears to contain a personal note-taking application alongside several standard personnel utilities."
+metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
+
 [sub_resource type="Resource" id="Resource_dp3eg"]
 script = ExtResource("7_trceg")
 command = "bio readouts"
@@ -156,7 +162,7 @@ visible = false
 
 [node name="CommandProcessor" type="Node" parent="." unique_id=845233236]
 script = ExtResource("2_sugp2")
-item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x"), SubResource("Resource_a8y0u")])
+item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x"), SubResource("Resource_a8y0u"), SubResource("Resource_36trf")])
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 script = ExtResource("4_eb6dy")
@@ -192,6 +198,7 @@ room_name = "Mess Hall"
 room_description = "Normally a welcome sight, the current state of the Mess Hall would leave Captain Webber with a veiny bulge in her neck on the brink of bursting.
 
 Shards of ceramic and glass cover the table. Several cabinets are left open and a slight creak emanates from the fridge as it slightly swings back and forth."
+items = Array[String](["pda"])
 short_description = "The fridge lightly creaks and the broken plates and mugs litter the table."
 
 [node name="ChangingRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
@@ -201,7 +208,6 @@ offset_top = -667.0
 offset_right = -1198.0
 offset_bottom = -1115.0
 room_name = "Changing Room"
-room_description = "Description"
 
 [node name="Airlock" parent="RoomManager" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -215,7 +221,6 @@ offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Airlock"
-room_description = "Description"
 
 [node name="Umbilical" parent="RoomManager" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -229,7 +234,6 @@ offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Docking Umbilical"
-room_description = "Description"
 
 [node name="Kinship" parent="RoomManager" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -243,7 +247,6 @@ offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "USCSS Kinship"
-room_description = "Description"
 
 [node name="Bridge" parent="RoomManager" unique_id=76881209 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -257,7 +260,6 @@ offset_bottom = -1228.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Bridge"
-room_description = "Description"
 items = Array[String](["credentials"])
 hidden_exits = Array[String](["vent"])
 
@@ -273,7 +275,6 @@ offset_bottom = -1230.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Computer Room"
-room_description = "Description"
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
 [node name="MedBay" parent="RoomManager" unique_id=477782257 instance=ExtResource("3_jyhfs")]
@@ -288,7 +289,6 @@ offset_bottom = -1223.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Med Bay"
-room_description = "Description"
 hidden_exits = Array[String](["vent"])
 
 [node name="MedVent" parent="RoomManager" unique_id=53633462 instance=ExtResource("3_jyhfs")]
@@ -304,7 +304,6 @@ grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(1.032306, 0.36248073)
 room_name = "Vent"
-room_description = "Description"
 
 [node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -328,7 +327,6 @@ offset_top = -1078.0
 offset_right = -1195.0
 offset_bottom = -1526.0
 room_name = "Junction A3"
-room_description = "Description"
 
 [node name="JunctionA2" parent="RoomManager" unique_id=586666453 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -342,7 +340,6 @@ offset_bottom = -883.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Junction A4"
-room_description = "Description"
 
 [node name="JunctionA4" parent="RoomManager" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -356,7 +353,6 @@ offset_bottom = -891.0
 grow_horizontal = 1
 grow_vertical = 1
 room_name = "Junction A2"
-room_description = "Description"
 
 [node name="JunctionA5" parent="RoomManager" unique_id=396502791 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -379,7 +375,6 @@ offset_left = 2036.0
 offset_top = -794.0
 offset_right = 1134.0
 offset_bottom = -1242.0
-room_description = "Description"
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1

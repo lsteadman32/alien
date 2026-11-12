@@ -5,6 +5,7 @@ extends Node
 
 signal response_generated(response_text)
 signal player_moved(previous_room: GameRoom, new_room: GameRoom)
+signal player_made_noise(intensity: int)
 
 const COMMANDS := ["go", "help", "look", "take", "get", "drop", "inventory", "examine", "investigate", "inspect", "unlock", "use", "access", "back"]
 
@@ -12,6 +13,8 @@ var current_room: GameRoom
 var previous_room: GameRoom
 var inventory: Array[String] = []
 var active_terminal: GameTerminal
+var active_pda: bool = false
+var pda_notes: Array[String] = []
 var player_name := ""
 var awaiting_name := false
 var item_lookup := {}
@@ -42,7 +45,12 @@ func _ready() -> void:
 func process_command(_input: String) -> String:
 	if awaiting_name:
 		return set_player_name(_input)
+	
+	if active_pda:
+		return pda_input(_input.strip_edges())
+	
 	var words = _input.split(" ", false)
+	
 	if active_terminal != null:
 		return terminal_input(" ".join(words).to_lower())
 
@@ -122,6 +130,8 @@ func move_to(room: GameRoom) -> String:
 	print("moved from", previous_room.room_name, " to ", room.room_name)
 	
 	player_moved.emit(old_room, current_room)
+	player_made_noise.emit(25)
+	
 	return room.enter()
 
 func take(item: String) -> String:
@@ -164,7 +174,20 @@ func examine(query: String) -> String:
 
 	return data.item_description.replace("{name}", player_name)
 
-func use_terminal(target: String) -> String: 
+func use_terminal(target: String) -> String:
+	if target == "pda":
+		if not inventory.has("pda"):
+			return "You aren't carrying a PDA."
+		active_pda = true
+		return "WEYLAND-YUTANI PERSONNEL DATA ASSISTANT\n" + \
+		"----------------------------------------------\n" + \
+		"PERSONAL NOTES\n\n" + \
+		"Commands:\n" + \
+		"notes - View saved notes\n" + \
+		"note add [text] - Write a note\n" + \
+		"note delete [number] - Delete a note\n" + \
+		"close - Close PDA session"
+	
 	var term := current_room.find_terminal(target)
 	if term == null:
 		return "There's nothing like that to use."
@@ -251,3 +274,53 @@ func find_room(room: String) -> GameRoom:
 		if r is GameRoom and r.room_name.to_lower() == room.to_lower():
 			return r
 	return null
+
+func pda_input(text: String) -> String:
+	var clean_text := text.strip_edges()
+	var command := text.to_lower()
+	
+	if command in ["close", "logout", "exit"]:
+		active_pda = false
+		return "PDA session terminated."
+		
+	if command in ["help", "menu", "home"]:
+		return "WEYLAND-YUTANI PERSONNEL DATA ASSISTANT\n" + \
+		"----------------------------------------------\n" + \
+		"PERSONAL NOTES\n\n" + \
+		"Commands:\n" + \
+		"notes - View saved notes\n" + \
+		"note add [text] - Write a note\n" + \
+		"note delete [number] - Delete a note\n" + \
+		"close - Close PDA session"
+		
+	if command == "notes" or command == "view notes" or command == "list notes":
+		if pda_notes.is_empty():
+			return "PERSONAL NOTES\n\nNo notes recorded."
+			
+			var output := "PERSONAL NOTES\n\n"
+			for i in range(pda_notes.size()):
+				output += "%d. %s\n" % [i + 1, pda_notes[i]]
+			return output
+	if command.begins_with("note add "):
+		var note_text := text.substr(9).strip_edges()
+		
+		if note_text == "":
+			return "Enter the text you want to record."
+			
+		pda_notes.append(note_text)
+		return "NOTE SAVED."
+	
+	if command.begins_with("note delete"):
+		var number_text := text.substr(12).strip_edges()
+		
+		if not number_text.is_valid_int():
+			return "Specify the number of the note to delete."
+		
+		var index := int(number_text) - 1
+		
+		if index < 0 or index >= pda_notes.size():
+			return "No note exists with that number."
+		
+		pda_notes.remove_at(index)
+		return "NOTE DELETED."
+	return "Unrecognized PDA command. Type 'help' for available commands."
