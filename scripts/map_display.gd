@@ -4,7 +4,7 @@ extends Control
 var room_manager: Node
 var current_room: GameRoom
 var selected_deck: int = 1
-var availale_decks: Array[int] = []
+var available_decks: Array[int] = []
 var deck_label: Label
 var previous_button: Button
 var next_button: Button
@@ -100,7 +100,7 @@ func setup(manager: Node) -> void:
 func set_current_room(room: GameRoom) -> void:
 	current_room = room
 	
-	if availale_decks.has(room.deck_number):
+	if available_decks.has(room.deck_number):
 		selected_deck = room.deck_number
 	
 	_update_deck_selector()
@@ -179,8 +179,10 @@ func _draw() -> void:
 		max_position.x = max(max_position.x, center.x)
 		max_position.y = max(max_position.y, center.y)
 
-	var available_size := size - Vector2(MAP_MARGIN * 2.0, MAP_MARGIN * 2.0)
-	var layout_size := max_position - min_position
+	var available_size := size - Vector2(
+		MAP_MARGIN * 2.0,
+		MAP_HEADER_HEIGHT + MAP_MARGIN
+	)
 
 	if layout_size.x < 1.0:
 		layout_size.x = 1.0
@@ -195,7 +197,7 @@ func _draw() -> void:
 	scale_factor = min(scale_factor, 1.0)
 
 	var map_size := layout_size * scale_factor
-	var map_offset := (size - map_size) / 2.0
+	var map_offset := available_origin + (available_size - map_size) / 2.0
 
 	var draw_positions: Dictionary = {}
 
@@ -245,9 +247,24 @@ func _draw() -> void:
 
 		draw_circle(position, marker_radius, marker_color)
 
+		var label_position := position + Vector2(14, 5)
+		var label_size := ThemeDB.fallback_font.get_string_size(
+			room.room_name.to_upper(),
+			HORIZONTAL_ALIGNMENT_LEFT,
+			-1,
+			14
+		)
+
+		var label_rect := Rect2(
+			label_position + Vector2(-3, -14),
+			label_size + Vector2(6, 6)
+	)
+
+		draw_rect(label_rect, COLOR_BACKGROUND, true)
+
 		draw_string(
 			ThemeDB.fallback_font,
-			position + Vector2(14, 5),
+			label_position,
 			room.room_name.to_upper(),
 			HORIZONTAL_ALIGNMENT_LEFT,
 			-1,

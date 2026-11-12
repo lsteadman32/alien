@@ -7,7 +7,7 @@
 bg_color = Color(0.6, 0.6, 0.6, 0.039215688)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
-bg_color = Color(0.1173548, 0.11735482, 0.11735474, 1)
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 0.72156864)
 
 [node name="PauseLayer" type="CanvasLayer" unique_id=205017505]
 process_mode = 2
