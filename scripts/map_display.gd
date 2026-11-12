@@ -4,8 +4,13 @@ extends Control
 var room_manager: Node
 var current_room: GameRoom
 var selected_deck: int = 1
+var availale_decks: Array[int] = []
+var deck_label: Label
+var previous_button: Button
+var next_button: Button
 
 const MAP_MARGIN := 60.0
+const MAP_HEADER_HEIGHT := 90.0
 const ROOM_RADIUS := 9.0
 
 const COLOR_BACKGROUND := Color(0.02, 0.06, 0.05, 0.96)
@@ -14,6 +19,41 @@ const COLOR_ROOM := Color(0.4, 0.75, 0.6, 1.0)
 const COLOR_CURRENT := Color(0.7, 1.0, 0.75, 1.0)
 const COLOR_TEXT := Color(0.65, 0.85, 0.75, 1.0)
 const COLOR_UNVISITED := Color(0.22, 0.38, 0.32, 0.75)
+
+func _ready() -> void:
+	var header := HBoxContainer.new()
+	header.anchor_left = 0.5
+	header.anchor_right = 0.5
+	header.anchor_top = 0.0
+	header.anchor_bottom = 0.0
+	header.offset_left = -115
+	header.offset_right = 115
+	header.offset_top = 20
+	header.offset_bottom = 60
+	header.alignment = BoxContainer.ALIGNMENT_CENTER
+	header.add_theme_constant_override("separation", 12)
+	add_child(header)
+
+	previous_button = Button.new()
+	previous_button.text = "<"
+	previous_button.custom_minimum_size = Vector2(42, 36)
+	previous_button.focus_mode = Control.FOCUS_NONE
+	previous_button.pressed.connect(_previous_deck)
+	header.add_child(previous_button)
+
+	deck_label = Label.new()
+	deck_label.text = "DECK 01"
+	deck_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	deck_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	deck_label.custom_minimum_size = Vector2(100, 36)
+	header.add_child(deck_label)
+
+	next_button = Button.new()
+	next_button.text = ">"
+	next_button.custom_minimum_size = Vector2(42, 36)
+	next_button.focus_mode = Control.FOCUS_NONE
+	next_button.pressed.connect(_next_deck)
+	header.add_child(next_button)
 
 func setup(manager: Node) -> void:
 	room_manager = manager
