@@ -4,6 +4,9 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var has_saved_game: bool = SaveManager.has_save()
+	$VBoxContainer/Continue.disabled = not has_saved_game
+	$VBoxContainer/Load.disabled = not has_saved_game
 	glow.pivot_offset = glow.size / 2
 	glow.modulate.a = 0.3
 	var tween := create_tween().set_loops()
@@ -26,11 +29,34 @@ func _on_start_pressed() -> void:
 
 
 func _on_continue_pressed() -> void:
-	pass
+	await _load_saved_game()
 
 
 func _on_load_pressed() -> void:
-	pass
+	await _load_saved_game()
+
+func _load_saved_game() -> void:
+	if not SaveManager.has_save():
+		print("No save file found.")
+		return
+	
+	var result: Error = get_tree().change_scene_to_file(
+		"res://scenes/main.tscn"
+		)
+	
+	if result != OK:
+		push_error("Could not open game save.")
+		return
+	
+	await  get_tree().current_scene
+	
+	var game = get_tree().current_scene
+	
+	if game and game.has_method("load_game"):
+		if game.load_game():
+			print("Continue: Game loaded.")
+		else:
+			print("Continue: Load failed.") 
 
 func _on_settings_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/settings.tscn")

@@ -8,7 +8,22 @@ func _on_resume_pressed() -> void:
 
 
 func _on_save_pressed() -> void:
-	pass # Replace with function body.
+	var game = get_tree().current_scene
+	
+	if game and game.has_method("save_game"):
+		if game.save_game():
+			print("Game saved.")
+		else:
+			print("Save failed.")
+
+func _on_load_pressed() -> void:
+	var game = get_tree().current_scene
+	
+	if game and game.has_method("load_game"):
+		if game.load_game():
+			print("Game loaded.")
+		else:
+			print("Load failed.")
 
 
 func _on_options_pressed() -> void:
@@ -16,6 +31,7 @@ func _on_options_pressed() -> void:
 
 
 func _on_menu_pressed() -> void:
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 

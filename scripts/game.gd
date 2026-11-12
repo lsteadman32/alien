@@ -130,3 +130,17 @@ func delete_history_beyond_limit():
 		var rows_to_forget = history_rows.get_child_count() - max_lines_remembered
 		for i in range(rows_to_forget):
 			history_rows.get_child(i).queue_free()
+
+func save_game() -> bool:
+	return SaveManager.save_game(self)
+
+func load_game() -> bool:
+	return SaveManager.load_game(self)
+
+func _input(event:InputEvent) -> void:
+	if event.is_action_pressed("ui_page_down"):
+		save_game()
+	
+	if event.is_action_pressed("ui_page_up"):
+		load_game()
+	

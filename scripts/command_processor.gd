@@ -297,10 +297,11 @@ func pda_input(text: String) -> String:
 		if pda_notes.is_empty():
 			return "PERSONAL NOTES\n\nNo notes recorded."
 			
-			var output := "PERSONAL NOTES\n\n"
-			for i in range(pda_notes.size()):
-				output += "%d. %s\n" % [i + 1, pda_notes[i]]
-			return output
+		var output := "PERSONAL NOTES\n\n"
+		for i in range(pda_notes.size()):
+			output += "%d. %s\n" % [i + 1, pda_notes[i]]
+		return output
+		
 	if command.begins_with("note add "):
 		var note_text := text.substr(9).strip_edges()
 		
