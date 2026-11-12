@@ -8,7 +8,7 @@ signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 signal player_made_noise(intensity: int)
 signal map_requested
 
-const COMMANDS := ["go", "help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
+const COMMANDS := ["go", "wait","help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
 
 var current_room: GameRoom
 var previous_room: GameRoom
@@ -96,6 +96,8 @@ func process_command(_input: String) -> String:
 			return drop(second_word)
 		"inventory", "i":
 			return show_inventory()
+		"wait":
+			return wait_turn()
 		"use", "access":
 			return use_terminal(second_word)
 		"examine", "investigate", "inspect", "x":
@@ -386,6 +388,9 @@ func hide(target: String = "") -> String:
 	
 	return "You slip into %s. You hold your breath... and you listen..." % current_hiding_spot
 	
+
+func wait_turn() -> String:
+	return "You wait quietly, listening to the sounds of the ship..."
 
 func leave_hiding_spot() -> String:
 	if not is_hiding:

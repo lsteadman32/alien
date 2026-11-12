@@ -134,3 +134,37 @@ func unlock_exit(query: String) -> bool:
 
 func drop_item(id: String) -> void:
 	items.append(id)
+
+
+func secure_exit(query: String) -> bool:
+	var key := find_exit_name(query.to_lower())
+	
+	if key == "" or not lockable_exits.has(key):
+		return false
+	
+	var other := get_node_or_null(exits[key]) as GameRoom
+	if other == null:
+		return false
+	
+	if secured_exits.append(key):
+		return false
+		
+	secured_exits.append(key)
+	other.secured_exits.append(room_name.to_lower())
+	
+	return true
+
+func unsecure_exit(quere: String) -> bool:
+	var key := find_exit_name(query.to_lower())
+	
+	if key == "" or not secured_exits.has(key):
+		return false
+	
+	var other := get_node_or_null(exits[key]) as GameRoom
+	if other == null:
+		return false
+	
+	secured_exits.erase(key)
+	other.secured_exits.erase(room_name.to_lower())
+	
+	return true
