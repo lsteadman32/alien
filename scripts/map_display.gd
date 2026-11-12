@@ -13,7 +13,7 @@ const COLOR_CONNECTION := Color(0.2, 0.55, 0.42, 0.7)
 const COLOR_ROOM := Color(0.4, 0.75, 0.6, 1.0)
 const COLOR_CURRENT := Color(0.7, 1.0, 0.75, 1.0)
 const COLOR_TEXT := Color(0.65, 0.85, 0.75, 1.0)
-
+const COLOR_UNVISITED := Color(0.22, 0.38, 0.32, 0.75)
 
 func setup(manager: Node) -> void:
 	room_manager = manager
@@ -36,14 +36,37 @@ func _draw() -> void:
 
 	draw_rect(Rect2(Vector2.ZERO, size), COLOR_BACKGROUND, true)
 
-	var visible_rooms: Array[GameRoom] = []
+	var discovered_rooms: Array[GameRoom] = []
 
+	# First, collect rooms the player has actually visited.
 	for room in room_manager.get_rooms_on_deck(selected_deck):
-		if room.room_name.strip_edges() == "":
+		if room.room_name.strip_edges() == "" or room.room_name == "Name":
 			continue
-
 		if room.visited or room == current_room:
-			visible_rooms.append(room)
+			discovered_rooms.append(room)
+
+# Start the visible map with discovered rooms.
+	var visible_rooms: Array[GameRoom] = discovered_rooms.duplicate()
+
+# Add only the immediate connections of discovered rooms.
+	for room in discovered_rooms:
+		for exit_name in room.exits.keys():
+			if room.hidden_exits.has(exit_name):
+				continue
+
+			var connected_room: GameRoom = room.get_exit(exit_name)
+
+			if connected_room == null:
+				continue
+
+			if connected_room.deck_number != selected_deck:
+				continue
+
+			if connected_room.room_name.strip_edges() == "" or connected_room.room_name == "Name":
+				continue
+
+			if not visible_rooms.has(connected_room):
+				visible_rooms.append(connected_room)
 
 	if visible_rooms.is_empty():
 		draw_string(
@@ -126,7 +149,13 @@ func _draw() -> void:
 		var position: Vector2 = draw_positions[room]
 		var is_current := room == current_room
 
-		var marker_color := COLOR_CURRENT if is_current else COLOR_ROOM
+		var marker_color := COLOR_ROOM
+		
+		if is_current:
+			marker_color = COLOR_CURRENT
+		elif not room.visited:
+			marker_color = COLOR_UNVISITED
+		
 		var marker_radius := ROOM_RADIUS * 1.5 if is_current else ROOM_RADIUS
 
 		draw_circle(position, marker_radius, marker_color)

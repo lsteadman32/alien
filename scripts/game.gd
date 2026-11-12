@@ -100,11 +100,15 @@ func _close_map() -> void:
 	map_display.hide()
 	
 	await get_tree().process_frame
-	await get_tree().process_frame
 	
 	var input_field: LineEdit = $TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input
+	
+	get_viewport().gui_release_focus()
+	
+	input_field.editable = true
 	input_field.grab_focus()
 	input_field.call_deferred("grab_focus")
+	print("Focus owner: ", get_viewport().gui_get_focus_owner())
 
 func pauseMenu():
 	if paused:
@@ -194,5 +198,5 @@ func _on_player_moved(_previous_room: GameRoom, new_room: GameRoom) -> void:
 	map_display.set_current_room(new_room)
 
 func _open_map() -> void:
-	map_display.visible = visible
+	map_display.show()
 	map_display.set_current_room(command_processor.current_room)

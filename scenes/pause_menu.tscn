@@ -6,6 +6,9 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choun"]
 bg_color = Color(0.6, 0.6, 0.6, 0.039215688)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
+bg_color = Color(0.1173548, 0.11735482, 0.11735474, 1)
+
 [node name="PauseLayer" type="CanvasLayer" unique_id=205017505]
 process_mode = 2
 layer = 20
@@ -103,9 +106,10 @@ offset_left = 541.0
 offset_top = 225.0
 offset_right = 800.0
 offset_bottom = 464.0
+scale = Vector2(1, 0.84000003)
 theme_override_colors/font_color = Color(0.7708395, 0.77083945, 0.77083945, 1)
 theme_override_fonts/font = ExtResource("2_myx47")
-theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("StyleBoxFlat_muem4")
 text = "\"back\"
 \"go\", \"move\" (or type partial location name)
 \"help\"

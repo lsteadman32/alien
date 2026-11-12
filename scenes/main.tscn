@@ -174,7 +174,6 @@ offset_left = 372.0
 offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
-deck_number = null
 room_name = "Cryo Chamber"
 room_description = "The whine of the cryo pod lid rouses you from your artificial sleep as the lights automatically flicker on. Looking around the room you can see two other cryo pods, empty with their lids open.
 
@@ -201,7 +200,6 @@ offset_right = 617.0
 offset_bottom = -364.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
 map_position = Vector2i(0, 1)
 room_name = "Junction A1"
 room_description = "The lights flicker and hum as you enter the junction. Metal pipes and wires run across the ceiling, leading to either the Cryo Chamber or the Mess Hall. "
@@ -213,7 +211,6 @@ offset_left = 373.0
 offset_top = -817.0
 offset_right = -529.0
 offset_bottom = -1265.0
-deck_number = null
 map_position = Vector2i(1, 1)
 room_name = "Mess Hall"
 room_description = "Normally a welcome sight, the current state of the Mess Hall would leave Captain Webber with a veiny bulge in her neck on the brink of bursting.
@@ -228,7 +225,6 @@ offset_left = -296.0
 offset_top = -667.0
 offset_right = -1198.0
 offset_bottom = -1115.0
-deck_number = null
 map_position = Vector2i(-1, 1)
 room_name = "Changing Room"
 
@@ -243,7 +239,6 @@ offset_right = 1157.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
 map_position = Vector2i(2, 1)
 room_name = "Airlock"
 
@@ -258,7 +253,6 @@ offset_right = 1505.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
 map_position = Vector2i(3, 1)
 room_name = "Docking Umbilical"
 
@@ -273,7 +267,6 @@ offset_right = 1838.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
 map_position = Vector2i(4, 1)
 room_name = "USCSS Kinship"
 
@@ -288,7 +281,6 @@ offset_right = 621.0
 offset_bottom = -1228.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
 room_name = "Bridge"
 items = Array[String](["credentials"])
 hidden_exits = Array[String](["vent"])
@@ -304,7 +296,6 @@ offset_right = 118.0
 offset_bottom = -1230.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
 room_name = "Computer Room"
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
@@ -319,7 +310,6 @@ offset_right = 1179.0
 offset_bottom = -1223.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
 room_name = "Med Bay"
 hidden_exits = Array[String](["vent"])
 
@@ -335,7 +325,6 @@ offset_bottom = -1165.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(1.032306, 0.36248073)
-deck_number = null
 room_name = "Vent"
 
 [node name="JunctionA3" parent="RoomManager" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
@@ -344,7 +333,6 @@ offset_left = -293.0
 offset_top = -1078.0
 offset_right = -1195.0
 offset_bottom = -1526.0
-deck_number = null
 room_name = "Junction A3"
 
 [node name="JunctionA2" parent="RoomManager" unique_id=586666453 instance=ExtResource("3_jyhfs")]
@@ -352,28 +340,26 @@ visible = true
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 917.0
-offset_top = -1083.0
-offset_right = 1167.0
-offset_bottom = -883.0
+offset_left = 378.0
+offset_top = -1094.0
+offset_right = 628.0
+offset_bottom = -894.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
-room_name = "Junction A4"
+room_name = "Junction A2"
 
 [node name="JunctionA4" parent="RoomManager" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 368.0
-offset_top = -1091.0
-offset_right = 618.0
-offset_bottom = -891.0
+offset_left = 930.0
+offset_top = -1105.0
+offset_right = 1180.0
+offset_bottom = -905.0
 grow_horizontal = 1
 grow_vertical = 1
-deck_number = null
-room_name = "Junction A2"
+room_name = "Junction A4"
 
 [node name="JunctionA5" parent="RoomManager" unique_id=396502791 instance=ExtResource("3_jyhfs")]
 visible = true
@@ -381,7 +367,6 @@ offset_left = 46.0
 offset_top = -292.0
 offset_right = -856.0
 offset_bottom = -740.0
-deck_number = null
 room_name = "Junction A5"
 room_description = "The lights flicker in the junction flicker for a moment, attempting to illuminate the corridor.
 
@@ -397,7 +382,6 @@ offset_left = 2036.0
 offset_top = -794.0
 offset_right = 1134.0
 offset_bottom = -1242.0
-deck_number = null
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
