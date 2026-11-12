@@ -227,7 +227,14 @@ func _draw() -> void:
 				continue
 
 			var end_position: Vector2 = draw_positions[connected_room]
-			var connection_color := COLOR_LOCKED
+			
+			var is_locked := (
+				room.locked_exits.has(exit_name)
+				or room.secured_exits.has(exit_name)
+				or connected_room.locked_exits.has(room.room_name.to_lower())
+				or connected_room.secured_exits.has(room.room_name.to_lower())
+			)
+			var connection_color := COLOR_LOCKED if is_locked else COLOR_CONNECTION
 			
 			if room.locked_exits.has(exit_name) or room.secured_exits.has(exit_name):
 				connection_color = COLOR_LOCKED

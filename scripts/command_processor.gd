@@ -72,6 +72,10 @@ func process_command(_input: String) -> String:
 	if pending_choice_type != "":
 		return process_pending_choice(full_text)
 	
+	var matching_exit := current_room.find_exit_name(full_text)
+	if words.size() == 1 and matching_exit.to_lower() == full_text:
+		return go(full_text)
+	
 	var first_word = resolve_command(words[0].to_lower(), full_text)
 	var second_word = " ".join(words.slice(1)).to_lower()
 	
