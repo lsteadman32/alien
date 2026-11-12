@@ -57,7 +57,15 @@ func describe(full: bool = true) -> String:
 		text += "\n\nYou see: " + ", ".join(items).to_upper()
 	var labels: Array[String] = []
 	for e in visible_exits():
-		labels.append(e + " (locked)" if locked_exits.has(e) else e)
+		var label: String = e
+		if locked_exits.has(e) and secured_exits.has(e):
+			label += " (locked; manually secured)"
+		elif locked_exits.has(e):
+			label += " (locked)"
+		elif secured_exits.has(e):
+			label += " (manually secured)"
+		
+		labels.append(label)
 	text += "\n\nExits: " + ", ".join(labels).to_upper()
 	return text
 

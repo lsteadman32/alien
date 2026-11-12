@@ -23,6 +23,7 @@ func save_game(game: Node) -> bool:
 			"hidden_items": room.hidden_items,
 			"hidden_exits": room.hidden_exits,
 			"locked_exits": room.locked_exits,
+			"secured_exits": room.secured_exits,
 			"visited": room.visited
 		}
 
@@ -137,6 +138,7 @@ func load_game(game: Node) -> bool:
 		room.hidden_items.assign(data.get("hidden_items", []))
 		room.hidden_exits.assign(data.get("hidden_exits", []))
 		room.locked_exits = data.get("locked_exits", {})
+		room.secured_exits.assign(data.get("secured_exits", []))
 		room.visited = data.get("visited", false)
 
 	# Restore Xenomorph state without awakening it.

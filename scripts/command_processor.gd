@@ -150,16 +150,24 @@ func lock(target: String) -> String:
 
 func unlock(target: String) -> String:
 	var exit_name := current_room.find_exit_name(target)
+	
 	if exit_name == "":
 		return "There's nothing like that to unlock."
+	
+	if current_room.secured_exits.has(exit_name):
+		if current_room.unsecure_exit(exit_name):
+			return "You release the manual security on the door to %s." % exit_name
+	
 	if not current_room.locked_exits.has(exit_name):
-		print("locks here: ", current_room.locked_exits)
-		return "It isn't locked."
+		return "It isn't locked or secured."
+	
 	var key_id: String = current_room.locked_exits[exit_name]
+	
 	if not inventory.has(key_id):
 		return "You don't have anything that opens it."
+	
 	current_room.unlock_exit(exit_name)
-	return "You unlock the way to %s." % exit_name
+	return "You unlock the way to %s." %exit_name
 
 func move_to(room: GameRoom) -> String:
 	if is_hiding:
