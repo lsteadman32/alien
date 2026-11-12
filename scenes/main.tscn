@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://c4trpwir3sos4" path="res://assets/audio/Input 5.wav" id="13_jkv2x"]
 [ext_resource type="Script" uid="uid://bex0ebdwxd8u6" path="res://scripts/xenomorph.gd" id="16_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://bc3lrc7lngynr" path="res://scenes/map_display.tscn" id="17_muem4"]
+[ext_resource type="Shader" uid="uid://cisxkkuwuix32" path="res://scenes/smoke.gdshader" id="18_dp3eg"]
 
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
@@ -148,14 +149,31 @@ default_font = ExtResource("5_o6xl0")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o5qli"]
 
-[sub_resource type="Gradient" id="Gradient_muem4"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_muem4"]
+shader = ExtResource("18_dp3eg")
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_jqcjr"]
-gradient = SubResource("Gradient_muem4")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
+[sub_resource type="Gradient" id="Gradient_0ld40"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.3372549)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dp3eg"]
+noise_type = 0
+frequency = 0.05
+fractal_octaves = 4
+fractal_gain = 0.6
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_muem4"]
+width = 256
+height = 256
+noise = SubResource("FastNoiseLite_dp3eg")
+color_ramp = SubResource("Gradient_0ld40")
+
+[sub_resource type="Gradient" id="Gradient_gqmmt"]
+offsets = PackedFloat32Array(0, 0.2, 0.47115386, 0.65705127, 0.8333333, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.65000004, 1, 1, 1, 0.85, 1, 1, 1, 0.55, 1, 1, 1, 0.35000002, 1, 1, 1, 0)
+metadata/_snap_count = 6
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ld40"]
+gradient = SubResource("Gradient_gqmmt")
 
 [sub_resource type="Curve" id="Curve_dp3eg"]
 _limits = [0.8, 2.0, 0.0, 1.0]
@@ -167,16 +185,20 @@ curve = SubResource("Curve_dp3eg")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_py3kj"]
 particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(960, 540, 1)
 direction = Vector3(1, -0.2, 0)
-spread = 25.0
-initial_velocity_min = 12.0
-initial_velocity_max = 12.5
+spread = 14.0
+initial_velocity_min = 4.0
+initial_velocity_max = 7.0
 angular_velocity_min = -15.000016
 angular_velocity_max = 14.999984
-gravity = Vector3(0, -2, 0)
-scale_min = 0.5
-scale_max = 1.5
+gravity = Vector3(0, -8, 0)
+scale_min = 3.0
+scale_max = 6.0
 scale_curve = SubResource("CurveTexture_pqted")
+color = Color(0.46666667, 0.46666667, 0.46666667, 0.11764706)
+color_ramp = SubResource("GradientTexture1D_0ld40")
 
 [node name="Game" type="Control" unique_id=929610791]
 process_mode = 3
@@ -553,7 +575,6 @@ visible = false
 layer = 15
 
 [node name="EffectsOverlay" type="Control" parent="EnvironmentEffectsLayer" unique_id=1417374330]
-custom_maximum_size = Vector2(0, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -563,10 +584,10 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="SmokeParticles" type="GPUParticles2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=254221184]
-position = Vector2(960, 540)
-amount = 35
-texture = SubResource("GradientTexture2D_jqcjr")
-lifetime = 8.0
+material = SubResource("ShaderMaterial_muem4")
+position = Vector2(641, 388)
+texture = SubResource("NoiseTexture2D_muem4")
+lifetime = 12.0
 randomness = 0.8
 visibility_rect = Rect2(-1000, -1000, 3000, 2000)
 process_material = SubResource("ParticleProcessMaterial_py3kj")
