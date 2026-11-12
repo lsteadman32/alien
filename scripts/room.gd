@@ -50,7 +50,7 @@ func describe(full: bool = true) -> String:
 		desc = short_description
 	var text := "%s\n%s" % [room_name, desc]
 	if items.size() > 0:
-		text += "\n\nYou see: " + ", ".join(items)
+		text += "\n\nYou see: " + ", ".join(items).to_upper()
 	var labels: Array[String] = []
 	for e in visible_exits():
 		labels.append(e + " (locked)" if locked_exits.has(e) else e)
