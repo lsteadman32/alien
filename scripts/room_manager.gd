@@ -54,3 +54,20 @@ func get_rooms_on_deck(deck: int) -> Array[GameRoom]:
 			result.append(room)
 	
 	return result
+
+func get_available_decks() -> Array[int]:
+	var decks: Array[int] = []
+	var rooms: Array = find_children("*", "GameRoom", true, false)
+	
+	for room in rooms:
+		if room.room_name.strip_edges() == "" or room.room_name == "Name":
+			continue
+		
+		if room.deck_number < 1:
+			continue
+		
+		if not decks.has(room.deck_number):
+			decks.append(room.deck_number)
+		
+	decks.sort()
+	return decks
