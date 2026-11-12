@@ -242,7 +242,7 @@ func _draw() -> void:
 			draw_line(
 				start_position,
 				end_position,
-				COLOR_CONNECTION,
+				connection_color,
 				2.0
 			)
 
