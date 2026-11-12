@@ -8,7 +8,7 @@ signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 signal player_made_noise(intensity: int)
 signal map_requested
 
-const COMMANDS := ["go", "wait","help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
+const COMMANDS := ["go", "wait","help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "lock", "use", "access", "back"]
 
 var current_room: GameRoom
 var previous_room: GameRoom
@@ -86,6 +86,8 @@ func process_command(_input: String) -> String:
 			return "ACCESSING SHIP SCHEMATIC..."
 		"unlock":
 			return unlock(second_word)
+		"lock":
+			return lock(second_word)
 		"take":
 			return take(second_word)
 		"hide":
@@ -125,7 +127,26 @@ func go(second_word: String) -> String:
 		return "You can't go that way."
 	if current_room.locked_exits.has(exit_name):
 		return "The way to %s is locked." % exit_name
+	if current_room.secured_exits.has(exit_name):
+		return "The door to %s is securely fastened." % exit_name
 	return move_to(current_room.get_exit((exit_name)))
+
+func lock(target: String) -> String:
+	if target == "":
+		return "Secure which door?"
+	
+	if current_room.secure_exit(target):
+		return "You manually secure the door to %s." % target
+	
+	var exit_name := current_room.find_exit_name(target)
+	
+	if exit_name == "":
+		return "there is no door like that here."
+	
+	if not current_room.lockable_exits.has(exit_name):
+		return "That door cannot be manually secured."
+	
+	return "That door is already secured."
 
 func unlock(target: String) -> String:
 	var exit_name := current_room.find_exit_name(target)

@@ -185,7 +185,7 @@ func move_to_random_adjacent_room() -> void:
 	for exit_name in current_room.exits.keys():
 		
 		#cannot pass through locked doors
-		if current_room.locked_exits.has(exit_name):
+		if current_room.locked_exits.has(exit_name) or current_room.secured_exits.has(exit_name):
 			continue
 		
 		var candidate := current_room.get_node_or_null(
@@ -252,7 +252,7 @@ func find_path(start_room: GameRoom, target_room: GameRoom) -> Array[GameRoom]:
 			break
 		
 		for exit_name in current.exits.keys():
-			if current.locked_exits.has(exit_name):
+			if current.locked_exits.has(exit_name) or current.secured_exits.has(exit_name):
 				continue
 			
 			var next_room: GameRoom = current.get_node_or_null(

@@ -174,7 +174,7 @@ offset_left = 372.0
 offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
-lockable_exits = null
+lockable_exits = Array[String](["junction a1"])
 room_name = "Cryo Chamber"
 room_description = "The whine of the cryo pod lid rouses you from your artificial sleep as the lights automatically flicker on. Looking around the room you can see two other cryo pods, empty with their lids open.
 
