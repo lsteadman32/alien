@@ -8,7 +8,7 @@ signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 signal player_made_noise(intensity: int)
 signal map_requested
 
-const COMMANDS := ["go", "help", "look", "take", "get", "drop", "hide", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
+const COMMANDS := ["go", "help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
 
 var current_room: GameRoom
 var previous_room: GameRoom
@@ -133,6 +133,8 @@ func unlock(target: String) -> String:
 	return "You unlock the way to %s." % exit_name
 
 func move_to(room: GameRoom) -> String:
+	if is_hiding:
+		return "You need to leave your hiding spot first."
 	var old_room := current_room
 	
 	previous_room = current_room
@@ -146,6 +148,9 @@ func move_to(room: GameRoom) -> String:
 	return room.enter()
 
 func take(item: String) -> String:
+	if is_hiding:
+		return "You have to leave your hiding spot to reach the item."
+		
 	if item == "":
 		return "Take what?"
 	var id := Fuzzy.best_match(item, current_room.items)
@@ -337,7 +342,7 @@ func pda_input(text: String) -> String:
 		return "NOTE DELETED."
 	return "Unrecognized PDA command. Type 'help' for available commands."
 
-func hide() -> String:
+func hide(target: String = "") -> String:
 	if is_hiding:
 		return "You are hiding in %s." % current_hiding_spot
 	

@@ -212,7 +212,7 @@ offset_top = -817.0
 offset_right = -529.0
 offset_bottom = -1265.0
 map_position = Vector2i(1, 1)
-hiding_spots = Array[String](["under mess hall table"])
+hiding_spots = Array[String](["under mess hall table", "fridge"])
 room_name = "Mess Hall"
 room_description = "Normally a welcome sight, the current state of the Mess Hall would leave Captain Webber with a veiny bulge in her neck on the brink of bursting.
 
