@@ -10,6 +10,10 @@ class_name GameRoom
 @export_group("Stealth Settings")
 @export var hiding_spots: Array[String] = []
 
+@export_group("Door Security")
+@export var lockable_exits: Array[String] = []
+var secured_exits: Array[String] = []
+
 @export_group("Room Information")
 @export var room_name: String = "Name" :
 	set( name ) :
