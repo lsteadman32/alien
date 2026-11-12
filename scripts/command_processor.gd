@@ -33,10 +33,12 @@ func resolve_command(word: String, full_text: String) -> String:
 			best = c
 	return best if best_score >= 0.6 else word
 
-func initialize(starting_room):
+func initialize(starting_room: GameRoom, request_name: bool = true):
 	current_room = starting_room
-	awaiting_name = true
-	emit_signal("response_generated", "Identify yourself, crew member.\nEnter your name:")
+	awaiting_name = request_name
+	
+	if request_name:
+		emit_signal("response_generated", "Identify yourself, crew member.\nEnter your name:")
 
 func _ready() -> void:
 	for d in item_data:

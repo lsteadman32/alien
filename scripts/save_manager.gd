@@ -1,7 +1,7 @@
 extends Node
 
 const SAVE_PATH := "user://alien_save.json"
-
+var load_on_next_scene := false
 
 func has_save() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)

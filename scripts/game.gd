@@ -48,12 +48,28 @@ func _ready() -> void:
 	
 	var starting_room: GameRoom = room_manager.get_node("CryoChamber")
 	
-	command_processor.initialize(starting_room)
+	var loading_saved_game: bool = SaveManager.load_on_next_scene
+	
+	command_processor.initialize(starting_room, not loading_saved_game)
 	xenomorph.initialize(starting_room)
+	
+	if SaveManager.load_on_next_scene:
+		SaveManager.load_on_next_scene = false
+		call_deferred("_load_pending_save")
 	
 	#xenomorph.debug_pathfinding(
 	#	room_manager.get_node("CryoChamber") as GameRoom
 	#)
+
+func _load_pending_save() -> void:
+	if load_game():
+		print("Game: Saved game restored successfully.")
+		print("Restored room: ", command_processor.current_room.room_name)
+		print("Restored inventory: ", command_processor.inventory)
+		print("Restored player: ", command_processor.player_name)
+	else:
+		push_error("Game: Failed to restore saved game.")
+
 func _on_xenomorph_event(message: String) -> void:
 	pending_xenomorph_events.append(message)
 
