@@ -59,4 +59,4 @@ func _process(delta: float) -> void:
 	else:
 		visible_ratio = 1.0
 		typing = false
-		typing_finished.emit
+		typing_finished.emit()

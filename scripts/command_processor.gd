@@ -75,7 +75,6 @@ func process_command(_input: String) -> String:
 		"help":
 			return help()
 		"map":
-			map_requested.emit()
 			return "ACCESSING SHIP SCHEMATIC..."
 		"unlock":
 			return unlock(second_word)

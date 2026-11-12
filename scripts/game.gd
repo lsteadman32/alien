@@ -45,7 +45,6 @@ func _ready() -> void:
 	
 	command_processor.player_moved.connect(xenomorph.on_player_moved)
 	command_processor.player_made_noise.connect(xenomorph.report_noise)
-	command_processor.map_requested.connect(_toggle_map)
 	command_processor.player_moved.connect(_on_player_moved)
 	xenomorph.xenomorph_event.connect(_on_xenomorph_event)
 	
@@ -98,12 +97,14 @@ func _process(_delta):
 		pauseMenu()
 
 func _close_map() -> void:
-	map_display.visible = false
+	map_display.hide()
 	
+	await get_tree().process_frame
 	await get_tree().process_frame
 	
 	var input_field: LineEdit = $TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input
 	input_field.grab_focus()
+	input_field.call_deferred("grab_focus")
 
 func pauseMenu():
 	if paused:
@@ -143,6 +144,9 @@ func _on_input_text_submitted(_new_text: String) -> void:
 		response_label.typing_finished.connect(
 			display_next_xenomorph_event
 		)
+	
+	if is_map_command:
+		response_label.typing_finished.connect(_open_map)
 	
 	input_response.set_text("*".repeat(_new_text.length()) if masked else _new_text, response)
 
@@ -188,3 +192,7 @@ func _toggle_map() -> void:
 
 func _on_player_moved(_previous_room: GameRoom, new_room: GameRoom) -> void:
 	map_display.set_current_room(new_room)
+
+func _open_map() -> void:
+	map_display.visible = visible
+	map_display.set_current_room(command_processor.current_room)
