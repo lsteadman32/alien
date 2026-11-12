@@ -40,23 +40,25 @@ func _load_saved_game() -> void:
 		print("No save file found.")
 		return
 	
+	var tree = get_tree()
+	
 	var result: Error = get_tree().change_scene_to_file(
 		"res://scenes/main.tscn"
 		)
 	
 	if result != OK:
-		push_error("Could not open game save.")
+		push_error("Could not open game scene.")
 		return
 	
-	await  get_tree().scene_changed
+	await tree.scene_changed
 	
-	var game = get_tree().current_scene
+	var game = tree.current_scene
 	
 	if game and game.has_method("load_game"):
 		if game.load_game():
-			print("Continue: Game loaded.")
+			print("Saved game restored successfully.")
 		else:
-			print("Continue: Load failed.") 
+			print("Failed to restore saved game.")
 
 func _on_settings_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/settings.tscn")

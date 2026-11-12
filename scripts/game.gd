@@ -81,6 +81,16 @@ func pauseMenu():
 	
 	paused = !paused
 
+func resume_game_input() -> void:
+	pause_menu.hide()
+	paused = false
+	get_tree().paused = false
+	
+	await get_tree().process_frame
+	
+	var input_field: LineEdit = $TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input
+	input_field.grab_focus()
+
 func _on_input_text_submitted(_new_text: String) -> void:
 	get_tree().call_group("typewriter", "skip")
 	
