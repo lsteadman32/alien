@@ -128,7 +128,10 @@ func resume_game_input() -> void:
 	await get_tree().process_frame
 	
 	var input_field: LineEdit = $TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input
+	get_viewport().gui_release_focus()
+	input_field.editable = true
 	input_field.grab_focus()
+	input_field.call_deferred("grab_focaus")
 
 func _on_input_text_submitted(_new_text: String) -> void:
 	get_tree().call_group("typewriter", "skip")
