@@ -23,6 +23,8 @@ var pending_terminal: GameTerminal
 var awaiting_password := false
 var is_hiding: bool = false
 var current_hiding_spot: String = ""
+var pending_choice_type: String = ""
+var pending_choices: Array[String] = []
 
 func resolve_command(word: String, full_text: String) -> String:
 	if word in ["i", "x"] or COMMANDS.has(word):
@@ -66,6 +68,10 @@ func process_command(_input: String) -> String:
 		return "Error: no words were parsed."
 	
 	var full_text := " ".join(words).to_lower()
+	
+	if pending_choice_type != "":
+		return process_pending_choice(full_text)
+	
 	var first_word = resolve_command(words[0].to_lower(), full_text)
 	var second_word = " ".join(words.slice(1)).to_lower()
 	
@@ -152,7 +158,15 @@ func take(item: String) -> String:
 		return "You have to leave your hiding spot to reach the item."
 		
 	if item == "":
-		return "Take what?"
+		if current_room.items.is_empty():
+			return "There is nothing here to take."
+		
+		pending_choice_type = "take"
+		pending_choices = current_room.items.duplicate()
+		return "What would you like to take? " + ", ".join(pending_choices).to_upper()
+	
+	
+	
 	var id := Fuzzy.best_match(item, current_room.items)
 	if id != "" and current_room.take_item(id):
 		inventory.append(id)
@@ -353,7 +367,9 @@ func hide(target: String = "") -> String:
 	
 	if target.strip_edges() == "":
 		if current_room.hiding_spots.size() > 1:
-			return "Choose a hiding spot: " + ", ".join(current_room.hiding_spots)
+			pending_choice_type = "hide"
+			pending_choices = current_room.hiding_spots.duplicate()
+			return "Choose a hiding spot: " + ", ".join(pending_choices)
 			
 		selected_spot = current_room.hiding_spots[0]
 		
@@ -380,3 +396,32 @@ func leave_hiding_spot() -> String:
 	current_hiding_spot = ""
 	
 	return "You climb out of %s." %spot
+
+func process_pending_choice(selection: String) -> String:
+	if selection == "cancel":
+		pending_choice_type = ""
+		pending_choices.clear()
+		return "Selection cancelled."
+	
+	var selected := ""
+	
+	for choice in pending_choices:
+		if choice.to_lower() == selection.to_lower():
+			selected = choice
+			break
+	
+	if selected == "":
+		return "Please choose one of: " + ", ".join(pending_choices)
+		
+	var action := pending_choice_type
+	pending_choice_type = ""
+	pending_choices.clear()
+	
+	match action:
+		"take":
+			return take(selected)
+		"hide":
+			return hide(selected)
+	
+	return "Selection unavailable."
+	
