@@ -55,17 +55,62 @@ func _ready() -> void:
 	next_button.pressed.connect(_next_deck)
 	header.add_child(next_button)
 
+func _refresh_available_decks() -> void:
+	available_decks = room_manager.get_available_decks()
+
+	if available_decks.is_empty():
+		available_decks.append(1)
+
+	if not available_decks.has(selected_deck):
+		selected_deck = available_decks[0]
+
+	_update_deck_selector()
+
+
+func _update_deck_selector() -> void:
+	if deck_label == null:
+		return
+
+	var deck_index := available_decks.find(selected_deck)
+
+	deck_label.text = "DECK %02d" % selected_deck
+	previous_button.disabled = deck_index <= 0
+	next_button.disabled = deck_index >= available_decks.size() - 1
+
+
+func _previous_deck() -> void:
+	var deck_index := available_decks.find(selected_deck)
+
+	if deck_index > 0:
+		set_deck(available_decks[deck_index - 1])
+
+
+func _next_deck() -> void:
+	var deck_index := available_decks.find(selected_deck)
+
+	if deck_index < available_decks.size() - 1:
+		set_deck(available_decks[deck_index + 1])
+
 func setup(manager: Node) -> void:
 	room_manager = manager
+	_refresh_available_decks()
 	queue_redraw()
 
 
 func set_current_room(room: GameRoom) -> void:
 	current_room = room
+	
+	if availale_decks.has(room.deck_number):
+		selected_deck = room.deck_number
+	
+	_update_deck_selector()
 	queue_redraw()
 
 
 func set_deck(deck: int) -> void:
+	if not available_decks.has(deck):
+		return
+	
 	selected_deck = deck
 	queue_redraw()
 
