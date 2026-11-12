@@ -112,6 +112,7 @@ func set_deck(deck: int) -> void:
 		return
 	
 	selected_deck = deck
+	_update_deck_selector()
 	queue_redraw()
 
 
@@ -183,6 +184,7 @@ func _draw() -> void:
 		MAP_MARGIN * 2.0,
 		MAP_HEADER_HEIGHT + MAP_MARGIN
 	)
+	var layout_size := max_position - min_position
 
 	if layout_size.x < 1.0:
 		layout_size.x = 1.0
@@ -197,6 +199,7 @@ func _draw() -> void:
 	scale_factor = min(scale_factor, 1.0)
 
 	var map_size := layout_size * scale_factor
+	var available_origin := Vector2(MAP_MARGIN, MAP_HEADER_HEIGHT)
 	var map_offset := available_origin + (available_size - map_size) / 2.0
 
 	var draw_positions: Dictionary = {}

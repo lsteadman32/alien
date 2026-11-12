@@ -8,7 +8,7 @@ signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 signal player_made_noise(intensity: int)
 signal map_requested
 
-const COMMANDS := ["go", "help", "look", "take", "get", "drop", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
+const COMMANDS := ["go", "help", "look", "take", "get", "drop", "hide", "inventory", "examine", "map", "investigate", "inspect", "unlock", "use", "access", "back"]
 
 var current_room: GameRoom
 var previous_room: GameRoom
@@ -21,6 +21,8 @@ var awaiting_name := false
 var item_lookup := {}
 var pending_terminal: GameTerminal
 var awaiting_password := false
+var is_hiding: bool = false
+var current_hiding_spot: String = ""
 
 func resolve_command(word: String, full_text: String) -> String:
 	if word in ["i", "x"] or COMMANDS.has(word):
@@ -80,6 +82,10 @@ func process_command(_input: String) -> String:
 			return unlock(second_word)
 		"take":
 			return take(second_word)
+		"hide":
+			return hide(second_word)
+		"leave":
+			return leave_hiding_spot()
 		"drop":
 			return drop(second_word)
 		"inventory", "i":
@@ -330,3 +336,42 @@ func pda_input(text: String) -> String:
 		pda_notes.remove_at(index)
 		return "NOTE DELETED."
 	return "Unrecognized PDA command. Type 'help' for available commands."
+
+func hide() -> String:
+	if is_hiding:
+		return "You are hiding in %s." % current_hiding_spot
+	
+	if current_room.hiding_spots.is_empty():
+		return "There is nowhere suitable to hide here."
+	
+	var selected_spot := ""
+	
+	if target.strip_edges() == "":
+		if current_room.hiding_spots.size() > 1:
+			return "Choose a hiding spot: " + ", ".join(current_room.hiding_spots)
+			
+		selected_spot = current_room.hiding_spots[0]
+		
+	else:
+		for spot in current_room.hiding_spots:
+			if spot.to_lower() == target.strip_edges().to_lower():
+				selected_spot = spot
+				break
+		if selected_spot == "":
+			return "You can't find that hiding spot. Available: " + ", ".join(current_room.hiding_spots)
+			
+	current_hiding_spot = selected_spot
+	is_hiding = true
+	
+	return "You slip into %s. You hold your breath... and you listen..." % current_hiding_spot
+	
+
+func leave_hiding_spot() -> String:
+	if not is_hiding:
+		return "You aren't hiding."
+	
+	var spot := current_hiding_spot
+	is_hiding = false
+	current_hiding_spot = ""
+	
+	return "You climb out of %s." %spot

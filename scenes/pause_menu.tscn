@@ -8,6 +8,10 @@ bg_color = Color(0.6, 0.6, 0.6, 0.039215688)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
 bg_color = Color(0.11764706, 0.11764706, 0.11764706, 0.72156864)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="PauseLayer" type="CanvasLayer" unique_id=205017505]
 process_mode = 2
@@ -100,19 +104,29 @@ theme_override_font_sizes/font_size = 18
 action_mode = 0
 text = "Quit to Desktop"
 
-[node name="RichTextLabel" type="Label" parent="PauseRoot" unique_id=1988532040]
-layout_mode = 0
-offset_left = 541.0
-offset_top = 225.0
-offset_right = 800.0
-offset_bottom = 464.0
-scale = Vector2(1, 0.84000003)
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseRoot" unique_id=381434901]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -119.0
+offset_right = 245.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="Label" parent="PauseRoot/HBoxContainer" unique_id=1988532040]
+layout_mode = 2
 theme_override_colors/font_color = Color(0.7708395, 0.77083945, 0.77083945, 1)
 theme_override_fonts/font = ExtResource("2_myx47")
 theme_override_styles/normal = SubResource("StyleBoxFlat_muem4")
 text = "\"back\"
 \"go\", \"move\" (or type partial location name)
 \"help\"
+\"map
 \"unlock\"
 \"take\" item
 \"drop\" item

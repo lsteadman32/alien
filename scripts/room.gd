@@ -7,6 +7,9 @@ class_name GameRoom
 @export_range(1,20) var deck_number: int = 1
 @export var map_position: Vector2i = Vector2i.ZERO
 
+@export_group("Stealth Settings")
+@export var hiding_spots: Array[String] = []
+
 @export_group("Room Information")
 @export var room_name: String = "Name" :
 	set( name ) :
