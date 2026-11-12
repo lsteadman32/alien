@@ -528,6 +528,7 @@ visible = false
 script = ExtResource("16_jbj1t")
 
 [node name="MapLayer" type="CanvasLayer" parent="." unique_id=1758485749]
+layer = 20
 
 [node name="MapDisplay" parent="MapLayer" unique_id=321590544 instance=ExtResource("17_muem4")]
 visible = false

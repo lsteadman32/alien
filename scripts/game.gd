@@ -46,7 +46,7 @@ func _ready() -> void:
 	command_processor.player_moved.connect(xenomorph.on_player_moved)
 	command_processor.player_made_noise.connect(xenomorph.report_noise)
 	command_processor.map_requested.connect(_toggle_map)
-	command_processor.player_moved.connec(_on_player_moved)
+	command_processor.player_moved.connect(_on_player_moved)
 	xenomorph.xenomorph_event.connect(_on_xenomorph_event)
 	
 	var starting_room: GameRoom = room_manager.get_node("CryoChamber")
@@ -92,7 +92,18 @@ func display_next_xenomorph_event() -> void:
 
 func _process(_delta):
 	if Input.is_action_just_pressed("pause"):
+		if map_display.visible:
+			_close_map()
+			return
 		pauseMenu()
+
+func _close_map() -> void:
+	map_display.visible = false
+	
+	await get_tree().process_frame
+	
+	var input_field: LineEdit = $TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input
+	input_field.grab_focus()
 
 func pauseMenu():
 	if paused:
@@ -121,6 +132,7 @@ func _on_input_text_submitted(_new_text: String) -> void:
 		return
 	
 	var player_turn_started: bool = not command_processor.awaiting_name
+	var is_map_command: bool = _new_text.strip_edges().to_lower() == "map"
 	
 	var input_response = InputResponse.instantiate()
 	var masked: bool =  command_processor.awaiting_password
@@ -139,7 +151,7 @@ func _on_input_text_submitted(_new_text: String) -> void:
 		label.add_theme_color_override("font_color", command_processor.active_terminal.text_color)
 	add_response_to_game(input_response)
 	
-	if player_turn_started:
+	if player_turn_started and not is_map_command:
 		xenomorph.advance_turn()
 		
 
