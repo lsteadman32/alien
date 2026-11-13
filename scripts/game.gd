@@ -16,6 +16,7 @@ const Response = preload("res://scenes/response.tscn")
 @onready var pause_menu = $PauseLayer
 @onready var xenomorph: Xenomorph = $Xenomorph
 @onready var map_display = $MapLayer/MapDisplay
+@onready var smoke_particles: GPUParticles2D = $EnvironmentEffectsLayer/EffectsOverlay/SmokeParticles
 
 
 var pending_xenomorph_events: Array[String] = []
@@ -49,6 +50,7 @@ func _ready() -> void:
 	xenomorph.xenomorph_event.connect(_on_xenomorph_event)
 	
 	var starting_room: GameRoom = room_manager.get_node("CryoChamber")
+	smoke_particles.emitting = starting_room.smoke_enabled
 	
 	var loading_saved_game: bool = SaveManager.load_on_next_scene
 	
@@ -198,6 +200,7 @@ func _toggle_map() -> void:
 
 func _on_player_moved(_previous_room: GameRoom, new_room: GameRoom) -> void:
 	map_display.set_current_room(new_room)
+	smoke_particles.emitting = new_room.smoke_enabled
 
 func _open_map() -> void:
 	map_display.show()

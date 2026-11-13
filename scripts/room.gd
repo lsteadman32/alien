@@ -14,6 +14,11 @@ class_name GameRoom
 @export var lockable_exits: Array[String] = []
 var secured_exits: Array[String] = []
 
+@export_group("Environmental Effects")
+@export var smoke_enabled: bool = false
+@export var sparks_enabled: bool = false
+@export var lights_flicker_enabled: bool = false
+
 @export_group("Room Information")
 @export var room_name: String = "Name" :
 	set( name ) :
