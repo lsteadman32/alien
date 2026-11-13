@@ -200,6 +200,16 @@ scale_curve = SubResource("CurveTexture_pqted")
 color = Color(0.46666667, 0.46666667, 0.46666667, 0.11764706)
 color_ramp = SubResource("GradientTexture1D_0ld40")
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dp3eg"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 80.0
+initial_velocity_max = 220.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 1.1999999
+
 [node name="Game" type="Control" unique_id=929610791]
 process_mode = 3
 layout_mode = 3
@@ -641,6 +651,13 @@ visibility_rect = Rect2(-1000, -1000, 3000, 2000)
 process_material = SubResource("ParticleProcessMaterial_py3kj")
 
 [node name="SparkParticles" type="GPUParticles2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=1413777195]
+emitting = false
+amount = 12
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+randomness = 0.8
+process_material = SubResource("ParticleProcessMaterial_dp3eg")
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]
