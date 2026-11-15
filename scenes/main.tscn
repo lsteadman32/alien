@@ -201,12 +201,16 @@ color = Color(0.46666667, 0.46666667, 0.46666667, 0.11764706)
 color_ramp = SubResource("GradientTexture1D_0ld40")
 
 [sub_resource type="Gradient" id="Gradient_dp3eg"]
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+colors = PackedColorArray(0.6591482, 0.9371796, 1, 0, 0.7438551, 0.95281494, 1, 0.8, 0.8294118, 0.96862745, 1, 1, 0.6591482, 0.9371796, 1, 0.8, 0.6591482, 0.9371796, 1, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 4
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dp3eg"]
 gradient = SubResource("Gradient_dp3eg")
 height = 8
-fill_from = Vector2(0, 0.5)
-fill_to = Vector2(1, 0.5)
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dp3eg"]
 particle_flag_disable_z = true
@@ -659,6 +663,7 @@ visibility_rect = Rect2(-1000, -1000, 3000, 2000)
 process_material = SubResource("ParticleProcessMaterial_py3kj")
 
 [node name="SparkParticles" type="GPUParticles2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=1413777195]
+position = Vector2(444, 334)
 emitting = false
 amount = 12
 texture = SubResource("GradientTexture2D_dp3eg")
