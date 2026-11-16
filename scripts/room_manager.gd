@@ -106,7 +106,7 @@ func connect_ladder(a: GameRoom, b: GameRoom) -> void:
 		a.ladder_exits.append(exit_a)
 	
 	if not b.ladder_exits.has(exit_b):
-		b.ladder_exits.append(exit_a)
+		b.ladder_exits.append(exit_b)
 
 func lock_exit(a: GameRoom, b: GameRoom, key_id) -> void:
 	a.locked_exits[b.room_name.to_lower()] = key_id
