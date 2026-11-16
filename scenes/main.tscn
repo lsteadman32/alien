@@ -329,6 +329,7 @@ offset_right = 1505.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
+ship_id = "docking_umbilical"
 map_position = Vector2i(500, -400)
 room_name = "Docking Umbilical"
 
@@ -458,7 +459,7 @@ offset_right = 1838.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
-ship_id = null
+ship_id = "kinship"
 map_position = Vector2i(900, -400)
 room_name = "USCSS Kinship"
 
