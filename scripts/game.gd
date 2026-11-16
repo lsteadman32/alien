@@ -20,7 +20,7 @@ const Response = preload("res://scenes/response.tscn")
 @onready var scripted_spark_trails: Node2D = $EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails
 @onready var room_darkening: ColorRect = $EnvironmentEffectsLayer/EffectsOverlay/RoomDarkening
 @onready var room_darkness_alpha: float = 0.40
-@onready var room_darkness_fade_time: float = 1.5
+@onready var room_darkness_fade_time: float = .8
 
 var pending_xenomorph_events: Array[String] = []
 var waiting_for_xenomorph_event := false
@@ -231,10 +231,11 @@ func _update_room_sparks(room: GameRoom) -> void:
 		await get_tree().create_timer(0.8).timeout
 		
 		if command_processor.current_room == room:
-			_set_room_darkness(true)
-		
+			_set_room_darkness(true)		
 		else:
 			_set_room_darkness(false)
+	else:
+		_set_room_darkness(false)
 
 func _set_room_darkness(enabled: bool) -> void:
 	print("DARKNESS FUNCTION: Enabled = ", enabled)
