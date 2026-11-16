@@ -1,37 +1,90 @@
 extends Node
 
+const SHIP_CONNECTIONS := {
+	"USCSS_Thessaly": [
+		["CryoChamber", "JunctionA1"],
+		["CryoChamber", "JunctionA5"],
+		["JunctionA1", "MessHall"],
+		["JunctionA5", "ChangingRoom"],
+		["ChangingRoom", "JunctionA3"],
+		["JunctionA3", "ComputerRoom"],
+		["ComputerRoom", "Bridge"],
+		["Bridge", "JunctionA2"],
+		["JunctionA2", "JunctionA3"],
+		["JunctionA2", "JunctionA4"],
+		["JunctionA4", "MedBay"],
+		["MessHall", "JunctionA2"],
+		["MessHall", "Airlock"],
+		["Airlock", "JunctionA4"]
+	],
+
+	"USCSS_Kinship": [
+		# Second ship connections will go here.
+	]
+}
+
+const DOCKING_CONNECTIONS := [
+	["USCSS_Thessaly/Airlock", "USCSS_Thessaly/Umbilical"],
+	["USCSS_Thessaly/Umbilical", "USCSS_Kinship/Kinship"]
+]
 
 func _ready() -> void:
-	# Ship 1 Rooms
-	connect_rooms($CryoChamber, $JunctionA1)
-	connect_rooms($CryoChamber, $JunctionA5)
-	connect_rooms($JunctionA1, $MessHall)
-	connect_rooms($JunctionA5, $ChangingRoom)
-	connect_rooms($ChangingRoom, $JunctionA3)
-	connect_rooms($JunctionA3, $ComputerRoom)
-	connect_rooms($ComputerRoom, $Bridge)
-	connect_rooms($Bridge, $JunctionA2)
-	connect_rooms($JunctionA2, $JunctionA3)
-	connect_rooms($JunctionA2, $JunctionA4)
-	connect_rooms($JunctionA4, $MedBay)
-	connect_rooms($MessHall, $JunctionA2)
-	connect_rooms($JunctionA2, $Bridge)
-	connect_rooms($MessHall, $Airlock)
-	connect_rooms($Airlock, $JunctionA4)
-	connect_rooms($Airlock, $Umbilical)
-	connect_rooms($Umbilical, $Kinship)
-	
-	#Ship 1 hidden rooms
-	connect_rooms($MedVent, $MedBay)
-	connect_rooms($MedVent, $Bridge)
-	
-	
-	# Ship 2 Rooms
-	
-	# Door locks
-	lock_exit($Airlock, $Umbilical, "credentials")
-	
+	# Build connections within each ship.
+	for ship_name in SHIP_CONNECTIONS:
+		var ship_node := get_node_or_null(NodePath(ship_name))
 
+		if ship_node == null:
+			push_error("RoomManager: Ship node not found: " + ship_name)
+			continue
+
+		for connection in SHIP_CONNECTIONS[ship_name]:
+			var room_a := ship_node.get_node_or_null(
+				NodePath(connection[0])
+			) as GameRoom
+
+			var room_b := ship_node.get_node_or_null(
+				NodePath(connection[1])
+			) as GameRoom
+
+			if room_a == null or room_b == null:
+				push_error("RoomManager: Invalid connection on " + ship_name)
+				continue
+
+			connect_rooms(room_a, room_b)
+
+	# Build docking connections.
+	for connection in DOCKING_CONNECTIONS:
+		var room_a := get_node_or_null(
+			NodePath(connection[0])
+		) as GameRoom
+
+		var room_b := get_node_or_null(
+			NodePath(connection[1])
+		) as GameRoom
+
+		if room_a == null or room_b == null:
+			push_error("RoomManager: Invalid docking connection.")
+			continue
+
+		connect_rooms(room_a, room_b)
+
+	# Hidden room connections.
+	connect_rooms(
+		$USCSS_Thessaly/MedVent,
+		$USCSS_Thessaly/MedBay
+	)
+
+	connect_rooms(
+		$USCSS_Thessaly/MedVent,
+		$USCSS_Thessaly/Bridge
+	)
+
+	# Door locks.
+	lock_exit(
+		$USCSS_Thessaly/Airlock,
+		$USCSS_Thessaly/Umbilical,
+		"credentials"
+	)
 
 func connect_rooms(a: GameRoom, b: GameRoom) -> void:
 	a.exits[b.room_name.to_lower()] = a.get_path_to(b)
