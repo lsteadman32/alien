@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://bex0ebdwxd8u6" path="res://scripts/xenomorph.gd" id="16_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://bc3lrc7lngynr" path="res://scenes/map_display.tscn" id="17_muem4"]
 [ext_resource type="Shader" uid="uid://cisxkkuwuix32" path="res://scenes/smoke.gdshader" id="18_dp3eg"]
+[ext_resource type="Texture2D" uid="uid://cg5qonyu2kmuj" path="res://assets/EnvironmentalEffects/4702607C-9823-4BBD-AFE6-95A00E466976.png" id="19_0ld40"]
 
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
@@ -66,6 +67,7 @@ script = ExtResource("7_trceg")
 command = "crew log"
 text = "Anita Webber (Captain)
 Sarah Jones (Biologist)
+Tamara Eddison (Engineer)
 {name} (Weyland-Yutani Executive)"
 metadata/_custom_type_script = "uid://dpb2fp3wv12bp"
 
@@ -200,18 +202,6 @@ scale_curve = SubResource("CurveTexture_pqted")
 color = Color(0.46666667, 0.46666667, 0.46666667, 0.11764706)
 color_ramp = SubResource("GradientTexture1D_0ld40")
 
-[sub_resource type="Gradient" id="Gradient_dp3eg"]
-offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
-colors = PackedColorArray(0.6591482, 0.9371796, 1, 0, 0.7438551, 0.95281494, 1, 0.8, 0.8294118, 0.96862745, 1, 1, 0.6591482, 0.9371796, 1, 0.8, 0.6591482, 0.9371796, 1, 0)
-metadata/_snap_enabled = true
-metadata/_snap_count = 4
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_dp3eg"]
-gradient = SubResource("Gradient_dp3eg")
-height = 8
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.5, 0)
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dp3eg"]
 particle_flag_disable_z = true
 direction = Vector3(0, 1, 0)
@@ -219,8 +209,8 @@ spread = 180.0
 initial_velocity_min = 80.0
 initial_velocity_max = 220.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-scale_max = 1.1999999
+scale_min = 0.099999994
+scale_max = 0.14999999
 
 [node name="Game" type="Control" unique_id=929610791]
 process_mode = 3
@@ -242,18 +232,18 @@ item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x"), SubRes
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 script = ExtResource("4_eb6dy")
 
-[node name="CryoChamber" parent="RoomManager" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
+[node name="USCSS_Thessaly" type="Node" parent="RoomManager" unique_id=1633762152]
+
+[node name="CryoChamber" parent="RoomManager/USCSS_Thessaly" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = 372.0
 offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
+ship_id = null
 lockable_exits = Array[String](["junction a1"])
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
 room_name = "Cryo Chamber"
-room_description = "The whine of the cryo pod lid rouses you from your artificial sleep as the lights automatically flicker on. Looking around the room you can see two other cryo pods, empty with their lids open.
+room_description = "The whine of the cryo pod lid rouses you from your artificial sleep as the lights automatically flicker on. Looking around the room you can see three other cryo pods, empty with their lids open.
 
 A faint smell of burnt electronics and the lingering scent of chemicals fills your nostrils, not quite overpowering but nearing the threshold.
 
@@ -267,7 +257,7 @@ search_text = "Upon inspecting the room you locate the cause of the burning elec
 
 You're lucky the cryo pod was functional enough to keep you alive, let alone able to wake you again."
 
-[node name="JunctionA1" parent="RoomManager" unique_id=833546915 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA1" parent="RoomManager/USCSS_Thessaly" unique_id=833546915 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -278,25 +268,21 @@ offset_right = 617.0
 offset_bottom = -364.0
 grow_horizontal = 1
 grow_vertical = 1
-map_position = Vector2i(0, 1)
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(0, -200)
 room_name = "Junction A1"
 room_description = "The lights flicker and hum as you enter the junction. Metal pipes and wires run across the ceiling, leading to either the Cryo Chamber or the Mess Hall. "
 short_description = "This junction leads to the Cryo Chamber or the Mess Hall."
 
-[node name="MessHall" parent="RoomManager" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
+[node name="MessHall" parent="RoomManager/USCSS_Thessaly" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = 373.0
 offset_top = -817.0
 offset_right = -529.0
 offset_bottom = -1265.0
-map_position = Vector2i(1, 1)
+ship_id = null
+map_position = Vector2i(0, -400)
 hiding_spots = Array[String](["under mess hall table", "fridge"])
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
 room_name = "Mess Hall"
 room_description = "Normally a welcome sight, the current state of the Mess Hall would leave Captain Webber with a veiny bulge in her neck on the brink of bursting.
 
@@ -304,19 +290,25 @@ Shards of ceramic and glass cover the table. Several cabinets are left open and 
 items = Array[String](["pda"])
 short_description = "The fridge lightly creaks and the broken plates and mugs litter the table."
 
-[node name="ChangingRoom" parent="RoomManager" unique_id=363051856 instance=ExtResource("3_jyhfs")]
+[node name="ChangingRoom" parent="RoomManager/USCSS_Thessaly" unique_id=363051856 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = -296.0
 offset_top = -667.0
 offset_right = -1198.0
 offset_bottom = -1115.0
-map_position = Vector2i(-1, 1)
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(-300, -300)
+hiding_spots = Array[String](["locker"])
 room_name = "Changing Room"
+room_description = "As you walk into the crew changing room, you read the names on each locker:
+Webber
+Jones
+Eddison
+Scratch marks cover the fourth nameplate.
+Your locker is cracked open, the other two are securely locked. Jones' clothes litter the floor, the captain would lose her shit if she saw it like this again."
+short_description = "Clothing litters the floor here and your locker remains open."
 
-[node name="Airlock" parent="RoomManager" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
+[node name="Airlock" parent="RoomManager/USCSS_Thessaly" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -327,13 +319,11 @@ offset_right = 1157.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
-map_position = Vector2i(2, 1)
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(300, -400)
 room_name = "Airlock"
 
-[node name="Umbilical" parent="RoomManager" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
+[node name="Umbilical" parent="RoomManager/USCSS_Thessaly" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -344,30 +334,11 @@ offset_right = 1505.0
 offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
-map_position = Vector2i(3, 1)
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = "kinship"
+map_position = Vector2i(500, -400)
 room_name = "Docking Umbilical"
 
-[node name="Kinship" parent="RoomManager" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
-visible = true
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 1588.0
-offset_top = -798.0
-offset_right = 1838.0
-offset_bottom = -598.0
-grow_horizontal = 1
-grow_vertical = 1
-map_position = Vector2i(4, 1)
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
-room_name = "USCSS Kinship"
-
-[node name="Bridge" parent="RoomManager" unique_id=76881209 instance=ExtResource("3_jyhfs")]
+[node name="Bridge" parent="RoomManager/USCSS_Thessaly" unique_id=76881209 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -378,14 +349,13 @@ offset_right = 621.0
 offset_bottom = -1228.0
 grow_horizontal = 1
 grow_vertical = 1
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(0, -900)
 room_name = "Bridge"
 items = Array[String](["credentials"])
 hidden_exits = Array[String](["vent"])
 
-[node name="ComputerRoom" parent="RoomManager" unique_id=267301003 instance=ExtResource("3_jyhfs")]
+[node name="ComputerRoom" parent="RoomManager/USCSS_Thessaly" unique_id=267301003 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -396,13 +366,12 @@ offset_right = 118.0
 offset_bottom = -1230.0
 grow_horizontal = 1
 grow_vertical = 1
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(-250, -800)
 room_name = "Computer Room"
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
-[node name="MedBay" parent="RoomManager" unique_id=477782257 instance=ExtResource("3_jyhfs")]
+[node name="MedBay" parent="RoomManager/USCSS_Thessaly" unique_id=477782257 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -413,13 +382,12 @@ offset_right = 1179.0
 offset_bottom = -1223.0
 grow_horizontal = 1
 grow_vertical = 1
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(250, -800)
 room_name = "Med Bay"
 hidden_exits = Array[String](["vent"])
 
-[node name="MedVent" parent="RoomManager" unique_id=53633462 instance=ExtResource("3_jyhfs")]
+[node name="MedVent" parent="RoomManager/USCSS_Thessaly" unique_id=53633462 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -431,23 +399,21 @@ offset_bottom = -1165.0
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(1.032306, 0.36248073)
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(150, -850)
 room_name = "Vent"
 
-[node name="JunctionA3" parent="RoomManager" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA3" parent="RoomManager/USCSS_Thessaly" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = -293.0
 offset_top = -1078.0
 offset_right = -1195.0
 offset_bottom = -1526.0
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(-300, -600)
 room_name = "Junction A3"
 
-[node name="JunctionA2" parent="RoomManager" unique_id=586666453 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA2" parent="RoomManager/USCSS_Thessaly" unique_id=586666453 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -458,12 +424,11 @@ offset_right = 628.0
 offset_bottom = -894.0
 grow_horizontal = 1
 grow_vertical = 1
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(0, -600)
 room_name = "Junction A2"
 
-[node name="JunctionA4" parent="RoomManager" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA4" parent="RoomManager/USCSS_Thessaly" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -474,20 +439,19 @@ offset_right = 1180.0
 offset_bottom = -905.0
 grow_horizontal = 1
 grow_vertical = 1
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+ship_id = null
+map_position = Vector2i(300, -600)
 room_name = "Junction A4"
 
-[node name="JunctionA5" parent="RoomManager" unique_id=396502791 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA5" parent="RoomManager/USCSS_Thessaly" unique_id=396502791 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = 46.0
 offset_top = -292.0
 offset_right = -856.0
 offset_bottom = -740.0
+ship_id = null
+map_position = Vector2i(-200, 0)
 smoke_enabled = true
-sparks_enabled = null
-lights_flicker_enabled = null
 room_name = "Junction A5"
 room_description = "The lights flicker in the junction flicker for a moment, attempting to illuminate the corridor.
 
@@ -495,17 +459,22 @@ In a final attempt the lights begin to glow brightly before popping, sending spa
 
 The only light you can see emanates dimly from the Changing Room and the Cryo Chamber"
 
-[node name="Node" type="Node" parent="RoomManager" unique_id=1976474899]
+[node name="USCSS_Kinship" type="Node" parent="RoomManager" unique_id=1976474899]
 
-[node name="GameRoom" parent="RoomManager/Node" unique_id=1117398016 instance=ExtResource("3_jyhfs")]
+[node name="Kinship" parent="RoomManager/USCSS_Kinship" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
 visible = true
-offset_left = 2036.0
-offset_top = -794.0
-offset_right = 1134.0
-offset_bottom = -1242.0
-smoke_enabled = null
-sparks_enabled = null
-lights_flicker_enabled = null
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1588.0
+offset_top = -798.0
+offset_right = 1838.0
+offset_bottom = -598.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = null
+map_position = Vector2i(900, -400)
+room_name = "USCSS Kinship"
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
@@ -665,8 +634,8 @@ process_material = SubResource("ParticleProcessMaterial_py3kj")
 [node name="SparkParticles" type="GPUParticles2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=1413777195]
 position = Vector2(444, 334)
 emitting = false
-amount = 12
-texture = SubResource("GradientTexture2D_dp3eg")
+amount = 1
+texture = ExtResource("19_0ld40")
 lifetime = 0.25
 one_shot = true
 explosiveness = 1.0

@@ -43,7 +43,7 @@ func initialize(starting_room: GameRoom, request_name: bool = true):
 	awaiting_name = request_name
 	
 	if request_name:
-		emit_signal("response_generated", "Identify yourself, crew member.\nEnter your name:")
+		emit_signal("response_generated", "----------------------------------------------------------------------\n\nIdentify yourself, crew member.\nEnter your name:")
 
 func _ready() -> void:
 	for d in item_data:

@@ -4,6 +4,7 @@ class_name GameRoom
 
 
 @export_group("Map Settings")
+@export var ship_id: String = "thessaly"
 @export_range(1,20) var deck_number: int = 1
 @export var map_position: Vector2i = Vector2i.ZERO
 

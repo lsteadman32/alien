@@ -24,7 +24,6 @@ var waiting_for_xenomorph_event := false
 var paused = false
 
 func _ready() -> void:
-	handle_response_generated("")
 	$PauseLayer/PauseRoot.resume_requested.connect(resume_game_input)
 	
 	scroll.get_v_scroll_bar().changed.connect(_scroll_to_bottom)
@@ -176,6 +175,16 @@ func _scroll_to_bottom() -> void:
 	scroll.scroll_vertical = int(scroll.get_v_scroll_bar().max_value)
 
 func add_response_to_game(response: Control):
+	var response_label: Label
+	
+	if response is Label:
+		response_label = response
+	elif response.has_node("Response"):
+		response_label = response.get_node("Response")
+	
+	if response_label != null:
+		response_label.text += "\n\n----------------------------------------------------------------------"
+	
 	history_rows.add_child(response)
 	await get_tree().process_frame
 	await get_tree().process_frame

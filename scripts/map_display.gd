@@ -57,7 +57,10 @@ func _ready() -> void:
 	header.add_child(next_button)
 
 func _refresh_available_decks() -> void:
-	available_decks = room_manager.get_available_decks()
+	if current_room == null:
+		return
+		
+	available_decks = room_manager.get_available_decks(current_room.ship_id)
 
 	if available_decks.is_empty():
 		available_decks.append(1)
@@ -94,12 +97,13 @@ func _next_deck() -> void:
 
 func setup(manager: Node) -> void:
 	room_manager = manager
-	_refresh_available_decks()
 	queue_redraw()
 
 
 func set_current_room(room: GameRoom) -> void:
 	current_room = room
+	
+	_refresh_available_decks()
 	
 	if available_decks.has(room.deck_number):
 		selected_deck = room.deck_number
@@ -126,7 +130,7 @@ func _draw() -> void:
 	var discovered_rooms: Array[GameRoom] = []
 
 	# First, collect rooms the player has actually visited.
-	for room in room_manager.get_rooms_on_deck(selected_deck):
+	for room in room_manager.get_rooms_on_deck(selected_deck, current_room.ship_id):
 		if room.room_name.strip_edges() == "" or room.room_name == "Name":
 			continue
 		if room.visited or room == current_room:
@@ -146,7 +150,7 @@ func _draw() -> void:
 			if connected_room == null:
 				continue
 
-			if connected_room.deck_number != selected_deck:
+			if connected_room.deck_number != selected_deck or connected_room.ship_id != current_room.ship_id:
 				continue
 
 			if connected_room.room_name.strip_edges() == "" or connected_room.room_name == "Name":
@@ -173,7 +177,7 @@ func _draw() -> void:
 	var room_centers: Dictionary = {}
 
 	for room in visible_rooms:
-		var center := room.global_position + room.size / 2.0
+		var center := Vector2(room.map_position)
 		room_centers[room] = center
 
 		min_position.x = min(min_position.x, center.x)
