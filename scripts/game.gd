@@ -17,7 +17,7 @@ const Response = preload("res://scenes/response.tscn")
 @onready var xenomorph: Xenomorph = $Xenomorph
 @onready var map_display = $MapLayer/MapDisplay
 @onready var smoke_particles: GPUParticles2D = $EnvironmentEffectsLayer/EffectsOverlay/SmokeParticles
-
+@onready var scripted_spark_trails: GPUParticles2D = $EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails
 
 var pending_xenomorph_events: Array[String] = []
 var waiting_for_xenomorph_event := false
@@ -50,6 +50,7 @@ func _ready() -> void:
 	
 	var starting_room: GameRoom = room_manager.get_node("USCSS_Thessaly/Deck1/CryoChamber")
 	smoke_particles.emitting = starting_room.smoke_enabled
+	_update_room_sparks(starting_room)
 	
 	var loading_saved_game: bool = SaveManager.load_on_next_scene
 	
@@ -210,7 +211,13 @@ func _toggle_map() -> void:
 func _on_player_moved(_previous_room: GameRoom, new_room: GameRoom) -> void:
 	map_display.set_current_room(new_room)
 	smoke_particles.emitting = new_room.smoke_enabled
+	_update_room_sparks(new_room)
 
 func _open_map() -> void:
 	map_display.show()
 	map_display.set_current_room(command_processor.current_room)
+
+func _update_room_sparks(room: GameRoom) -> void:
+	if room.sparks_enabled and not room.sparks_played:
+		scripted_spark_trails.trigger_screen_burst()
+		room.sparks_played = true

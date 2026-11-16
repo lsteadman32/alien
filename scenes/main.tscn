@@ -656,7 +656,6 @@ randomness = 0.8
 process_material = SubResource("ParticleProcessMaterial_dp3eg")
 
 [node name="ScriptedSparkTrails" type="Node2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=372514803]
-position = Vector2(444, 334)
 script = ExtResource("19_0ld40")
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]

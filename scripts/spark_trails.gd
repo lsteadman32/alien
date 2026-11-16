@@ -10,7 +10,6 @@ extends Node2D
 @export var trail_spacing: float = 0.025
 
 var sparks: Array[Dictionary] = []
-var emission_timer: float = 0.0
 
 
 func _ready() -> void:
@@ -18,11 +17,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	emission_timer -= delta
-
-	if emission_timer <= 0.0:
-		_emit_burst()
-		emission_timer = randf_range(1.5, 4.0)
 
 	for i in range(sparks.size() - 1, -1, -1):
 		var spark: Dictionary = sparks[i]
@@ -46,13 +40,13 @@ func _process(delta: float) -> void:
 
 	queue_redraw()
 
-func _emit_burst() -> void:
-	var burst_size := randi_range(3, 7)
+func _emit_burst_at(origin: Vector2) -> void:
+	var burst_size := randi_range(4, 7)
 	
 	for i in range(burst_size):
-		_emit_spark()
+		_emit_spark(origin)
 
-func _emit_spark() -> void:
+func _emit_spark(origin: Vector2) -> void:
 	var angle := randf_range(0.0, TAU)
 	var speed := randf_range(spark_speed_min, spark_speed_max)
 	
@@ -62,11 +56,11 @@ func _emit_spark() -> void:
 	)
 	
 	sparks.append({
-		"position": Vector2.ZERO,
+		"position": origin,
 		"velocity": velocity,
 		"age" : 0.0,
 		"trail_timer" : 0.0,
-		"trail": [Vector2.ZERO]
+		"trail": [origin]
 	})
 
 
@@ -93,3 +87,14 @@ func _draw() -> void:
 			2.0,
 			Color(1.0, 0.95, 0.75, lifetime_ratio)
 		)
+
+func trigger_screen_burst() -> void:
+	var viewport_size := get_viewport_rect().size
+	var burst_count := randi_range(8, 14)
+	
+	for i in range (burst_count):
+		var random_position := Vector2(
+			randf_range(0.0, viewport_size.x),
+			randf_range(0.0, viewport_size.y)
+		)
+		_emit_burst_at(random_position)
