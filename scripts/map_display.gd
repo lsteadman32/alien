@@ -12,6 +12,7 @@ var next_button: Button
 const MAP_MARGIN := 60.0
 const MAP_HEADER_HEIGHT := 90.0
 const ROOM_RADIUS := 9.0
+const SHIP_UMBILICAL := "docking_umbilical"
 
 const COLOR_BACKGROUND := Color(0.02, 0.06, 0.05, 0.96)
 const COLOR_CONNECTION := Color(0.2, 0.55, 0.42, 0.7)
@@ -102,6 +103,10 @@ func setup(manager: Node) -> void:
 
 func set_current_room(room: GameRoom) -> void:
 	current_room = room
+	var is_umbilical := room.ship_id == SHIP_UMBILICAL
+	deck_label.visible = not is_umbilical
+	previous_button.visible = not is_umbilical
+	next_button.visible = not is_umbilical
 	
 	_refresh_available_decks()
 	
@@ -122,10 +127,14 @@ func set_deck(deck: int) -> void:
 
 
 func _draw() -> void:
-	if room_manager == null:
+	if room_manager == null or current_room == null:
 		return
-
+	
 	draw_rect(Rect2(Vector2.ZERO, size), COLOR_BACKGROUND, true)
+	
+	if current_room.ship_id == SHIP_UMBILICAL:
+		_draw_umbilical_map()
+		return
 
 	var discovered_rooms: Array[GameRoom] = []
 
@@ -290,3 +299,49 @@ func _draw() -> void:
 			14,
 			COLOR_TEXT
 		)
+
+
+func _draw_umbilical_map() -> void:
+	var center_y := size.y * 0.5
+	var left_x := size.x * 0.25
+	var right_x := size.x * 0.75
+
+	var left_point := Vector2(left_x, center_y)
+	var right_point := Vector2(right_x, center_y)
+
+	# Connection between the two airlocks.
+	draw_line(
+		left_point,
+		right_point,
+		COLOR_CONNECTION,
+		3.0,
+		true
+	)
+
+	# Airlock markers.
+	draw_circle(left_point, ROOM_RADIUS, COLOR_ROOM)
+	draw_circle(right_point, ROOM_RADIUS, COLOR_ROOM)
+
+	# Airlock labels.
+	var font := ThemeDB.fallback_font
+	var font_size := 18
+
+	draw_string(
+		font,
+		Vector2(left_x - 100, center_y + 40),
+		"THESSALY AIRLOCK",
+		HORIZONTAL_ALIGNMENT_CENTER,
+		200,
+		font_size,
+		COLOR_TEXT
+	)
+
+	draw_string(
+		font,
+		Vector2(right_x - 100, center_y + 40),
+		"KINSHIP AIRLOCK",
+		HORIZONTAL_ALIGNMENT_CENTER,
+		200,
+		font_size,
+		COLOR_TEXT
+	)
