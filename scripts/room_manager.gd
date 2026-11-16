@@ -24,8 +24,8 @@ const SHIP_CONNECTIONS := {
 }
 
 const DOCKING_CONNECTIONS := [
-	["USCSS_Thessaly/Deck1/ThessalyAirlock", "USCSS_Thessaly/Deck1/Umbilical"],
-	["USCSS_Thessaly/Deck1/Umbilical", "USCSS_Kinship/KinshipAirlock"]
+	["USCSS_Thessaly/ThessalyAirlock", "USCSS_Thessaly/Umbilical"],
+	["USCSS_Thessaly/Umbilical", "USCSS_Kinship/KinshipAirlock"]
 ]
 
 func _ready() -> void:
@@ -71,10 +71,10 @@ func _ready() -> void:
 
 	# Ladder rooms.
 	var junction_a3 := _find_ship_room("USCSS_Thessaly", "JunctionA3")
-	var sub_junction_a3 := _find_ship_room("USCSS_Thessaly", "SubJunctionA3")
+	var junction_b3 := _find_ship_room("USCSS_Thessaly", "JunctionB3")
 
-	if junction_a3 != null and sub_junction_a3 != null:
-		connect_ladder(junction_a3, sub_junction_a3)
+	if junction_a3 != null and junction_b3 != null:
+		connect_ladder(junction_a3, junction_b3)
 
 	# Door locks.
 	var airlock := _find_ship_room("USCSS_Thessaly", "ThessalyAirlock")

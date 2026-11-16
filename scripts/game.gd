@@ -48,7 +48,7 @@ func _ready() -> void:
 	command_processor.player_moved.connect(_on_player_moved)
 	xenomorph.xenomorph_event.connect(_on_xenomorph_event)
 	
-	var starting_room: GameRoom = room_manager.get_node("USCSS_Thessaly/CryoChamber")
+	var starting_room: GameRoom = room_manager.get_node("USCSS_Thessaly/Deck1/CryoChamber")
 	smoke_particles.emitting = starting_room.smoke_enabled
 	
 	var loading_saved_game: bool = SaveManager.load_on_next_scene
