@@ -98,12 +98,17 @@ func hide_exit(a: GameRoom, b: GameRoom) -> void:
 	a.hidden_exits.append(b.room_name.to_lower())
 
 func get_rooms_on_deck(deck: int, ship_id: String) -> Array[GameRoom]:
-	var result: Array[GameRoom] = []
-	
+	var result: Array[GameRoom] = []	
 	var rooms: Array = find_children("*", "GameRoom", true, false)
 	
 	for room in rooms:
-		if room.deck_number == deck and room.ship_id == ship_id:
+		var belongs_to_ship: bool = room.ship_id == ship_id
+		var is_docking_umbilical: bool = (
+			room.ship_id == "docking_umbilical"
+			and ship_id in ["thessaly", "kinship"]
+		)
+	
+		if room.deck_number == deck and (belongs_to_ship or is_docking_umbilical):
 			result.append(room)
 	
 	return result
