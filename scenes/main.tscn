@@ -452,6 +452,7 @@ offset_right = -856.0
 offset_bottom = -740.0
 map_position = Vector2i(-200, 0)
 smoke_enabled = true
+sparks_enabled = true
 room_name = "Junction A5"
 room_description = "The lights flicker in the junction flicker for a moment, attempting to illuminate the corridor.
 
@@ -657,6 +658,15 @@ process_material = SubResource("ParticleProcessMaterial_dp3eg")
 
 [node name="ScriptedSparkTrails" type="Node2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=372514803]
 script = ExtResource("19_0ld40")
+
+[node name="RoomDarkening" type="ColorRect" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=1108348090]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]

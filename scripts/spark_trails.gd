@@ -5,7 +5,7 @@ extends Node2D
 @export var spark_speed_min: float = 90.0
 @export var spark_speed_max: float = 180.0
 @export var gravity: float = 350.0
-@export var spark_lifetime: float = 0.45
+@export var spark_lifetime: float = 0.8
 @export var trail_length: int = 9
 @export var trail_spacing: float = 0.025
 
@@ -74,7 +74,7 @@ func _draw() -> void:
 			var fade := 1.0 - (float(i) / maxf(float(trail_length), 1.0))
 			var alpha := fade * lifetime_ratio
 
-			var radius := lerpf(1.5, 0.4, float(i) / maxf(float(trail_length), 1.0))
+			var radius := lerpf(2.5, 0.8, float(i) / maxf(float(trail_length), 1.0))
 
 			draw_circle(
 				trail[i],
@@ -84,7 +84,7 @@ func _draw() -> void:
 
 		draw_circle(
 			spark["position"],
-			2.0,
+			3.0,
 			Color(1.0, 0.95, 0.75, lifetime_ratio)
 		)
 

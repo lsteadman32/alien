@@ -17,7 +17,10 @@ const Response = preload("res://scenes/response.tscn")
 @onready var xenomorph: Xenomorph = $Xenomorph
 @onready var map_display = $MapLayer/MapDisplay
 @onready var smoke_particles: GPUParticles2D = $EnvironmentEffectsLayer/EffectsOverlay/SmokeParticles
-@onready var scripted_spark_trails: GPUParticles2D = $EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails
+@onready var scripted_spark_trails: Node2D = $EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails
+@onready var room_darkening: ColorRect = $EnvironmentEffectsLayer/EffectsOverlay/RoomDarkening
+@onready var room_darkness_alpha: float = 0.18
+@onready var room_darkness_fade_time: float = 1.5
 
 var pending_xenomorph_events: Array[String] = []
 var waiting_for_xenomorph_event := false
@@ -50,12 +53,14 @@ func _ready() -> void:
 	
 	var starting_room: GameRoom = room_manager.get_node("USCSS_Thessaly/Deck1/CryoChamber")
 	smoke_particles.emitting = starting_room.smoke_enabled
-	_update_room_sparks(starting_room)
 	
 	var loading_saved_game: bool = SaveManager.load_on_next_scene
 	
 	command_processor.initialize(starting_room, not loading_saved_game)
 	xenomorph.initialize(starting_room)
+	
+	if not loading_saved_game:
+		_update_room_sparks(starting_room)
 	
 	map_display.setup(room_manager)
 	map_display.set_current_room((command_processor.current_room))
@@ -71,6 +76,7 @@ func _ready() -> void:
 func _load_pending_save() -> void:
 	if load_game():
 		map_display.set_current_room(command_processor.current_room)
+		_update_room_sparks(command_processor.current_room)
 		print("Game: Saved game restored successfully.")
 		print("Restored room: ", command_processor.current_room.room_name)
 		print("Restored inventory: ", command_processor.inventory)
@@ -221,3 +227,22 @@ func _update_room_sparks(room: GameRoom) -> void:
 	if room.sparks_enabled and not room.sparks_played:
 		scripted_spark_trails.trigger_screen_burst()
 		room.sparks_played = true
+		
+		await get_tree().create_timer(0.8).timeout
+		
+		if command_processor.current_room == room:
+			_set_room_darkness(true)
+		
+		else:
+			_set_room_darkness(false)
+
+func _set_room_darkness(enabled: bool) -> void:
+	var target_alpha := room_darkness_alpha if enabled else 0.0
+	
+	var tween := create_tween()
+	tween.tween_property(
+		room_darkening,
+		"color.a",
+		target_alpha,
+		room_darkness_fade_time
+	)
