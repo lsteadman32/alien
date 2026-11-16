@@ -411,7 +411,7 @@ offset_right = -1195.0
 offset_bottom = -1526.0
 deck_number = 2
 map_position = Vector2i(-300, -500)
-room_name = "Junction A3"
+room_name = "Sub Junction A3"
 
 [node name="JunctionA2" parent="RoomManager/USCSS_Thessaly" unique_id=586666453 instance=ExtResource("3_jyhfs")]
 visible = true

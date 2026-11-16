@@ -79,6 +79,12 @@ func _ready() -> void:
 		$USCSS_Thessaly/Bridge
 	)
 
+	#Ladder rooms.
+	connect_ladder(
+		$USCSS_Thessaly/JunctionA3,
+		$USCSS_Thessaly/SubJunctionA3
+	)
+
 	# Door locks.
 	lock_exit(
 		$USCSS_Thessaly/ThessalyAirlock,
@@ -87,6 +93,10 @@ func _ready() -> void:
 	)
 
 func connect_rooms(a: GameRoom, b: GameRoom) -> void:
+	a.exits[b.room_name.to_lower()] = a.get_path_to(b)
+	b.exits[a.room_name.to_lower()] = b.get_path_to(a)
+
+func connect_ladder(a: GameRoom, b: GameRoom) -> void:
 	connect_rooms(a, b)
 	
 	var exit_a: String = b.room_name.to_lower()
@@ -97,10 +107,6 @@ func connect_rooms(a: GameRoom, b: GameRoom) -> void:
 	
 	if not b.ladder_exits.has(exit_b):
 		b.ladder_exits.append(exit_a)
-	
-	a.exits[b.room_name.to_lower()] = a.get_path_to(b)
-	b.exits[a.room_name.to_lower()] = b.get_path_to(a)
-	
 
 func lock_exit(a: GameRoom, b: GameRoom, key_id) -> void:
 	a.locked_exits[b.room_name.to_lower()] = key_id
