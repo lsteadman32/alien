@@ -14,8 +14,8 @@ const SHIP_CONNECTIONS := {
 		["JunctionA2", "JunctionA4"],
 		["JunctionA4", "MedBay"],
 		["MessHall", "JunctionA2"],
-		["MessHall", "Airlock"],
-		["Airlock", "JunctionA4"]
+		["MessHall", "ThessalyAirlock"],
+		["ThessalyAirlock", "JunctionA4"]
 	],
 
 	"USCSS_Kinship": [
@@ -24,8 +24,8 @@ const SHIP_CONNECTIONS := {
 }
 
 const DOCKING_CONNECTIONS := [
-	["USCSS_Thessaly/Airlock", "USCSS_Thessaly/Umbilical"],
-	["USCSS_Thessaly/Umbilical", "USCSS_Kinship/Kinship"]
+	["USCSS_Thessaly/ThessalyAirlock", "USCSS_Thessaly/Umbilical"],
+	["USCSS_Thessaly/Umbilical", "USCSS_Kinship/KinshipAirlock"]
 ]
 
 func _ready() -> void:
@@ -81,7 +81,7 @@ func _ready() -> void:
 
 	# Door locks.
 	lock_exit(
-		$USCSS_Thessaly/Airlock,
+		$USCSS_Thessaly/ThessalyAirlock,
 		$USCSS_Thessaly/Umbilical,
 		"credentials"
 	)
