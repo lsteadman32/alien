@@ -8,7 +8,7 @@ signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 signal player_made_noise(intensity: int)
 signal map_requested
 
-const COMMANDS := ["go", "wait","help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "lock", "use", "access", "back"]
+const COMMANDS := ["go", "climb", "wait","help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "lock", "use", "access", "back"]
 
 var current_room: GameRoom
 var previous_room: GameRoom
@@ -84,6 +84,8 @@ func process_command(_input: String) -> String:
 			return go("back")
 		"go", "move":
 			return go(second_word)
+		"climb":
+			return climb(second_word)
 		"help":
 			return help()
 		"map":
@@ -134,6 +136,29 @@ func go(second_word: String) -> String:
 	if current_room.secured_exits.has(exit_name):
 		return "The door to %s is securely fastened." % exit_name
 	return move_to(current_room.get_exit((exit_name)))
+
+func climb(direction: String) -> String:
+	if direction not in ["up", "down"]:
+		return "Climb where? Try 'climb up' or 'climb down'."
+	
+	var destination: GameRoom = null
+	for exit_name in current_room.ladder_exits:
+		var target: GameRoom = current_room.get_exit(exit_name)
+	
+		if target == null:
+			continue
+		
+		if direction == "up" and target.deck_number < current_room.deck_number:
+			destination = target
+			break
+		
+		if direction == "down" and target.deck_number > current_room.deck_number:
+			destination = target
+			break
+	if destination == null:
+		return "There is no ladder leading %s from here." % direction
+	
+	return move_to(destination)
 
 func lock(target: String) -> String:
 	if target == "":

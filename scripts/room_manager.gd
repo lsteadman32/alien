@@ -24,8 +24,8 @@ const SHIP_CONNECTIONS := {
 }
 
 const DOCKING_CONNECTIONS := [
-	["USCSS_Thessaly/ThessalyAirlock", "USCSS_Thessaly/Umbilical"],
-	["USCSS_Thessaly/Umbilical", "USCSS_Kinship/KinshipAirlock"]
+	["USCSS_Thessaly/Deck1/ThessalyAirlock", "USCSS_Thessaly/Deck1/Umbilical"],
+	["USCSS_Thessaly/Deck1/Umbilical", "USCSS_Kinship/KinshipAirlock"]
 ]
 
 func _ready() -> void:
@@ -38,13 +38,8 @@ func _ready() -> void:
 			continue
 
 		for connection in SHIP_CONNECTIONS[ship_name]:
-			var room_a := ship_node.get_node_or_null(
-				NodePath(connection[0])
-			) as GameRoom
-
-			var room_b := ship_node.get_node_or_null(
-				NodePath(connection[1])
-			) as GameRoom
+			var room_a := _find_ship_room(ship_name, connection[0])
+			var room_b := _find_ship_room(ship_name, connection[1])
 
 			if room_a == null or room_b == null:
 				push_error("RoomManager: Invalid connection on " + ship_name)
@@ -54,13 +49,8 @@ func _ready() -> void:
 
 	# Build docking connections.
 	for connection in DOCKING_CONNECTIONS:
-		var room_a := get_node_or_null(
-			NodePath(connection[0])
-		) as GameRoom
-
-		var room_b := get_node_or_null(
-			NodePath(connection[1])
-		) as GameRoom
+		var room_a := _find_room_from_path(connection[0])
+		var room_b := _find_room_from_path(connection[1])
 
 		if room_a == null or room_b == null:
 			push_error("RoomManager: Invalid docking connection.")
@@ -69,28 +59,49 @@ func _ready() -> void:
 		connect_rooms(room_a, room_b)
 
 	# Hidden room connections.
-	connect_rooms(
-		$USCSS_Thessaly/MedVent,
-		$USCSS_Thessaly/MedBay
-	)
+	var med_vent := _find_ship_room("USCSS_Thessaly", "MedVent")
+	var med_bay := _find_ship_room("USCSS_Thessaly", "MedBay")
+	var bridge := _find_ship_room("USCSS_Thessaly", "Bridge")
 
-	connect_rooms(
-		$USCSS_Thessaly/MedVent,
-		$USCSS_Thessaly/Bridge
-	)
+	if med_vent != null and med_bay != null:
+		connect_rooms(med_vent, med_bay)
 
-	#Ladder rooms.
-	connect_ladder(
-		$USCSS_Thessaly/JunctionA3,
-		$USCSS_Thessaly/SubJunctionA3
-	)
+	if med_vent != null and bridge != null:
+		connect_rooms(med_vent, bridge)
+
+	# Ladder rooms.
+	var junction_a3 := _find_ship_room("USCSS_Thessaly", "JunctionA3")
+	var sub_junction_a3 := _find_ship_room("USCSS_Thessaly", "SubJunctionA3")
+
+	if junction_a3 != null and sub_junction_a3 != null:
+		connect_ladder(junction_a3, sub_junction_a3)
 
 	# Door locks.
-	lock_exit(
-		$USCSS_Thessaly/ThessalyAirlock,
-		$USCSS_Thessaly/Umbilical,
-		"credentials"
-	)
+	var airlock := _find_ship_room("USCSS_Thessaly", "ThessalyAirlock")
+	var umbilical := _find_ship_room("USCSS_Thessaly", "Umbilical")
+
+	if airlock != null and umbilical != null:
+		lock_exit(airlock, umbilical, "credentials")
+
+
+func _find_ship_room(ship_name: String, room_node_name: String) -> GameRoom:
+	var ship_node := get_node_or_null(NodePath(ship_name))
+
+	if ship_node == null:
+		push_error("RoomManager: Ship not found: " + ship_name)
+		return null
+
+	return ship_node.find_child(room_node_name, true, false) as GameRoom
+
+
+func _find_room_from_path(path: String) -> GameRoom:
+	var parts := path.split("/", false)
+
+	if parts.size() != 2:
+		push_error("RoomManager: Invalid room path: " + path)
+		return null
+
+	return _find_ship_room(parts[0], parts[1]) 
 
 func connect_rooms(a: GameRoom, b: GameRoom) -> void:
 	a.exits[b.room_name.to_lower()] = a.get_path_to(b)

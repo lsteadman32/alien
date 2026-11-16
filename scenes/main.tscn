@@ -234,7 +234,9 @@ script = ExtResource("4_eb6dy")
 
 [node name="USCSS_Thessaly" type="Node" parent="RoomManager" unique_id=1633762152]
 
-[node name="CryoChamber" parent="RoomManager/USCSS_Thessaly" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
+[node name="Deck1" type="Node" parent="RoomManager/USCSS_Thessaly" unique_id=1715796804]
+
+[node name="CryoChamber" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=1423448244 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = 372.0
 offset_top = -290.0
@@ -256,7 +258,7 @@ search_text = "Upon inspecting the room you locate the cause of the burning elec
 
 You're lucky the cryo pod was functional enough to keep you alive, let alone able to wake you again."
 
-[node name="JunctionA1" parent="RoomManager/USCSS_Thessaly" unique_id=833546915 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA1" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=833546915 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -272,7 +274,7 @@ room_name = "Junction A1"
 room_description = "The lights flicker and hum as you enter the junction. Metal pipes and wires run across the ceiling, leading to either the Cryo Chamber or the Mess Hall. "
 short_description = "This junction leads to the Cryo Chamber or the Mess Hall."
 
-[node name="MessHall" parent="RoomManager/USCSS_Thessaly" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
+[node name="MessHall" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=1237955491 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = 373.0
 offset_top = -817.0
@@ -287,7 +289,7 @@ Shards of ceramic and glass cover the table. Several cabinets are left open and 
 items = Array[String](["pda"])
 short_description = "The fridge lightly creaks and the broken plates and mugs litter the table."
 
-[node name="ChangingRoom" parent="RoomManager/USCSS_Thessaly" unique_id=363051856 instance=ExtResource("3_jyhfs")]
+[node name="ChangingRoom" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=363051856 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = -296.0
 offset_top = -667.0
@@ -304,7 +306,7 @@ Scratch marks cover the fourth nameplate.
 Your locker is cracked open, the other two are securely locked. Jones' clothes litter the floor, the captain would lose her shit if she saw it like this again."
 short_description = "Clothing litters the floor here and your locker remains open."
 
-[node name="ThessalyAirlock" parent="RoomManager/USCSS_Thessaly" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
+[node name="ThessalyAirlock" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=2058321759 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -318,7 +320,7 @@ grow_vertical = 1
 map_position = Vector2i(300, -400)
 room_name = "Thessaly Airlock"
 
-[node name="Umbilical" parent="RoomManager/USCSS_Thessaly" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
+[node name="Umbilical" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -333,7 +335,7 @@ ship_id = "docking_umbilical"
 map_position = Vector2i(500, -400)
 room_name = "Docking Umbilical"
 
-[node name="Bridge" parent="RoomManager/USCSS_Thessaly" unique_id=76881209 instance=ExtResource("3_jyhfs")]
+[node name="Bridge" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=76881209 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -349,7 +351,7 @@ room_name = "Bridge"
 items = Array[String](["credentials"])
 hidden_exits = Array[String](["vent"])
 
-[node name="ComputerRoom" parent="RoomManager/USCSS_Thessaly" unique_id=267301003 instance=ExtResource("3_jyhfs")]
+[node name="ComputerRoom" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=267301003 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -364,7 +366,7 @@ map_position = Vector2i(-250, -800)
 room_name = "Computer Room"
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
-[node name="MedBay" parent="RoomManager/USCSS_Thessaly" unique_id=477782257 instance=ExtResource("3_jyhfs")]
+[node name="MedBay" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=477782257 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -379,7 +381,7 @@ map_position = Vector2i(250, -800)
 room_name = "Med Bay"
 hidden_exits = Array[String](["vent"])
 
-[node name="MedVent" parent="RoomManager/USCSS_Thessaly" unique_id=53633462 instance=ExtResource("3_jyhfs")]
+[node name="MedVent" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=53633462 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -394,26 +396,17 @@ scale = Vector2(1.032306, 0.36248073)
 map_position = Vector2i(150, -850)
 room_name = "Vent"
 
-[node name="JunctionA3" parent="RoomManager/USCSS_Thessaly" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA3" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = -293.0
 offset_top = -1078.0
 offset_right = -1195.0
 offset_bottom = -1526.0
 map_position = Vector2i(-300, -600)
-room_name = "Junction A3"
+room_name = "Junction B3"
+room_description = "In this junction you can get to the Computer Room, the Changing Room, and Junction A2. You also see a ladder leading down to Deck 2 against the back wall of the junction."
 
-[node name="SubJunctionA3" parent="RoomManager/USCSS_Thessaly" unique_id=470806442 instance=ExtResource("3_jyhfs")]
-visible = true
-offset_left = -293.0
-offset_top = -1078.0
-offset_right = -1195.0
-offset_bottom = -1526.0
-deck_number = 2
-map_position = Vector2i(-300, -500)
-room_name = "Sub Junction A3"
-
-[node name="JunctionA2" parent="RoomManager/USCSS_Thessaly" unique_id=586666453 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA2" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=586666453 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -427,7 +420,7 @@ grow_vertical = 1
 map_position = Vector2i(0, -600)
 room_name = "Junction A2"
 
-[node name="JunctionA4" parent="RoomManager/USCSS_Thessaly" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA4" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -441,7 +434,7 @@ grow_vertical = 1
 map_position = Vector2i(300, -600)
 room_name = "Junction A4"
 
-[node name="JunctionA5" parent="RoomManager/USCSS_Thessaly" unique_id=396502791 instance=ExtResource("3_jyhfs")]
+[node name="JunctionA5" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=396502791 instance=ExtResource("3_jyhfs")]
 visible = true
 offset_left = 46.0
 offset_top = -292.0
@@ -455,6 +448,18 @@ room_description = "The lights flicker in the junction flicker for a moment, att
 In a final attempt the lights begin to glow brightly before popping, sending sparks showering down.
 
 The only light you can see emanates dimly from the Changing Room and the Cryo Chamber"
+
+[node name="Deck2" type="Node" parent="RoomManager/USCSS_Thessaly" unique_id=1244589506]
+
+[node name="JunctionB3" parent="RoomManager/USCSS_Thessaly/Deck2" unique_id=470806442 instance=ExtResource("3_jyhfs")]
+visible = true
+offset_left = -642.0
+offset_top = -1078.0
+offset_right = -1544.0
+offset_bottom = -1526.0
+deck_number = 2
+map_position = Vector2i(-300, -500)
+room_name = "Junction B3"
 
 [node name="USCSS_Kinship" type="Node" parent="RoomManager" unique_id=1976474899]
 

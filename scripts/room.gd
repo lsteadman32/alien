@@ -79,7 +79,7 @@ func describe(full: bool = true) -> String:
 func visible_exits() -> Array:
 	var result: Array = []
 	for k in exits.keys():
-		if not hidden_exits.has(k):
+		if not hidden_exits.has(k) and not ladder_exits.has(k):
 			result.append(k)
 	return result
 
