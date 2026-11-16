@@ -19,7 +19,7 @@ const Response = preload("res://scenes/response.tscn")
 @onready var smoke_particles: GPUParticles2D = $EnvironmentEffectsLayer/EffectsOverlay/SmokeParticles
 @onready var scripted_spark_trails: Node2D = $EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails
 @onready var room_darkening: ColorRect = $EnvironmentEffectsLayer/EffectsOverlay/RoomDarkening
-@onready var room_darkness_alpha: float = 0.18
+@onready var room_darkness_alpha: float = 0.40
 @onready var room_darkness_fade_time: float = 1.5
 
 var pending_xenomorph_events: Array[String] = []
@@ -237,12 +237,16 @@ func _update_room_sparks(room: GameRoom) -> void:
 			_set_room_darkness(false)
 
 func _set_room_darkness(enabled: bool) -> void:
+	print("DARKNESS FUNCTION: Enabled = ", enabled)
 	var target_alpha := room_darkness_alpha if enabled else 0.0
+	var target_color := Color(0.0, 0.0, 0.0, target_alpha)
 	
 	var tween := create_tween()
 	tween.tween_property(
 		room_darkening,
-		"color.a",
-		target_alpha,
+		"color",
+		target_color,
 		room_darkness_fade_time
 	)
+	print("DARKNESS TARGET: ", target_color)
+	print("COLORRECT CURRENT COLOR: ", room_darkening.color)
