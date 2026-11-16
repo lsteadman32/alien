@@ -87,8 +87,20 @@ func _ready() -> void:
 	)
 
 func connect_rooms(a: GameRoom, b: GameRoom) -> void:
+	connect_rooms(a, b)
+	
+	var exit_a: String = b.room_name.to_lower()
+	var exit_b: String = a.room_name.to_lower()
+	
+	if not a.ladder_exits.has(exit_a):
+		a.ladder_exits.append(exit_a)
+	
+	if not b.ladder_exits.has(exit_b):
+		b.ladder_exits.append(exit_a)
+	
 	a.exits[b.room_name.to_lower()] = a.get_path_to(b)
 	b.exits[a.room_name.to_lower()] = b.get_path_to(a)
+	
 
 func lock_exit(a: GameRoom, b: GameRoom, key_id) -> void:
 	a.locked_exits[b.room_name.to_lower()] = key_id

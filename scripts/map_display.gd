@@ -161,7 +161,11 @@ func _draw() -> void:
 
 			if connected_room.deck_number != selected_deck:
 				continue
-
+			
+			if connected_room.ship_id != current_room.ship_id \
+			and connected_room.ship_id != SHIP_UMBILICAL:
+				continue
+			
 			if connected_room.room_name.strip_edges() == "" or connected_room.room_name == "Name":
 				continue
 

@@ -403,6 +403,16 @@ offset_bottom = -1526.0
 map_position = Vector2i(-300, -600)
 room_name = "Junction A3"
 
+[node name="SubJunctionA3" parent="RoomManager/USCSS_Thessaly" unique_id=470806442 instance=ExtResource("3_jyhfs")]
+visible = true
+offset_left = -293.0
+offset_top = -1078.0
+offset_right = -1195.0
+offset_bottom = -1526.0
+deck_number = 2
+map_position = Vector2i(-300, -500)
+room_name = "Junction A3"
+
 [node name="JunctionA2" parent="RoomManager/USCSS_Thessaly" unique_id=586666453 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
@@ -448,7 +458,7 @@ The only light you can see emanates dimly from the Changing Room and the Cryo Ch
 
 [node name="USCSS_Kinship" type="Node" parent="RoomManager" unique_id=1976474899]
 
-[node name="Kinship" parent="RoomManager/USCSS_Kinship" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
+[node name="KinshipAirlock" parent="RoomManager/USCSS_Kinship" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0

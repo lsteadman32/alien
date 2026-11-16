@@ -31,6 +31,7 @@ var secured_exits: Array[String] = []
 		$MarginContainer/Rows/RoomDescription.text=desc
 @export var exits: Dictionary = {}
 @export var locked_exits: Dictionary = {}
+var ladder_exits: Array[String] = []
 @export var items: Array[String] = []
 @export var ambient_sound: AudioStream
 @export var background: Texture2D
