@@ -21,12 +21,14 @@ const Response = preload("res://scenes/response.tscn")
 @onready var room_darkening: ColorRect = $EnvironmentEffectsLayer/EffectsOverlay/RoomDarkening
 @onready var room_darkness_alpha: float = 0.60
 @onready var room_darkness_fade_time: float = .5
+@onready var crt_overlay: ColorRect = $TextEditorGUI/GUI/ScanLines
 
 var pending_xenomorph_events: Array[String] = []
 var waiting_for_xenomorph_event := false
 var paused = false
 
 func _ready() -> void:
+	crt_overlay.visible = SettingsManager.crt_enabled
 	$PauseLayer/PauseRoot.resume_requested.connect(resume_game_input)
 	
 	scroll.get_v_scroll_bar().changed.connect(_scroll_to_bottom)

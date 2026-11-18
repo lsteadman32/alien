@@ -51,6 +51,7 @@ shader_parameter/roll_strength = 0.08
 shader_parameter/tint = Color(0.3, 1, 0.7, 1)
 
 [node name="Settings" type="CanvasLayer" unique_id=137133012]
+layer = 30
 follow_viewport_enabled = true
 script = ExtResource("1_5p8wc")
 
@@ -186,6 +187,13 @@ theme_override_fonts/font = ExtResource("2_r6d6q")
 theme_override_font_sizes/font_size = 24
 text = "Fullscreen mode"
 
+[node name="CRT_Enabled" type="CheckBox" parent="SettingsControl/VBoxContainer" unique_id=886192189]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_r6d6q")
+theme_override_font_sizes/font_size = 24
+text = "CRT Effect"
+
 [node name="Close" type="Button" parent="SettingsControl/VBoxContainer" unique_id=915008658]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0.4, 1)
@@ -198,4 +206,6 @@ alignment = 0
 [connection signal="item_selected" from="SettingsControl/VBoxContainer/ResolutionLabel/Resolutions" to="." method="_on_resolutions_item_selected"]
 [connection signal="pressed" from="SettingsControl/VBoxContainer/FullScreenCheck" to="." method="_on_check_box_pressed"]
 [connection signal="toggled" from="SettingsControl/VBoxContainer/FullScreenCheck" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_check_box_pressed"]
+[connection signal="toggled" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="SettingsControl/VBoxContainer/Close" to="." method="_on_close_pressed"]

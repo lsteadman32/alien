@@ -23,6 +23,7 @@ buses/default_bus_layout="uid://bvwxrc2rmixmi"
 
 MetSys="*uid://c01ibpvrp2wsd"
 SaveManager="*uid://c861fcqagtcle"
+SettingsManager="*uid://reagovwpnk5i"
 
 [display]
 
