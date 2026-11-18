@@ -29,8 +29,13 @@ func _on_load_pressed() -> void:
 
 
 func _on_options_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/settings.tscn")
+	var settings_scene = preload("res://scenes/settings.tscn")
+	var settings = settings_scene.instantiate()
 
+	settings.opened_from_pause = true
+	settings.process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	get_tree().root.add_child(settings)
 
 func _on_menu_pressed() -> void:
 	get_tree().paused = false
