@@ -9,6 +9,8 @@ extends Node2D
 @export var trail_length: int = 9
 @export var trail_spacing: float = 0.025
 
+@onready var spark_sound: AudioStreamPlayer = $SparkSound
+
 var sparks: Array[Dictionary] = []
 
 
@@ -89,6 +91,9 @@ func _draw() -> void:
 		)
 
 func trigger_screen_burst() -> void:
+	if spark_sound.stream:
+		spark_sound.play()
+		
 	var viewport_size := get_viewport_rect().size
 	var burst_count := randi_range(8, 14)
 	

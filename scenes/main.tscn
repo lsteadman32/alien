@@ -659,6 +659,8 @@ process_material = SubResource("ParticleProcessMaterial_dp3eg")
 [node name="ScriptedSparkTrails" type="Node2D" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=372514803]
 script = ExtResource("19_0ld40")
 
+[node name="SparkSound" type="AudioStreamPlayer" parent="EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails" unique_id=865770730]
+
 [node name="RoomDarkening" type="ColorRect" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=1108348090]
 layout_mode = 1
 anchors_preset = 15

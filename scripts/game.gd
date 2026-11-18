@@ -19,8 +19,8 @@ const Response = preload("res://scenes/response.tscn")
 @onready var smoke_particles: GPUParticles2D = $EnvironmentEffectsLayer/EffectsOverlay/SmokeParticles
 @onready var scripted_spark_trails: Node2D = $EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails
 @onready var room_darkening: ColorRect = $EnvironmentEffectsLayer/EffectsOverlay/RoomDarkening
-@onready var room_darkness_alpha: float = 0.40
-@onready var room_darkness_fade_time: float = .8
+@onready var room_darkness_alpha: float = 0.60
+@onready var room_darkness_fade_time: float = .5
 
 var pending_xenomorph_events: Array[String] = []
 var waiting_for_xenomorph_event := false
@@ -224,16 +224,15 @@ func _open_map() -> void:
 	map_display.set_current_room(command_processor.current_room)
 
 func _update_room_sparks(room: GameRoom) -> void:
-	if room.sparks_enabled and not room.sparks_played:
-		scripted_spark_trails.trigger_screen_burst()
-		room.sparks_played = true
-		
-		await get_tree().create_timer(0.8).timeout
+	if room.sparks_enabled:
+		if not room.sparks_played:
+			scripted_spark_trails.trigger_screen_burst()
+			room.sparks_played = true
+			
+			await get_tree().create_timer(0.5).timeout
 		
 		if command_processor.current_room == room:
-			_set_room_darkness(true)		
-		else:
-			_set_room_darkness(false)
+			_set_room_darkness(true)
 	else:
 		_set_room_darkness(false)
 
