@@ -1,6 +1,8 @@
 extends CanvasLayer
 @onready var glow = $SettingsControl/Glow
 
+var opened_from_pause: bool = false
+
 var bus_name : String
 
 
@@ -17,9 +19,9 @@ func _ready() -> void:
 	tween.chain().tween_property(glow, "modulate:a", 0.3, 2.0)
 	tween.tween_property(glow, "scale", Vector2.ONE, 2.0)
 	
-	var bus_index: int = AudioServer.get_bus_index(bus_name)
+	var bus_index: int = AudioServer.get_bus_index("Master")
 	var current_db: float = AudioServer.get_bus_volume_db(bus_index)
-	$SettingsControl/VBoxContainer/Vol_Label/Volume.value = db_to_linear(bus_index)
+	$SettingsControl/VBoxContainer/Vol_Label/Volume.value = db_to_linear(current_db)
 
 
 func _on_volume_value_changed(value: float) -> void:
@@ -54,4 +56,6 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 
 
 func _on_close_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	if opened_from_pause:
+		queue_free()
+	else: get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

@@ -254,6 +254,7 @@ offset_top = -290.0
 offset_right = -530.0
 offset_bottom = -738.0
 lockable_exits = Array[String](["junction a1"])
+darkness_enabled = null
 room_name = "Cryo Chamber"
 room_description = "The whine of the cryo pod lid rouses you from your artificial sleep as the lights automatically flicker on. Looking around the room you can see three other cryo pods, empty with their lids open.
 
@@ -281,6 +282,7 @@ offset_bottom = -364.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(0, -200)
+darkness_enabled = null
 room_name = "Junction A1"
 room_description = "The lights flicker and hum as you enter the junction. Metal pipes and wires run across the ceiling, leading to either the Cryo Chamber or the Mess Hall. "
 short_description = "This junction leads to the Cryo Chamber or the Mess Hall."
@@ -293,6 +295,7 @@ offset_right = -529.0
 offset_bottom = -1265.0
 map_position = Vector2i(0, -400)
 hiding_spots = Array[String](["under mess hall table", "fridge"])
+darkness_enabled = null
 room_name = "Mess Hall"
 room_description = "Normally a welcome sight, the current state of the Mess Hall would leave Captain Webber with a veiny bulge in her neck on the brink of bursting.
 
@@ -308,6 +311,7 @@ offset_right = -1198.0
 offset_bottom = -1115.0
 map_position = Vector2i(-300, -300)
 hiding_spots = Array[String](["locker"])
+darkness_enabled = null
 room_name = "Changing Room"
 room_description = "As you walk into the crew changing room, you read the names on each locker:
 Webber
@@ -329,6 +333,7 @@ offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(300, -400)
+darkness_enabled = null
 room_name = "Thessaly Airlock"
 
 [node name="Umbilical" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=1066873581 instance=ExtResource("3_jyhfs")]
@@ -344,6 +349,7 @@ grow_horizontal = 1
 grow_vertical = 1
 ship_id = "docking_umbilical"
 map_position = Vector2i(500, -400)
+darkness_enabled = null
 room_name = "Docking Umbilical"
 
 [node name="Bridge" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=76881209 instance=ExtResource("3_jyhfs")]
@@ -358,6 +364,7 @@ offset_bottom = -1228.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(0, -900)
+darkness_enabled = null
 room_name = "Bridge"
 items = Array[String](["credentials"])
 hidden_exits = Array[String](["vent"])
@@ -374,6 +381,7 @@ offset_bottom = -1230.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(-250, -800)
+darkness_enabled = null
 room_name = "Computer Room"
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
@@ -389,6 +397,7 @@ offset_bottom = -1223.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(250, -800)
+darkness_enabled = null
 room_name = "Med Bay"
 hidden_exits = Array[String](["vent"])
 
@@ -405,6 +414,7 @@ grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(1.032306, 0.36248073)
 map_position = Vector2i(150, -850)
+darkness_enabled = null
 room_name = "Vent"
 
 [node name="JunctionA3" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=2017330396 instance=ExtResource("3_jyhfs")]
@@ -414,6 +424,7 @@ offset_top = -1078.0
 offset_right = -1195.0
 offset_bottom = -1526.0
 map_position = Vector2i(-300, -600)
+darkness_enabled = null
 room_name = "Junction A3"
 room_description = "In this junction you can get to the Computer Room, the Changing Room, and Junction A2. You also see a ladder leading down to Deck 2 against the back wall of the junction."
 
@@ -429,6 +440,7 @@ offset_bottom = -894.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(0, -600)
+darkness_enabled = null
 room_name = "Junction A2"
 
 [node name="JunctionA4" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=1567687208 instance=ExtResource("3_jyhfs")]
@@ -443,6 +455,7 @@ offset_bottom = -905.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(300, -600)
+darkness_enabled = null
 room_name = "Junction A4"
 
 [node name="JunctionA5" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=396502791 instance=ExtResource("3_jyhfs")]
@@ -454,6 +467,7 @@ offset_bottom = -740.0
 map_position = Vector2i(-200, 0)
 smoke_enabled = true
 sparks_enabled = true
+darkness_enabled = true
 room_name = "Junction A5"
 room_description = "The lights flicker in the junction for a moment, attempting to illuminate the corridor.
 
@@ -471,6 +485,7 @@ offset_right = -1544.0
 offset_bottom = -1526.0
 deck_number = 2
 map_position = Vector2i(-300, -500)
+darkness_enabled = true
 room_name = "Junction B3"
 room_description = "You can climb up to Deck 1 from here."
 
@@ -489,6 +504,7 @@ grow_horizontal = 1
 grow_vertical = 1
 ship_id = "kinship"
 map_position = Vector2i(900, -400)
+darkness_enabled = null
 room_name = "USCSS Kinship Airlock"
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
