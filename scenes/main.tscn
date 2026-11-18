@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://bc3lrc7lngynr" path="res://scenes/map_display.tscn" id="17_muem4"]
 [ext_resource type="Shader" uid="uid://cisxkkuwuix32" path="res://scenes/smoke.gdshader" id="18_dp3eg"]
 [ext_resource type="Script" uid="uid://d0jnwgifvvgml" path="res://scripts/spark_trails.gd" id="19_0ld40"]
+[ext_resource type="AudioStream" uid="uid://byx5eteyquj76" path="res://assets/audio/freesound_community-fluorescent-lightbulb-break-37391.mp3" id="20_gqmmt"]
 
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
@@ -454,7 +455,7 @@ map_position = Vector2i(-200, 0)
 smoke_enabled = true
 sparks_enabled = true
 room_name = "Junction A5"
-room_description = "The lights flicker in the junction flicker for a moment, attempting to illuminate the corridor.
+room_description = "The lights flicker in the junction for a moment, attempting to illuminate the corridor.
 
 In a final attempt the lights begin to glow brightly before popping, sending sparks showering down.
 
@@ -660,6 +661,7 @@ process_material = SubResource("ParticleProcessMaterial_dp3eg")
 script = ExtResource("19_0ld40")
 
 [node name="SparkSound" type="AudioStreamPlayer" parent="EnvironmentEffectsLayer/EffectsOverlay/ScriptedSparkTrails" unique_id=865770730]
+stream = ExtResource("20_gqmmt")
 
 [node name="RoomDarkening" type="ColorRect" parent="EnvironmentEffectsLayer/EffectsOverlay" unique_id=1108348090]
 layout_mode = 1

@@ -19,6 +19,7 @@ var secured_exits: Array[String] = []
 @export var smoke_enabled: bool = false
 @export var sparks_enabled: bool = false
 @export var lights_flicker_enabled: bool = false
+@export var darkness_enabled: bool = false
 var sparks_played: bool = false
 
 @export_group("Room Information")
