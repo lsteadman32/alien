@@ -207,5 +207,5 @@ alignment = 0
 [connection signal="pressed" from="SettingsControl/VBoxContainer/FullScreenCheck" to="." method="_on_check_box_pressed"]
 [connection signal="toggled" from="SettingsControl/VBoxContainer/FullScreenCheck" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_check_box_pressed"]
-[connection signal="toggled" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_check_box_toggled"]
+[connection signal="toggled" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_crt_check_toggled"]
 [connection signal="pressed" from="SettingsControl/VBoxContainer/Close" to="." method="_on_close_pressed"]

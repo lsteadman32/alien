@@ -8,7 +8,7 @@ var bus_name : String
 
 func _ready() -> void:
 	$SettingsControl/VBoxContainer/FullScreenCheck.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
-
+	$SettingsControl/VBoxContainer/CRT_Enabled.button_pressed = SettingsManager.crt_enabled
 	glow.pivot_offset = glow.size / 2
 	glow.modulate.a = 0.3
 	var tween := create_tween().set_loops()
@@ -53,7 +53,12 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		
 
-
+func _on_crt_check_toggled(toggled_on: bool) -> void:
+	SettingsManager.set_crt_enabled(toggled_on)
+	
+	var game := get_tree().current_scene
+	if game and game.has_node("TextEditorGUI/GUI/ScanLines"):
+		game.get_node("TextEditorGUI/GUI/ScanLines").visible = toggled_on
 
 func _on_close_pressed() -> void:
 	if opened_from_pause:
