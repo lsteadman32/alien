@@ -71,4 +71,10 @@ scroll_active = false
 
 [node name="BootAudio" type="AudioStreamPlayer" parent="." unique_id=224101734]
 stream = ExtResource("3_ihkx6")
+volume_db = -5.883
 playback_type = 1
+
+[node name="BootVideo" type="VideoStreamPlayer" parent="." unique_id=472530550]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
