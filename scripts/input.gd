@@ -11,8 +11,9 @@ func _ready() -> void:
 
 func _on_text_changed(new_text: String) -> void:
 	if new_text.length() > last_text_length:
-		audio_player.pitch_scale = randf_range(0.95, 1.01)
-		audio_player.play()
+		if SettingsManager.keyboard_clicks_enabled:
+			audio_player.pitch_scale = randf_range(0.95, 1.01)
+			audio_player.play()
 	last_text_length = new_text.length()
 
 func _on_text_submitted(_new_text: String) -> void:
