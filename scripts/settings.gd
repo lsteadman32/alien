@@ -9,7 +9,7 @@ var bus_name : String
 func _ready() -> void:
 	$SettingsControl/VBoxContainer/FullScreenCheck.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 	$SettingsControl/VBoxContainer/CRT_Enabled.button_pressed = SettingsManager.crt_enabled
-	$SettingsControl/VBoxContainer/PrintSoundsCheck.button_pressed = SettingsManager.keyboard_clicks_enabled
+	$SettingsControl/VBoxContainer/KeyboardClicksCheck.button_pressed = SettingsManager.keyboard_clicks_enabled
 	$SettingsControl/VBoxContainer/PrintSoundsCheck.button_pressed = SettingsManager.print_sounds_enabled
 	
 	glow.pivot_offset = glow.size / 2

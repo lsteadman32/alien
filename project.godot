@@ -27,8 +27,8 @@ SettingsManager="*uid://reagovwpnk5i"
 
 [display]
 
+window/size/mode=3
 window/stretch/mode="canvas_items"
-window/stretch/scale_mode="integer"
 
 [dotnet]
 

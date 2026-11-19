@@ -218,12 +218,8 @@ alignment = 0
 
 [connection signal="value_changed" from="SettingsControl/VBoxContainer/Vol_Label/Volume" to="." method="_on_volume_value_changed"]
 [connection signal="item_selected" from="SettingsControl/VBoxContainer/ResolutionLabel/Resolutions" to="." method="_on_resolutions_item_selected"]
-[connection signal="pressed" from="SettingsControl/VBoxContainer/FullScreenCheck" to="." method="_on_check_box_pressed"]
 [connection signal="toggled" from="SettingsControl/VBoxContainer/FullScreenCheck" to="." method="_on_check_box_toggled"]
-[connection signal="pressed" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_check_box_pressed"]
 [connection signal="toggled" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_crt_check_toggled"]
-[connection signal="pressed" from="SettingsControl/VBoxContainer/KeyboardClicksCheck" to="." method="_on_check_box_pressed"]
 [connection signal="toggled" from="SettingsControl/VBoxContainer/KeyboardClicksCheck" to="." method="_on_keyboard_clicks_toggled"]
-[connection signal="pressed" from="SettingsControl/VBoxContainer/PrintSoundsCheck" to="." method="_on_check_box_pressed"]
 [connection signal="toggled" from="SettingsControl/VBoxContainer/PrintSoundsCheck" to="." method="_on_print_sounds_toggled"]
 [connection signal="pressed" from="SettingsControl/VBoxContainer/Close" to="." method="_on_close_pressed"]
