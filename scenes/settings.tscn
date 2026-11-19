@@ -194,6 +194,20 @@ theme_override_fonts/font = ExtResource("2_r6d6q")
 theme_override_font_sizes/font_size = 24
 text = "CRT Effect"
 
+[node name="KeyboardClicksCheck" type="CheckBox" parent="SettingsControl/VBoxContainer" unique_id=2036304720]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_r6d6q")
+theme_override_font_sizes/font_size = 24
+text = "Keyboard Clicks"
+
+[node name="PrintSoundsCheck" type="CheckBox" parent="SettingsControl/VBoxContainer" unique_id=1342247927]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0.4, 1)
+theme_override_fonts/font = ExtResource("2_r6d6q")
+theme_override_font_sizes/font_size = 24
+text = "Computer Print Sounds"
+
 [node name="Close" type="Button" parent="SettingsControl/VBoxContainer" unique_id=915008658]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0.4, 1)
@@ -208,4 +222,8 @@ alignment = 0
 [connection signal="toggled" from="SettingsControl/VBoxContainer/FullScreenCheck" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_check_box_pressed"]
 [connection signal="toggled" from="SettingsControl/VBoxContainer/CRT_Enabled" to="." method="_on_crt_check_toggled"]
+[connection signal="pressed" from="SettingsControl/VBoxContainer/KeyboardClicksCheck" to="." method="_on_check_box_pressed"]
+[connection signal="toggled" from="SettingsControl/VBoxContainer/KeyboardClicksCheck" to="." method="_on_keyboard_clicks_toggled"]
+[connection signal="pressed" from="SettingsControl/VBoxContainer/PrintSoundsCheck" to="." method="_on_check_box_pressed"]
+[connection signal="toggled" from="SettingsControl/VBoxContainer/PrintSoundsCheck" to="." method="_on_print_sounds_toggled"]
 [connection signal="pressed" from="SettingsControl/VBoxContainer/Close" to="." method="_on_close_pressed"]

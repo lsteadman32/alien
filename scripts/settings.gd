@@ -9,6 +9,9 @@ var bus_name : String
 func _ready() -> void:
 	$SettingsControl/VBoxContainer/FullScreenCheck.button_pressed = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN
 	$SettingsControl/VBoxContainer/CRT_Enabled.button_pressed = SettingsManager.crt_enabled
+	$SettingsControl/VBoxContainer/PrintSoundsCheck.button_pressed = SettingsManager.keyboard_clicks_enabled
+	$SettingsControl/VBoxContainer/PrintSoundsCheck.button_pressed = SettingsManager.print_sounds_enabled
+	
 	glow.pivot_offset = glow.size / 2
 	glow.modulate.a = 0.3
 	var tween := create_tween().set_loops()
@@ -64,3 +67,11 @@ func _on_close_pressed() -> void:
 	if opened_from_pause:
 		queue_free()
 	else: get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+
+
+func _on_print_sounds_toggled(toggled_on: bool) -> void:
+	SettingsManager.set_print_sounds_enabled(toggled_on)
+
+
+func _on_keyboard_clicks_toggled(toggled_on: bool) -> void:
+	SettingsManager.set_keyboard_clicks_enabled(toggled_on)
