@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://bjqrqr1kw3cem" path="res://scenes/main_menu.tres" id="2_bqqt6"]
 [ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="2_ekxnf"]
 [ext_resource type="Texture2D" uid="uid://cfwdjc6tofogw" path="res://assets/UI/Sprite-WY.png" id="4_wu84c"]
+[ext_resource type="AudioStream" uid="uid://bntb3eo1kvnxq" path="res://assets/audio/Main Title - Jerry Goldsmith (192k).mp3" id="5_8ln24"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ogn71"]
 shader = ExtResource("2_bqqt6")
@@ -274,6 +275,11 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_wu84c")
 expand_mode = 1
 stretch_mode = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1335765318]
+stream = ExtResource("5_8ln24")
+autoplay = true
+playback_type = 1
 
 [connection signal="pressed" from="MainMenuRoot/VBoxContainer/Start" to="MainMenuRoot" method="_on_start_pressed"]
 [connection signal="pressed" from="MainMenuRoot/VBoxContainer/Continue" to="MainMenuRoot" method="_on_continue_pressed"]
