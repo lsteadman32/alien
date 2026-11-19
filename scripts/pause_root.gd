@@ -44,3 +44,8 @@ func _on_menu_pressed() -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause") and not event.is_echo():
+		resume_requested.emit()
+		get_viewport().set_input_as_handled()
