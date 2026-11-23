@@ -7,6 +7,7 @@ signal response_generated(response_text)
 signal player_moved(previous_room: GameRoom, new_room: GameRoom)
 signal player_made_noise(intensity: int)
 signal map_requested
+signal inventory_requested
 
 const COMMANDS := ["go", "climb", "wait","help", "look", "take", "get", "drop", "hide", "leave", "inventory", "examine", "map", "investigate", "inspect", "unlock", "lock", "use", "access", "back"]
 
@@ -103,7 +104,8 @@ func process_command(_input: String) -> String:
 		"drop":
 			return drop(second_word)
 		"inventory", "i":
-			return show_inventory()
+			inventory_requested.emit()
+			return "ACCESSING PERSONNEL INVENTORY..."
 		"wait":
 			return wait_turn()
 		"use", "access":

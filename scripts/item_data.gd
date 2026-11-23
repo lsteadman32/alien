@@ -6,3 +6,4 @@ class_name ItemData
 
 @export var id := ""
 @export_multiline var item_description := ""
+@export var is_toggleable: bool = false

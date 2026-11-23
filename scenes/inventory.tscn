@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://c182f1cqcru0n"]
+
+[ext_resource type="Script" uid="uid://cmu2mixb0p1p4" path="res://scripts/inventory.gd" id="1_qw0r6"]
+
+[node name="InventoryScreen" type="Control" unique_id=913505244]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qw0r6")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1528658605]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06053035, 0.06053035, 0.060530342, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1211182944]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainLayout" type="VBoxContainer" parent="MarginContainer" unique_id=489205700]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="Label" parent="MarginContainer/MainLayout" unique_id=15746882]
+layout_mode = 2
+text = "PERSONNEL INVENTORY"
+
+[node name="Separator" type="HSeparator" parent="MarginContainer/MainLayout" unique_id=1545619053]
+layout_mode = 2
+
+[node name="Content" type="HBoxContainer" parent="MarginContainer/MainLayout" unique_id=1669044652]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="ItemList" type="ItemList" parent="MarginContainer/MainLayout/Content" unique_id=1750636826]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+allow_reselect = true
+allow_search = false
+
+[node name="DetailsPanel" type="PanelContainer" parent="MarginContainer/MainLayout/Content" unique_id=426463623]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DetailsLayout" type="VBoxContainer" parent="MarginContainer/MainLayout/Content/DetailsPanel" unique_id=1177652037]
+layout_mode = 2
+
+[node name="ItemName" type="Label" parent="MarginContainer/MainLayout/Content/DetailsPanel/DetailsLayout" unique_id=1769986099]
+layout_mode = 2
+text = "NO ITEM SELECTED"
+
+[node name="ItemClassification" type="Label" parent="MarginContainer/MainLayout/Content/DetailsPanel/DetailsLayout" unique_id=710796321]
+layout_mode = 2
+text = "CLASSIFICATION: --"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/MainLayout/Content/DetailsPanel/DetailsLayout" unique_id=2075207073]
+layout_mode = 2
+
+[node name="ItemDescription" type="RichTextLabel" parent="MarginContainer/MainLayout/Content/DetailsPanel/DetailsLayout" unique_id=751241617]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Footer" type="Label" parent="MarginContainer" unique_id=481529317]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_vertical = 8
+text = "↑ / ↓ SELECT    ENTER: INSPECT    ESC: RETURN"
+horizontal_alignment = 1
+vertical_alignment = 1

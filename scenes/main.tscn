@@ -20,6 +20,7 @@
 [ext_resource type="Shader" uid="uid://cisxkkuwuix32" path="res://scenes/smoke.gdshader" id="18_dp3eg"]
 [ext_resource type="Script" uid="uid://d0jnwgifvvgml" path="res://scripts/spark_trails.gd" id="19_0ld40"]
 [ext_resource type="AudioStream" uid="uid://byx5eteyquj76" path="res://assets/audio/freesound_community-fluorescent-lightbulb-break-37391.mp3" id="20_gqmmt"]
+[ext_resource type="PackedScene" uid="uid://c182f1cqcru0n" path="res://scenes/inventory.tscn" id="21_yc10j"]
 
 [sub_resource type="Resource" id="Resource_jkv2x"]
 script = ExtResource("4_a8y0u")
@@ -40,6 +41,18 @@ metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
 script = ExtResource("4_a8y0u")
 id = "pda"
 item_description = "A Weyland-Yutani Personnel Data Assistant. The casing is scuffed, but the display still functions. It appears to contain a personal note-taking application alongside several standard personnel utilities."
+metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
+
+[sub_resource type="Resource" id="Resource_yc10j"]
+script = ExtResource("4_a8y0u")
+id = "headlamp"
+item_description = "A headmounted lamp that is secured around the wearer's head with an elastic strap. Standard issue for Wey-Yu Engineers."
+is_toggleable = true
+metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
+
+[sub_resource type="Resource" id="Resource_py3kj"]
+script = ExtResource("4_a8y0u")
+id = "medical officer credentials"
 metadata/_custom_type_script = "uid://b6qnpxdtgwbn5"
 
 [sub_resource type="Resource" id="Resource_dp3eg"]
@@ -238,7 +251,7 @@ visible = false
 
 [node name="CommandProcessor" type="Node" parent="." unique_id=845233236]
 script = ExtResource("2_sugp2")
-item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x"), SubResource("Resource_a8y0u"), SubResource("Resource_36trf")])
+item_data = Array[ExtResource("4_a8y0u")]([SubResource("Resource_jkv2x"), SubResource("Resource_a8y0u"), SubResource("Resource_36trf"), SubResource("Resource_yc10j"), SubResource("Resource_py3kj")])
 
 [node name="RoomManager" type="Node" parent="." unique_id=1985747606]
 script = ExtResource("4_eb6dy")
@@ -260,6 +273,7 @@ room_description = "The whine of the cryo pod lid rouses you from your artificia
 A faint smell of burnt electronics and the lingering scent of chemicals fills your nostrils, not quite overpowering but nearing the threshold.
 
 A computer terminal flashes near a door labeled \"Jct. A1\"."
+items = Array[String](["headlamp"])
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_jbj1t")])
 short_description = "In the center of the room, the three cryo pods remain open. The faint smell of burnt electronics returns to your senses as the lights flicker intermittently.
 
@@ -374,7 +388,7 @@ offset_bottom = -1230.0
 grow_horizontal = 1
 grow_vertical = 1
 map_position = Vector2i(-250, -800)
-room_name = "Computer Room"
+room_name = "Captain's Quarters"
 terminals = Array[ExtResource("6_eb6dy")]([SubResource("Resource_v0a5v")])
 
 [node name="MedBay" parent="RoomManager/USCSS_Thessaly/Deck1" unique_id=477782257 instance=ExtResource("3_jyhfs")]
@@ -478,7 +492,9 @@ room_description = "You can climb up to Deck 1 from here."
 
 [node name="USCSS_Kinship" type="Node" parent="RoomManager" unique_id=1976474899]
 
-[node name="KinshipAirlock" parent="RoomManager/USCSS_Kinship" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
+[node name="Deck1" type="Node" parent="RoomManager/USCSS_Kinship" unique_id=76482413]
+
+[node name="KinshipAirlock" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=1016006843 instance=ExtResource("3_jyhfs")]
 visible = true
 anchors_preset = 0
 anchor_right = 0.0
@@ -490,8 +506,131 @@ offset_bottom = -598.0
 grow_horizontal = 1
 grow_vertical = 1
 ship_id = "kinship"
-map_position = Vector2i(900, -400)
+map_position = Vector2i(800, -400)
 room_name = "USCSS Kinship Airlock"
+
+[node name="EVAPrepRoom" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=822383082 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1979.0
+offset_top = -801.0
+offset_right = 2229.0
+offset_bottom = -601.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = "kinship"
+map_position = Vector2i(1100, -400)
+room_name = "EVA Prep Room"
+room_description = "EVA suits line the left wall with helmets and cables neatly placed atop each suit."
+
+[node name="MedicalBay" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=1060993173 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1976.0
+offset_top = -1142.0
+offset_right = 2226.0
+offset_bottom = -942.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = "kinship"
+map_position = Vector2i(1100, -500)
+room_name = "Medical Bay"
+
+[node name="MedStorage" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=369236676 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1974.0
+offset_top = -1410.0
+offset_right = 2224.0
+offset_bottom = -1210.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = "kinship"
+map_position = Vector2i(1100, -600)
+room_name = "Medical Storage"
+
+[node name="FitnessCenter" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=1236121689 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 2355.0
+offset_top = -1142.0
+offset_right = 2605.0
+offset_bottom = -942.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = "kinship"
+map_position = Vector2i(1300, -500)
+room_name = "Fitness Center"
+
+[node name="Laundry" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=1540551324 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 2355.0
+offset_top = -1408.0
+offset_right = 2605.0
+offset_bottom = -1208.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = "kinship"
+map_position = Vector2i(1300, -600)
+room_name = "Laundry"
+
+[node name="Security" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=1682786082 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1983.0
+offset_top = -514.0
+offset_right = 2233.0
+offset_bottom = -314.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = "kinship"
+map_position = Vector2i(1100, -300)
+room_name = "Security"
+
+[node name="SecurityStorage" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=1812306632 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 2362.0
+offset_top = -514.0
+offset_right = 2612.0
+offset_bottom = -314.0
+grow_horizontal = 1
+grow_vertical = 1
+ship_id = "kinship"
+map_position = Vector2i(1300, -300)
+room_name = "Security Storage"
+
+[node name="CentralAtrium" parent="RoomManager/USCSS_Kinship/Deck1" unique_id=630591693 instance=ExtResource("3_jyhfs")]
+visible = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 2845.0
+offset_top = -1195.0
+offset_right = 3095.0
+offset_bottom = -995.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(1, 3.4400012)
+ship_id = "kinship"
+map_position = Vector2i(1300, -300)
+room_name = "Central Atrium"
+items = Array[String](["medical officer credentials"])
 
 [node name="TextEditorGUI" type="CanvasLayer" parent="." unique_id=1172315282]
 process_mode = 1
@@ -673,6 +812,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
+
+[node name="InventoryLayer" type="CanvasLayer" parent="." unique_id=1921820673]
+layer = 30
+
+[node name="Inventory" parent="InventoryLayer" unique_id=913505244 instance=ExtResource("21_yc10j")]
+visible = false
 
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="." method="_on_input_text_submitted"]
 [connection signal="text_submitted" from="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" to="TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input" method="_on_text_submitted"]

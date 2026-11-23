@@ -20,6 +20,15 @@ const SHIP_CONNECTIONS := {
 
 	"USCSS_Kinship": [
 		# Second ship connections will go here.
+		["KinshipAirlock", "EVAPrepRoom"],
+		["EVAPrepRoom", "MedicalBay"],
+		["EVAPrepRoom", "Security"],
+		["MedicalBay", "FitnessCenter"],
+		["MedicalBay", "MedStorage"],
+		["FitnessCenter", "Laundry"],
+		["Security", "SecurityStorage"],
+		["Laundry", "CentralAtrium"],
+		["FitnessCenter", "CentralAtrium"]
 	]
 }
 
@@ -79,9 +88,17 @@ func _ready() -> void:
 	# Door locks.
 	var airlock := _find_ship_room("USCSS_Thessaly", "ThessalyAirlock")
 	var umbilical := _find_ship_room("USCSS_Thessaly", "Umbilical")
+	var medical := _find_ship_room("USCSSKinship", "MedicalBay")
+	var fitness := _find_ship_room("USCSSKinship", "FitnessCenter")
+	var eva := _find_ship_room("USCSSKinship", "EVAPrepRoom")
 
 	if airlock != null and umbilical != null:
 		lock_exit(airlock, umbilical, "credentials")
+	
+	if medical != null and fitness != null and eva != null:
+		lock_exit(medical, eva, "medical officer credentials")
+		lock_exit(medical, fitness, "medical officer credentials")
+	
 
 
 func _find_ship_room(ship_name: String, room_node_name: String) -> GameRoom:

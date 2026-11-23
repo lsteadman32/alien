@@ -22,6 +22,9 @@ const Response = preload("res://scenes/response.tscn")
 @onready var room_darkness_alpha: float = 0.60
 @onready var room_darkness_fade_time: float = .5
 @onready var crt_overlay: ColorRect = $TextEditorGUI/GUI/ScanLines
+@onready var inventory_screen = $InventoryLayer/Inventory
+
+var equipment_states: Dictionary = {}
 
 var pending_xenomorph_events: Array[String] = []
 var waiting_for_xenomorph_event := false
@@ -47,7 +50,9 @@ func _ready() -> void:
 
 
 	command_processor.response_generated.connect(handle_response_generated)
-	
+	command_processor.inventory_requested.connect(_open_inventory)
+	inventory_screen.inventory_closed.connect(_return_to_terminal)
+	inventory_screen.item_toggled.connect(_on_item_toggled)
 	command_processor.player_moved.connect(xenomorph.on_player_moved)
 	command_processor.player_made_noise.connect(xenomorph.report_noise)
 	command_processor.player_moved.connect(_on_player_moved)
@@ -234,7 +239,10 @@ func _update_room_sparks(room: GameRoom) -> void:
 
 func _set_room_darkness(enabled: bool) -> void:
 	print("DARKNESS FUNCTION: Enabled = ", enabled)
-	var target_alpha := room_darkness_alpha if enabled else 0.0
+	var headlamp_active: bool = equipment_states.get("headlamp", false)
+	var target_alpha: float = 0.0
+	if enabled:
+		target_alpha = 0.18 if headlamp_active else room_darkness_alpha
 	var target_color := Color(0.0, 0.0, 0.0, target_alpha)
 	
 	var tween := create_tween()
@@ -246,3 +254,27 @@ func _set_room_darkness(enabled: bool) -> void:
 	)
 	print("DARKNESS TARGET: ", target_color)
 	print("COLORRECT CURRENT COLOR: ", room_darkening.color)
+
+func _open_inventory() -> void:
+	inventory_screen.populate_inventory(
+		command_processor.inventory,
+		command_processor.item_lookup,
+		command_processor.player_name
+	)
+	inventory_screen.show()
+	get_viewport().gui_release_focus()
+
+func _return_to_terminal() -> void:
+	await get_tree().process_frame
+	
+	var input_field: LineEdit = $TextEditorGUI/GUI/MarginContainer/Rows/InputArea/HBoxContainer/Input
+	
+	get_viewport().gui_release_focus()
+	input_field.editable = true
+	input_field.grab_focus()
+
+func _on_item_toggled(item_id: String, is_active: bool) -> void:
+	equipment_states[item_id] = is_active
+	
+	if item_id == "headlamp":
+		_set_room_darkness(command_processor.current_room.darkness_enabled)

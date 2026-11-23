@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://r8dikwelfymx"]
 
 [ext_resource type="Script" uid="uid://tfrhi0rsbrav" path="res://scripts/boot_sequence.gd" id="1_3hojd"]
-[ext_resource type="FontFile" uid="uid://b5js21qbjmyhk" path="res://assets/Font/Berthold City Light Regular/Berthold City Light Regular.otf" id="1_5w1gu"]
-[ext_resource type="AudioStream" uid="uid://doynjor8f72x6" path="res://assets/audio/ALIEN (1979) Nostromo Boot Up Sequence (but with Alien Romulus Sound Effects added) 2160p 4K #alien - Romeo Five Hotel 4K Movie Clips and More! (192k).wav" id="3_ihkx6"]
+[ext_resource type="VideoStream" uid="uid://5n5biqa3pkoy" path="res://assets/Video/nostromo_boot.ogv" id="4_s7n2c"]
 
 [node name="BootSequence" type="Control" unique_id=764429989]
 layout_mode = 3
@@ -22,59 +21,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="TerminalArea" type="MarginContainer" parent="." unique_id=1687975568]
+[node name="BootVideo" type="VideoStreamPlayer" parent="." unique_id=472530550]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 60
-theme_override_constants/margin_top = 60
-theme_override_constants/margin_right = 60
-theme_override_constants/margin_bottom = 60
-
-[node name="BootText" type="VBoxContainer" parent="TerminalArea" unique_id=1639233469]
-layout_mode = 2
-theme_override_constants/separation = 28
-
-[node name="SystemHeader" type="Label" parent="TerminalArea/BootText" unique_id=1569557542]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.65882355, 0.78039217, 0.627451, 1)
-theme_override_fonts/font = ExtResource("1_5w1gu")
-theme_override_font_sizes/font_size = 22
-text = "WEYLAND-YUTANI
-COMMERCIAL TRANSPORT DIVISION"
-
-[node name="SequenceTitle" type="Label" parent="TerminalArea/BootText" unique_id=1167670938]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.47058824, 0.5803922, 0.06666667, 1)
-theme_override_fonts/font = ExtResource("1_5w1gu")
-text = "USCSS THESSALY SYSTEMS INITIALIZATION"
-
-[node name="DiagnosticOutput" type="RichTextLabel" parent="TerminalArea/BootText" unique_id=2029384449]
-custom_minimum_size = Vector2(900, 300)
-layout_mode = 2
-theme_override_colors/default_color = Color(0.65882355, 0.78039217, 0.627451, 1)
-theme_override_constants/line_separation = 20
-theme_override_fonts/normal_font = ExtResource("1_5w1gu")
-theme_override_fonts/mono_font = ExtResource("1_5w1gu")
-bbcode_enabled = true
-text = "POWER DISTRIBUTION ............. ONLINE
-NAVIGATION CONTROL  ............. ONLINE
-LIFE SUPPORT ............. ONLINE
-CRYO-STASIS ............. 3/4 OPERATIONAL
-MuThUr INTERFACE ............. ACTIVE
-
-SYSTEM DIAGNOSTICS COMPLETE"
-scroll_active = false
-
-[node name="BootAudio" type="AudioStreamPlayer" parent="." unique_id=224101734]
-stream = ExtResource("3_ihkx6")
-volume_db = -5.883
-playback_type = 1
-
-[node name="BootVideo" type="VideoStreamPlayer" parent="." unique_id=472530550]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+stream = ExtResource("4_s7n2c")
+volume_db = -6.09
+expand = true
