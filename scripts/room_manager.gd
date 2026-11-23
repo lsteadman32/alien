@@ -138,7 +138,7 @@ func connect_ladder(a: GameRoom, b: GameRoom) -> void:
 
 func lock_exit(a: GameRoom, b: GameRoom, key_id: String) -> void:
 	a.locked_exits[b.room_name.to_lower()] = key_id
-	b.locked_exits[b.room_name.to_lower()] = key_id
+	b.locked_exits[a.room_name.to_lower()] = key_id
 
 func hide_exit(a: GameRoom, b: GameRoom) -> void:
 	a.hidden_exits.append(b.room_name.to_lower())
