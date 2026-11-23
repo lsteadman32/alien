@@ -88,9 +88,9 @@ func _ready() -> void:
 	# Door locks.
 	var airlock := _find_ship_room("USCSS_Thessaly", "ThessalyAirlock")
 	var umbilical := _find_ship_room("USCSS_Thessaly", "Umbilical")
-	var medical := _find_ship_room("USCSSKinship", "MedicalBay")
-	var fitness := _find_ship_room("USCSSKinship", "FitnessCenter")
-	var eva := _find_ship_room("USCSSKinship", "EVAPrepRoom")
+	var medical := _find_ship_room("USCSS_Kinship", "MedicalBay")
+	var fitness := _find_ship_room("USCSS_Kinship", "FitnessCenter")
+	var eva := _find_ship_room("USCSS_Kinship", "EVAPrepRoom")
 
 	if airlock != null and umbilical != null:
 		lock_exit(airlock, umbilical, "credentials")
@@ -136,7 +136,7 @@ func connect_ladder(a: GameRoom, b: GameRoom) -> void:
 	if not b.ladder_exits.has(exit_b):
 		b.ladder_exits.append(exit_b)
 
-func lock_exit(a: GameRoom, b: GameRoom, key_id) -> void:
+func lock_exit(a: GameRoom, b: GameRoom, key_id: String) -> void:
 	a.locked_exits[b.room_name.to_lower()] = key_id
 	b.locked_exits[b.room_name.to_lower()] = key_id
 
